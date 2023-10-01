@@ -1,10 +1,9 @@
 import { StyleSheet, View } from "react-native";
-import { StoryOptionCard } from "../../../component/games/story/storyOptionCard";
+import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
 import { FlatList } from "react-native";
-import { storySelectionOptions } from "../../../constants/strings";
-import { Divider } from "@rneui/themed";
+import { storySelectionOptions } from "../../constants/strings";
 
-export const StorySelectionScreen = () => {
+export const StorySelectionScreen = ({ navigation }) => {
   return (
     <View style={styles.mainContainer}>
       <FlatList
@@ -12,7 +11,11 @@ export const StorySelectionScreen = () => {
         keyExtractor={(item) => item.ref}
         numColumns={3}
         renderItem={({ item }) => (
-          <StoryOptionCard option={item.ref} title={item.title} />
+          <StoryOptionCard
+            option={item.ref}
+            title={item.title}
+            navigation={navigation}
+          />
         )}
       />
     </View>

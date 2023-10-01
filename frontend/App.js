@@ -7,6 +7,8 @@ import { MenuProvider } from "react-native-popup-menu";
 import { ThemeProvider } from "react-native-elements";
 import { SafeAreaView } from "react-native";
 import { useState } from "react";
+import { MuteContextProvider } from "./context/muteContext";
+
 import AppLoading from "expo-app-loading";
 
 const getFonts = () =>
@@ -24,8 +26,10 @@ export default function App() {
         <RapiLayout>
           <MenuProvider>
             <ThemeProvider>
-              <Navigator />
-              <Toast />
+              <MuteContextProvider>
+                <Navigator />
+                <Toast />
+              </MuteContextProvider>
             </ThemeProvider>
           </MenuProvider>
         </RapiLayout>

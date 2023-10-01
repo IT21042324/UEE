@@ -4,6 +4,7 @@ import { rapunzelOption } from "../assets/images/imageIndex";
 
 export const screenTitles = {
   StorySelection: "Story Selection",
+  CinderellaStory: "Cinderella",
 };
 
 export const storySelectionOptions = [

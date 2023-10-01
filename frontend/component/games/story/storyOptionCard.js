@@ -3,15 +3,22 @@ import { useEffect, useState } from "react";
 import { Divider } from "@rneui/themed";
 import { globalStyles } from "../../../styles/global";
 
-export const StoryOptionCard = ({ option, title }) => {
+export const StoryOptionCard = ({ option, title, navigation }) => {
   const [selectedOption, setSelectedOption] = useState(3);
 
   useEffect(() => {
     setSelectedOption(option);
   }, [selectedOption]);
 
+  console.log(navigation);
+
+  const onPressHandler = () => {
+    //use a second parameter as a object to pass data between screens
+    navigation.navigate("CinderellaStory");
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPressHandler}>
       <Image
         source={selectedOption}
         resizeMode="contain"
