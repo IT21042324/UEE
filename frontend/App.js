@@ -10,6 +10,7 @@ import { useState } from "react";
 import { MuteContextProvider } from "./context/muteContext";
 
 import AppLoading from "expo-app-loading";
+import { CustomToast } from "./component/games/customToast";
 
 const getFonts = () =>
   Font.loadAsync({
@@ -28,7 +29,7 @@ export default function App() {
             <ThemeProvider>
               <MuteContextProvider>
                 <Navigator />
-                <Toast />
+                <CustomToast />
               </MuteContextProvider>
             </ThemeProvider>
           </MenuProvider>

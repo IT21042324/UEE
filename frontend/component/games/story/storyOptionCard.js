@@ -10,11 +10,9 @@ export const StoryOptionCard = ({ option, title, navigation }) => {
     setSelectedOption(option);
   }, [selectedOption]);
 
-  console.log(navigation);
-
   const onPressHandler = () => {
     //use a second parameter as a object to pass data between screens
-    navigation.navigate("CinderellaStory");
+    navigation.navigate(`${title}Story`);
   };
 
   return (

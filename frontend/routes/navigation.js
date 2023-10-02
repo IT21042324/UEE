@@ -7,7 +7,7 @@ import { StorySelectionScreen } from "../screen/game/storySelection";
 import { CinderellaStoryPage } from "../screen/game/story/cinderellaStory";
 
 const screens = {
-  StoreSelection: {
+  StorySelection: {
     screen: StorySelectionScreen,
     navigationOptions: {
       headerTitle: () => <Header title={screenTitles.StorySelection} />,

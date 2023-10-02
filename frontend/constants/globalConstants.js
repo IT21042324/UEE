@@ -31,7 +31,7 @@ export const width = {
 export const fontFamily = {
   titleText: "ubuntu-bold",
   subTitleText: "ubuntu-regular",
-  inspectorOptionsText: "ubuntu-regular",
+  normalText: "ubuntu-regular",
 };
 
 export const fontStyle = {
