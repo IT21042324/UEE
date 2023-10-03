@@ -4,13 +4,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { UseMuteContext } from "../useHook/useMuteContext";
 
 export const Header = ({ title, muteButton }) => {
-  const { dispatch, muted } = UseMuteContext();
+  const { muted, mute, unMute } = UseMuteContext();
 
   const muteOnPressHandler = () => {
-    dispatch({
-      type: muted ? "unmute" : "mute",
-    });
+    muted ? unMute() : mute();
   };
+
   return (
     <View style={styles.header}>
       <TouchableOpacity style={styles.volumeIcon} onPress={muteOnPressHandler}>

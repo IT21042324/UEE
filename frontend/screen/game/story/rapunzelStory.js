@@ -6,10 +6,10 @@ import {
 } from "../../../constants/globalConstants";
 import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { CinderellaStoryContent } from "../../../constants/strings";
+import { RapunzelStoryContent } from "../../../constants/strings";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
 
-export const CinderellaStoryPage = ({ navigation }) => {
+export const RapunzelStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
 
   const [currentStoryPageObjectNumber, setCurrentStoryPageObjectNumber] =
@@ -18,7 +18,7 @@ export const CinderellaStoryPage = ({ navigation }) => {
   const [displayObject, setDisplayObject] = useState({});
 
   useEffect(() => {
-    setStoryContent(CinderellaStoryContent);
+    setStoryContent(RapunzelStoryContent);
     setCurrentStoryPageObjectNumber(0);
   }, []);
 

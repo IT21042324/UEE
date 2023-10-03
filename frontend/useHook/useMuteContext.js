@@ -5,5 +5,13 @@ export const UseMuteContext = () => {
   const muteContext = useContext(MuteContext);
   const { dispatch, muted } = muteContext;
 
-  return { dispatch, muted };
+  const mute = () => {
+    dispatch({ type: "mute" });
+  };
+
+  const unMute = () => {
+    dispatch({ type: "unmute" });
+  };
+
+  return { dispatch, muted, mute, unMute };
 };
