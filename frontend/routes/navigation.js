@@ -7,6 +7,7 @@ import { StorySelectionScreen } from "../screen/game/storySelection";
 import { CinderellaStoryPage } from "../screen/game/story/cinderellaStory";
 import { RapunzelStoryPage } from "../screen/game/story/rapunzelStory";
 import { HerculesStoryPage } from "../screen/game/story/herculesStory";
+import { GameCompletion } from "../screen/game/gameCompletion";
 
 const screens = {
   StorySelection: {
@@ -34,6 +35,13 @@ const screens = {
 
     navigationOptions: {
       headerTitle: () => <Header title={screenTitles.HerculesStory} />,
+    },
+  },
+  GameCompletion: {
+    screen: GameCompletion,
+
+    navigationOptions: {
+      headerTitle: () => <Header title={screenTitles.GameCompletion} />,
     },
   },
 };

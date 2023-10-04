@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -21,12 +21,19 @@ export const PopupQuestionModal = ({
   onCorrectAnswerSelected,
   modalVisible,
   setModalVisiblity,
+  onIncorrectAnswerSelected,
 }) => {
   const questionsArray = questionBank.easy;
 
-  const randomIndex = Math.floor(Math.random() * questionsArray?.length);
+  const [randomIndex, setRandomIndex] = useState(0);
 
-  // Get a random question from the array
+  useEffect(() => {
+    if (modalVisible) {
+      setRandomIndex(Math.floor(Math.random() * questionsArray?.length));
+      shuffleArray(randomOptions);
+    }
+  }, [modalVisible]);
+
   const randomQuestion = questionsArray[randomIndex];
   const randomOptions = randomQuestion.options;
 
@@ -37,8 +44,6 @@ export const PopupQuestionModal = ({
     }
   }
 
-  shuffleArray(randomOptions);
-
   const answerOnPressHandler = (answer) => {
     if (answer === randomQuestion.correctAnswer) {
       Toast.show({
@@ -47,6 +52,8 @@ export const PopupQuestionModal = ({
       });
       setModalVisiblity(false);
       onCorrectAnswerSelected();
+    } else {
+      onIncorrectAnswerSelected();
     }
   };
 

@@ -17,9 +17,13 @@ export const RapunzelStoryPage = ({ navigation }) => {
   const [totalStoryPages, setTotalStoryPages] = useState(5);
   const [displayObject, setDisplayObject] = useState({});
 
+  const [startTime, setStartTime] = useState(0);
+
   useEffect(() => {
     setStoryContent(RapunzelStoryContent);
     setCurrentStoryPageObjectNumber(0);
+
+    setStartTime(new Date().getTime());
   }, []);
 
   useEffect(() => {
@@ -27,12 +31,22 @@ export const RapunzelStoryPage = ({ navigation }) => {
     setTotalStoryPages(storyContent.length);
   }, [currentStoryPageObjectNumber]);
 
+  const [incorrectAttempts, setIncorrectAttempts] = useState(0);
+
+  const onIncorrectAnswerSelected = () => {
+    setIncorrectAttempts(incorrectAttempts + 1);
+  };
+
   const onCorrectAnswerSelected = () => {
     if (currentStoryPageObjectNumber < totalStoryPages - 1) {
       setCurrentStoryPageObjectNumber(currentStoryPageObjectNumber + 1);
       setDisplayObject(storyContent[currentStoryPageObjectNumber]);
     } else if (currentStoryPageObjectNumber == totalStoryPages - 1) {
-      navigation.navigate("StorySelection");
+      navigation.navigate("GameCompletion", {
+        incorrectAttempts,
+        startTime,
+        questionCount: totalStoryPages,
+      });
     }
   };
 
@@ -55,6 +69,7 @@ export const RapunzelStoryPage = ({ navigation }) => {
           onCorrectAnswerSelected={onCorrectAnswerSelected}
           modalVisible={modalVisible}
           setModalVisiblity={setModalVisiblity}
+          onIncorrectAnswerSelected={onIncorrectAnswerSelected}
         />
       )}
       <View style={styles.storyDisplayContainer}>
@@ -73,6 +88,11 @@ export const RapunzelStoryPage = ({ navigation }) => {
         >
           <Foundation name="next" size={80} color="black" />
         </TouchableOpacity>
+        <View style={styles.pageNoContainer}>
+          <Text style={styles.pageNoText}>
+            Page {currentStoryPageObjectNumber + 1} of {totalStoryPages}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -111,5 +131,21 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     margin: 30,
+  },
+  pageNoContainer: {
+    position: "absolute",
+    bottom: 30,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  pageNoText: {
+    fontFamily: fontFamily.normalText,
+    fontStyle: fontStyle.normal,
+    fontSize: 30,
+    backgroundColor: colorVariants.black,
+    color: colorVariants.white,
+    padding: 10,
   },
 });

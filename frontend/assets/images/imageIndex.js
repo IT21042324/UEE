@@ -1,6 +1,7 @@
 export const cinderellaOption = require("./cinderellaOption.jpg");
 export const herculesOption = require("./herculesOption.jpeg");
 export const rapunzelOption = require("./rapunzelOption.jpeg");
+export const brilliantImage = require("./brilliant.png");
 
 export const cinderellaStoryImages = {
   cinderellaImage1: require("./cinderellaImage1.jpeg"),

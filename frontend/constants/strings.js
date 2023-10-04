@@ -10,6 +10,9 @@ import {
 export const screenTitles = {
   StorySelection: "Story Selection",
   CinderellaStory: "Cinderella",
+  RapunzelStory: "Rapunzel",
+  HerculesStory: "Hercules",
+  GameCompletion: "Stats",
 };
 
 export const storySelectionOptions = [
@@ -17,6 +20,13 @@ export const storySelectionOptions = [
   { title: "Rapunzel", ref: rapunzelOption },
   { title: "Hercules", ref: herculesOption },
 ];
+
+export const gameStats = [
+  { text: "Story Completion Time", value: 0, unit: "minutes" },
+  { text: "Incorrect Attmepts", value: 0, unit: "attempts" },
+  { text: "Time spent on a question on average", value: 0, unit: "minutes" },
+];
+
 export const CinderellaStoryContent = [
   {
     imageId: cinderellaStoryImages.cinderellaImage1,
