@@ -8,8 +8,15 @@ import { CinderellaStoryPage } from "../screen/game/story/cinderellaStory";
 import { RapunzelStoryPage } from "../screen/game/story/rapunzelStory";
 import { HerculesStoryPage } from "../screen/game/story/herculesStory";
 import { GameCompletion } from "../screen/game/gameCompletion";
+import { StudentSelectionScreen } from "../screen/studentSelection";
 
 const screens = {
+  StudentSelection: {
+    screen: StudentSelectionScreen,
+    navigationOptions: {
+      headerTitle: () => <Header title={screenTitles.MainMenu} />,
+    },
+  },
   StorySelection: {
     screen: StorySelectionScreen,
     navigationOptions: {

@@ -1,3 +1,7 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+
 import {
   cinderellaOption,
   rapunzelOption,
@@ -6,8 +10,10 @@ import {
   RapunzelStoryImages,
   HerculesStoryImages,
 } from "../assets/images/imageIndex";
+import { colorVariants } from "./globalConstants";
 
 export const screenTitles = {
+  MainMenu: "Main Menu",
   StorySelection: "Story Selection",
   CinderellaStory: "Cinderella",
   RapunzelStory: "Rapunzel",
@@ -1266,5 +1272,44 @@ export const HerculesStoryContent = [
       ],
       hard: [],
     },
+  },
+];
+
+export const studentSelectionOptions = [
+  {
+    title: "Puzzle",
+    Icon: (
+      <MaterialCommunityIcons
+        name="puzzle"
+        size={200}
+        color={colorVariants.dodgerblue}
+      />
+    ),
+  },
+  {
+    title: "Story",
+    Icon: (
+      <Entypo name="open-book" size={200} color={colorVariants.dodgerblue} />
+    ),
+  },
+  {
+    title: "PlayList",
+    Icon: (
+      <MaterialCommunityIcons
+        name="playlist-music"
+        size={200}
+        color={colorVariants.dodgerblue}
+      />
+    ),
+  },
+  {
+    title: "Settings",
+    Icon: (
+      <MaterialIcons
+        name="settings"
+        size={200}
+        color={colorVariants.dodgerblue}
+      />
+    ),
   },
 ];
