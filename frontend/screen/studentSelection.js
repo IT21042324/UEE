@@ -27,7 +27,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
               useNativeDriver: false,
             }
           )}
-          pagingEnabled
+          // pagingEnabled // remove this prop or set it to false
           horizontal
           decelerationRate={"normal"}
           scrollEventThrottle={4}
@@ -38,6 +38,8 @@ export const StudentSelectionScreen = ({ navigation }) => {
               navigation={navigation}
             />
           )}
+          snapToAlignment={"start"} // add this prop to align the items to the start of the list
+          snapToInterval={400} // add this prop to snap to each item with a width of 400
         />
 
         <ExpandingDot
