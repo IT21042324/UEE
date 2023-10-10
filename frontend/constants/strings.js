@@ -1313,3 +1313,8 @@ export const studentSelectionOptions = [
     ),
   },
 ];
+
+export const studentSelectionSpeech = {
+  english:
+    "Choose the relevant options..  1st option is Puzzle.      2nd option is Story. Third option is playlist.   Fourth option is Settings",
+};

@@ -7,10 +7,10 @@ import { MenuProvider } from "react-native-popup-menu";
 import { ThemeProvider } from "react-native-elements";
 import { SafeAreaView } from "react-native";
 import { useState } from "react";
-import { MuteContextProvider } from "./context/muteContext";
-
+import { AppGeneralSettingsContextProvider } from "./context/generalSettingsContext";
 import AppLoading from "expo-app-loading";
 import { CustomToast } from "./component/games/customToast";
+import { SpeechContextProvider } from "./context/speechContext";
 
 const getFonts = () =>
   Font.loadAsync({
@@ -27,10 +27,12 @@ export default function App() {
         <RapiLayout>
           <MenuProvider>
             <ThemeProvider>
-              <MuteContextProvider>
-                <Navigator />
-                <CustomToast />
-              </MuteContextProvider>
+              <AppGeneralSettingsContextProvider>
+                <SpeechContextProvider>
+                  <Navigator />
+                  <CustomToast />
+                </SpeechContextProvider>
+              </AppGeneralSettingsContextProvider>
             </ThemeProvider>
           </MenuProvider>
         </RapiLayout>

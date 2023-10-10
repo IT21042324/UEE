@@ -1,12 +1,22 @@
 import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
-import { studentSelectionOptions } from "../constants/strings";
+import {
+  studentSelectionOptions,
+  studentSelectionSpeech,
+} from "../constants/strings";
 import { StudentMainManuSelectionCard } from "../component/studentSelectionCard";
 import { Divider } from "@rneui/themed";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { UseSpeechContext } from "../useHook/useSpeechContext";
 
 export const StudentSelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
+
+  const { startSpeaking } = UseSpeechContext();
+
+  useEffect(() => {
+    startSpeaking(studentSelectionSpeech.english);
+  }, []);
 
   return (
     <View style={styles.mainContainer}>
@@ -27,7 +37,6 @@ export const StudentSelectionScreen = ({ navigation }) => {
               useNativeDriver: false,
             }
           )}
-          // pagingEnabled // remove this prop or set it to false
           horizontal
           decelerationRate={"normal"}
           scrollEventThrottle={4}

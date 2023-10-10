@@ -1,10 +1,10 @@
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { globalStyles } from "../styles/global";
 import { Ionicons } from "@expo/vector-icons";
-import { UseMuteContext } from "../useHook/useMuteContext";
+import { UseAppGeneralSettingsContext } from "../useHook/generalSettingsContext";
 
 export const Header = ({ title, muteButton }) => {
-  const { muted, mute, unMute } = UseMuteContext();
+  const { muted, mute, unMute } = UseAppGeneralSettingsContext();
 
   const muteOnPressHandler = () => {
     muted ? unMute() : mute();
@@ -14,9 +14,9 @@ export const Header = ({ title, muteButton }) => {
     <View style={styles.header}>
       <TouchableOpacity style={styles.volumeIcon} onPress={muteOnPressHandler}>
         {muted ? (
-          <Ionicons name="volume-high" size={40} color="black" />
-        ) : (
           <Ionicons name="volume-mute" size={40} color="black" />
+        ) : (
+          <Ionicons name="volume-high" size={40} color="black" />
         )}
       </TouchableOpacity>
       <View>
