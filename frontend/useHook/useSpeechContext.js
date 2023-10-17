@@ -28,11 +28,14 @@ export const UseSpeechContext = () => {
   };
   const startSpeaking = async (thingsToSay) => {
     const text = thingsToSay || speechText;
+
     setSpeechText(text);
 
     const options = voice?.name
       ? { voice: voice.name, ...speechOptions }
       : { ...speechOptions };
+
+    console.log(text, options);
     Speech.speak(text, options);
   };
 

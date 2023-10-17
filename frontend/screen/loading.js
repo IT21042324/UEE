@@ -45,7 +45,8 @@ export default function LoadingScreen({ navigation }) {
           setLoading(false);
           console.log(voice1);
         } else {
-          throw new Error("Impossible to get Available Voices");
+          console.log("No Voices Available. Ending the search...");
+          setLoading(false);
         }
       }
     };
