@@ -8,6 +8,7 @@ import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { RapunzelStoryContent } from "../../../constants/strings";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
+import { UseSpeechContext } from "../../../useHook/useSpeechContext";
 
 export const RapunzelStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -30,6 +31,16 @@ export const RapunzelStoryPage = ({ navigation }) => {
     setDisplayObject(storyContent[currentStoryPageObjectNumber]);
     setTotalStoryPages(storyContent.length);
   }, [currentStoryPageObjectNumber]);
+
+  const { startSpeaking, stopSpeaking } = UseSpeechContext();
+
+  useEffect(() => {
+    async function speaking() {
+      stopSpeaking();
+      await startSpeaking(displayObject?.passageContent);
+    }
+    speaking();
+  }, [displayObject]);
 
   const [incorrectAttempts, setIncorrectAttempts] = useState(0);
 

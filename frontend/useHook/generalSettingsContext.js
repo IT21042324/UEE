@@ -20,18 +20,17 @@ export const UseAppGeneralSettingsContext = () => {
   };
 
   const mute = () => {
-    setDispatchToMute();
     setInitialSpeechText(speechText);
     stopSpeaking();
+    setDispatchToMute();
   };
 
   const unMute = () => {
-    setDispatchToUnMute();
-
     if (initialSpeechText) {
       setSpeechText(initialSpeechText);
     }
     startSpeaking();
+    setDispatchToUnMute();
   };
 
   const setLanguage = (newLanguage) => {

@@ -8,6 +8,7 @@ import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { HerculesStoryContent } from "../../../constants/strings";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
+import { UseSpeechContext } from "../../../useHook/useSpeechContext";
 
 export const HerculesStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -17,6 +18,8 @@ export const HerculesStoryPage = ({ navigation }) => {
   const [totalStoryPages, setTotalStoryPages] = useState(5);
   const [displayObject, setDisplayObject] = useState({});
   const [startTime, setStartTime] = useState(0);
+
+  const { startSpeaking, stopSpeaking } = UseSpeechContext();
 
   useEffect(() => {
     setStoryContent(HerculesStoryContent);
@@ -28,6 +31,14 @@ export const HerculesStoryPage = ({ navigation }) => {
     setDisplayObject(storyContent[currentStoryPageObjectNumber]);
     setTotalStoryPages(storyContent.length);
   }, [currentStoryPageObjectNumber]);
+
+  useEffect(() => {
+    async function speaking() {
+      stopSpeaking();
+      await startSpeaking(displayObject?.passageContent);
+    }
+    speaking();
+  }, [displayObject]);
 
   const [incorrectAttempts, setIncorrectAttempts] = useState(0);
 

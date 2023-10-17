@@ -8,6 +8,7 @@ import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { CinderellaStoryContent } from "../../../constants/strings";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
+import { UseSpeechContext } from "../../../useHook/useSpeechContext";
 
 export const CinderellaStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -19,6 +20,10 @@ export const CinderellaStoryPage = ({ navigation }) => {
 
   const [startTime, setStartTime] = useState(0);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const { startSpeaking, stopSpeaking } = UseSpeechContext();
+
   useEffect(() => {
     setStoryContent(CinderellaStoryContent);
     setCurrentStoryPageObjectNumber(0);
@@ -29,6 +34,14 @@ export const CinderellaStoryPage = ({ navigation }) => {
     setDisplayObject(storyContent[currentStoryPageObjectNumber]);
     setTotalStoryPages(storyContent.length);
   }, [currentStoryPageObjectNumber]);
+
+  useEffect(() => {
+    async function speaking() {
+      stopSpeaking();
+      await startSpeaking(displayObject?.passageContent);
+    }
+    speaking();
+  }, [displayObject]);
 
   const [incorrectAttempts, setIncorrectAttempts] = useState(0);
 
@@ -48,8 +61,6 @@ export const CinderellaStoryPage = ({ navigation }) => {
       });
     }
   };
-
-  const [modalVisible, setModalVisible] = useState(false);
 
   const setModalVisiblity = (state) => {
     setModalVisible(state);

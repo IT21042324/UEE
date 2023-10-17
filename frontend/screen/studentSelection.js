@@ -12,10 +12,25 @@ import { UseSpeechContext } from "../useHook/useSpeechContext";
 export const StudentSelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const { startSpeaking } = UseSpeechContext();
+  const { startSpeaking, stopSpeaking } = UseSpeechContext();
 
   useEffect(() => {
-    startSpeaking(studentSelectionSpeech.english);
+    const onFocus = navigation.addListener("didFocus", () => {
+      stopSpeaking();
+      const speak = async () => {
+        await startSpeaking(studentSelectionSpeech.english);
+      };
+      speak();
+    });
+
+    const onBlur = navigation.addListener("willBlur", () => {
+      stopSpeaking();
+    });
+
+    return () => {
+      onFocus.remove();
+      onBlur.remove();
+    };
   }, []);
 
   return (
@@ -28,7 +43,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <FlatList
           data={studentSelectionOptions}
-          keyExtractor={(item) => item.ref}
+          keyExtractor={(item) => item.title}
           contentContainerStyle={styles.flatListStyle}
           showsHorizontalScrollIndicator={false}
           onScroll={Animated.event(
@@ -47,8 +62,8 @@ export const StudentSelectionScreen = ({ navigation }) => {
               navigation={navigation}
             />
           )}
-          snapToAlignment={"start"} // add this prop to align the items to the start of the list
-          snapToInterval={400} // add this prop to snap to each item with a width of 400
+          snapToAlignment={"start"}
+          snapToInterval={400}
         />
 
         <ExpandingDot

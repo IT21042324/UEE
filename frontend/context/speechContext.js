@@ -6,13 +6,11 @@ export const SpeechContextProvider = ({ children }) => {
   const reducer = (state, action) => {
     switch (action.type) {
       case "setSpeechText":
-        return {
-          speechText: action.payload,
-        };
+        return { ...state, speechText: action.payload.speechText };
       case "clearSpeechText":
-        return {
-          speechText: "",
-        };
+        return { ...state, speechText: "" };
+      case "setVoice":
+        return { ...state, voice: action.payload.voice };
       default:
         return state;
     }
@@ -20,10 +18,11 @@ export const SpeechContextProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducer, {
     speechText: "",
+    voice: {},
   });
 
   return (
-    <SpeechContext.Provider value={{ speechText: state.speechText, dispatch }}>
+    <SpeechContext.Provider value={{ ...state, dispatch }}>
       {children}
     </SpeechContext.Provider>
   );

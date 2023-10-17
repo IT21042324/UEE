@@ -1,53 +1,73 @@
-// App.jsx
 import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+import { Text } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-/*
-  1. Create the config
-*/
 export const toastConfig = {
-  /*
-    Overwrite 'success' type,
-    by modifying the existing `BaseToast` component
-  */
   success: (props) => (
     <BaseToast
       {...props}
-      style={{ backgroundColor: "green", height: 80, width: "100%" }}
+      style={{
+        backgroundColor: "#4CAF50",
+        borderRadius: 10,
+        height: 80,
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         color: "white",
-        fontSize: 40,
-        fontWeight: "400",
+        fontSize: 30,
+        fontWeight: "bold",
+        textAlign: "center",
       }}
-    />
+    >
+      <Feather name="check" size={30} color="white" />
+      <Text
+        style={{
+          color: "white",
+          fontSize: 30,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Correct Answer!
+      </Text>
+    </BaseToast>
   ),
-  /*
-    Overwrite 'error' type,
-    by modifying the existing `ErrorToast` component
-  */
   error: (props) => (
     <ErrorToast
       {...props}
+      style={{
+        backgroundColor: "#F44336",
+        borderRadius: 10,
+        height: 80,
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
       text1Style={{
-        fontSize: 17,
+        color: "white",
+        fontSize: 30,
+        fontWeight: "bold",
+        textAlign: "center",
       }}
-      text2Style={{
-        fontSize: 15,
-      }}
-    />
-  ),
-
-  tomatoToast: ({ text1, props }) => (
-    <View style={{ height: 500, width: "100%", backgroundColor: "orange" }}>
-      <Text>{text1}</Text>
-      <Text>{props.uuid}</Text>
-    </View>
+    >
+      <Feather name="x" size={30} color="white" />
+      <Text
+        style={{
+          color: "white",
+          fontSize: 30,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Wrong Answer!
+      </Text>
+    </ErrorToast>
   ),
 };
 
-/*
-  2. Pass the config as prop to the Toast component instance
-*/
 export function CustomToast() {
   return <Toast config={toastConfig} />;
 }

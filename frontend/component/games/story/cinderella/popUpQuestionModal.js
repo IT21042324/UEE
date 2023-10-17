@@ -14,6 +14,7 @@ import {
 } from "../../../../constants/globalConstants";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
+import { UseSpeechContext } from "../../../../useHook/useSpeechContext";
 
 export const PopupQuestionModal = ({
   questionBank,
@@ -27,15 +28,27 @@ export const PopupQuestionModal = ({
 
   const [randomIndex, setRandomIndex] = useState(0);
 
+  const { stopSpeaking, startSpeaking } = UseSpeechContext();
+
   useEffect(() => {
     if (modalVisible) {
-      setRandomIndex(Math.floor(Math.random() * questionsArray?.length));
-      shuffleArray(randomOptions);
+      const newRandomIndex = Math.floor(Math.random() * questionsArray?.length);
+      setRandomIndex(newRandomIndex);
+      const newRandomQuestion = questionsArray[newRandomIndex];
+      setRandomQuestion(newRandomQuestion);
+      const newRandomOptions = [...newRandomQuestion.options]; // Create a copy
+      shuffleArray(newRandomOptions);
+
+      setRandomOptions(newRandomOptions);
+
+      stopSpeaking();
+      const optionsString = newRandomOptions.join(", ");
+      startSpeaking(newRandomQuestion.question + optionsString);
     }
   }, [modalVisible]);
 
-  const randomQuestion = questionsArray[randomIndex];
-  const randomOptions = randomQuestion.options;
+  const [randomQuestion, setRandomQuestion] = useState({});
+  const [randomOptions, setRandomOptions] = useState([]);
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -53,6 +66,12 @@ export const PopupQuestionModal = ({
       setModalVisiblity(false);
       onCorrectAnswerSelected();
     } else {
+      Toast.show({
+        type: "error",
+        text1:
+          "Good Guess, but maybe there is a better answer. Can you find it?",
+      });
+
       onIncorrectAnswerSelected();
     }
   };

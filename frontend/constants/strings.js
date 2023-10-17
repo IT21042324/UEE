@@ -1316,5 +1316,10 @@ export const studentSelectionOptions = [
 
 export const studentSelectionSpeech = {
   english:
-    "Choose the relevant options..  1st option is Puzzle.      2nd option is Story. Third option is playlist.   Fourth option is Settings",
+    "Welcome! You are in the main menu. Our first option is a fun Puzzle! Can you solve it? The second option is a magical Story. Are you ready to dive into a world of imagination? The third option is a Playlist. Let's listen to some cool tunes together! And last but not least, the fourth option is Settings. Here you can change things to make them just right for you! So, what will it be?",
+};
+
+export const storySelectionSpeech = {
+  english:
+    "You are in story-based games section! Now, it's time to pick a magical adventure. Your first choice is the enchanting tale of Cinderella, next is the high-flying journey of Rapunzel with her long golden hair, and last but not least, the mighty and brave Hercules. So, which fantastic journey will you embark on today? Cinderella, Rapunzel, or Hercules? I am waiting for your answer!",
 };
