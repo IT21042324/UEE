@@ -2,7 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+
 const userRoutes = require("./routes/user");
+const progressRoutes = require("./routes/progress");
+const studentRoutes = requuire("./routes/student");
+const teacherRoutes = require("./routes/teacher");
 
 const app = express();
 
@@ -27,3 +31,6 @@ mongoose
   });
 
 app.use("/api/users", userRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
+app.use("/api/progress", progressRoutes);
