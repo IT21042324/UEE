@@ -10,11 +10,7 @@ import { AppGeneralSettingsContextProvider } from "./context/generalSettingsCont
 import { CustomToast } from "./component/games/customToast";
 import { SpeechContextProvider } from "./context/speechContext";
 import * as SplashScreen from "expo-splash-screen";
-const getFonts = () =>
-  Font.loadAsync({
-    "ubuntu-regular": require("./assets/fonts/Ubuntu-Regular.ttf"),
-    "ubuntu-bold": require("./assets/fonts/Ubuntu-Bold.ttf"),
-  });
+
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
