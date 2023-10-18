@@ -1,15 +1,15 @@
-import { StyleSheet, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { Animated, FlatList, StyleSheet, View } from "react-native";
+import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
-import { FlatList } from "react-native";
 import {
   storySelectionOptions,
   storySelectionSpeech,
 } from "../../constants/strings";
-import { useEffect } from "react";
-
 import { UseSpeechContext } from "../../useHook/useSpeechContext";
 
 export const StorySelectionScreen = ({ navigation }) => {
+  const scrollX = useRef(new Animated.Value(0)).current;
   const { startSpeaking, stopSpeaking } = UseSpeechContext();
 
   useEffect(() => {
@@ -36,7 +36,14 @@ export const StorySelectionScreen = ({ navigation }) => {
       <FlatList
         data={storySelectionOptions}
         keyExtractor={(item) => item.ref}
-        numColumns={3}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          {
+            useNativeDriver: false,
+          }
+        )}
         renderItem={({ item }) => (
           <StoryOptionCard
             option={item.ref}
@@ -44,6 +51,28 @@ export const StorySelectionScreen = ({ navigation }) => {
             navigation={navigation}
           />
         )}
+      />
+
+      <ExpandingDot
+        data={storySelectionOptions}
+        expandingDotWidth={30}
+        scrollX={scrollX}
+        inActiveDotOpacity={0.6}
+        dotStyle={{
+          width: 10,
+          height: 10,
+          backgroundColor: "#347af0",
+          borderRadius: 5,
+          marginHorizontal: 5,
+          alignSelf: "center",
+        }}
+        containerStyle={{
+          position: "absolute",
+          bottom: 30,
+          alignSelf: "center",
+          width: "100%",
+          justifyContent: "center",
+        }}
       />
     </View>
   );

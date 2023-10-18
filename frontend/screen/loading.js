@@ -2,17 +2,26 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import * as Speech from "expo-speech";
 import { UseSpeechContext } from "../useHook/useSpeechContext";
+import { getSettings, saveSettings } from "../asyncStorage/asyncStorage";
 
 export default function LoadingScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const { setVoice } = UseSpeechContext();
 
+  const [language, setLanguage] = useState("en-US");
+
   useEffect(() => {
     const loadVoices = async () => {
+      const settings = await getSettings();
+
+      settings?.language
+        ? setLanguage(settings.language)
+        : saveSettings({ language: "en-US" });
+
       const voices = await Speech.getAvailableVoicesAsync();
 
       if (voices.length) {
-        const voice = voices.find((v) => v.language === "en-US");
+        const voice = voices.find((v) => v.language === language);
 
         setVoice(voice);
         setLoading(false);
@@ -39,7 +48,7 @@ export default function LoadingScreen({ navigation }) {
           }
         }
         if (tryAgainResult.length) {
-          const voice1 = tryAgainResult.find((v) => v.language === "en-US");
+          const voice1 = tryAgainResult.find((v) => v.language === language);
 
           setVoice(voice1);
           setLoading(false);

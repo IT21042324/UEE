@@ -11,6 +11,9 @@ export const SpeechContextProvider = ({ children }) => {
         return { ...state, speechText: "" };
       case "setVoice":
         return { ...state, voice: action.payload.voice };
+      case "setLanguage": {
+        return { ...state, language: action.payload.language };
+      }
       default:
         return state;
     }
@@ -19,6 +22,7 @@ export const SpeechContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {
     speechText: "",
     voice: {},
+    language: "en-US",
   });
 
   return (
