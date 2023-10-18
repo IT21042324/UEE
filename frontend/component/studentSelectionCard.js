@@ -1,10 +1,18 @@
-import { Image, StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Divider } from "@rneui/themed";
 import { globalStyles } from "../styles/global";
 
-export const StudentMainManuSelectionCard = ({ Icon, title, navigation }) => {
+export const StudentMainManuSelectionCard = ({
+  Icon,
+  title,
+  navigation,
+  toggleModal,
+}) => {
   const onPressHandler = () => {
-    navigation.navigate(`${title}Selection`);
+    console.log(title);
+
+    if (title !== "Settings") navigation.navigate(`${title}Selection`);
+    else toggleModal(true);
   };
 
   return (

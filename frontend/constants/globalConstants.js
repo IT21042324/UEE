@@ -66,6 +66,18 @@ export const colorVariants = {
   babyBlue: "#89CFF0",
   crimson: "crimson",
   darkGray: "#333",
+  gray: "gray",
+  platinumGray: "#E5E4E2",
+  whiteSmoke: "#f5f5f5",
+  turquesa: "#468499",
+  lightGray: "#E6E6E3",
+  pistachio: "#93C572",
+  available: "#93C572",
+  helonica: "#DB3E79",
+  occupied: "#DB3E79",
+  lightCoral: "#f1807e",
+  lightGray: "#ccc",
+  deepSkyBlue: "#007AFF",
 };
 
 export const heightVariants = {

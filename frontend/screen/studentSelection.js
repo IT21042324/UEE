@@ -6,8 +6,9 @@ import {
 import { StudentMainManuSelectionCard } from "../component/studentSelectionCard";
 import { Divider } from "@rneui/themed";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UseSpeechContext } from "../useHook/useSpeechContext";
+import { SettingsModal } from "../component/settingsModal";
 
 export const StudentSelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -33,8 +34,16 @@ export const StudentSelectionScreen = ({ navigation }) => {
     };
   }, []);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = (status) => {
+    setModalVisible(status);
+  };
+
   return (
     <View style={styles.mainContainer}>
+      {modalVisible && <SettingsModal toggleModal={toggleModal} />}
+
       <View styles={styles.welcomeContiner}>
         <Text style={styles.welcomeContinerText}>Welcome Nimal</Text>
         <Divider width={2} />
@@ -60,6 +69,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
               Icon={item.Icon}
               title={item.title}
               navigation={navigation}
+              toggleModal={toggleModal}
             />
           )}
           snapToAlignment={"start"}
@@ -110,5 +120,10 @@ const styles = StyleSheet.create({
     color: "#000",
     width: "100%",
     marginTop: 30,
+  },
+  popup: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

@@ -9,7 +9,6 @@ import { RapunzelStoryPage } from "../screen/game/story/rapunzelStory";
 import { HerculesStoryPage } from "../screen/game/story/herculesStory";
 import { GameCompletion } from "../screen/game/gameCompletion";
 import { StudentSelectionScreen } from "../screen/studentSelection";
-// import LoadingScreen from "../screen/loading";
 import LoadingScreen from "../screen/loading";
 
 const screens = {

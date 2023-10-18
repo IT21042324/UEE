@@ -10,6 +10,7 @@ import { AppGeneralSettingsContextProvider } from "./context/generalSettingsCont
 import { CustomToast } from "./component/games/customToast";
 import { SpeechContextProvider } from "./context/speechContext";
 import * as SplashScreen from "expo-splash-screen";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -35,6 +36,7 @@ export default function App() {
             <ThemeProvider>
               <AppGeneralSettingsContextProvider>
                 <SpeechContextProvider>
+                  <Toast />
                   <Navigator />
                   <CustomToast />
                 </SpeechContextProvider>
