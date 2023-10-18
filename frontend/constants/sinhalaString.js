@@ -5,29 +5,29 @@ import {
 } from "@expo/vector-icons";
 
 import {
-  cinderellaOption,
-  rapunzelOption,
-  herculesOption,
-  cinderellaStoryImages,
-  RapunzelStoryImages,
   HerculesStoryImages,
+  RapunzelStoryImages,
+  cinderellaOption,
+  cinderellaStoryImages,
+  herculesOption,
+  rapunzelOption,
 } from "../assets/images/imageIndex";
 import { colorVariants } from "./globalConstants";
 
 export const SinhalaString = () => {
   return {
     screenTitles: {
-      MainMenu: "Main Menu",
-      StorySelection: "Story Selection",
-      CinderellaStory: "Cinderella",
-      RapunzelStory: "Rapunzel",
-      HerculesStory: "Hercules",
-      GameCompletion: "Stats",
+      MainMenu: "ප්‍රධාන මෙනුව",
+      StorySelection: "කතන්දර තේරීම",
+      CinderellaStory: "සින්ඩරෙල්ලා",
+      RapunzelStory: "රපුන්සෙල්",
+      HerculesStory: "හර්කියුලිස්",
+      GameCompletion: "සංඛ්යාලේඛන",
     },
     storySelectionOptions: [
-      { title: "Cinderella", ref: cinderellaOption },
-      { title: "Rapunzel", ref: rapunzelOption },
-      { title: "Hercules", ref: herculesOption },
+      { title: "සින්ඩරෙල්ලා", ref: cinderellaOption },
+      { title: "රපුන්සෙල්", ref: rapunzelOption },
+      { title: "හර්කියුලිස්", ref: herculesOption },
     ],
     gameStats: [
       { text: "Story Completion Time", value: 0, unit: "minutes" },
@@ -45,7 +45,7 @@ export const SinhalaString = () => {
 
     studentSelectionOptions: [
       {
-        title: "Puzzle",
+        title: "ප්රහේලිකාව",
         Icon: (
           <MaterialCommunityIcons
             name="puzzle"
@@ -55,7 +55,7 @@ export const SinhalaString = () => {
         ),
       },
       {
-        title: "Story",
+        title: "කතාව",
         Icon: (
           <Entypo
             name="open-book"
@@ -65,7 +65,7 @@ export const SinhalaString = () => {
         ),
       },
       {
-        title: "PlayList",
+        title: "ධාවන ලැයිස්තුව",
         Icon: (
           <MaterialCommunityIcons
             name="playlist-music"
@@ -75,7 +75,7 @@ export const SinhalaString = () => {
         ),
       },
       {
-        title: "Settings",
+        title: "සැකසීම්",
         Icon: (
           <MaterialIcons
             name="settings"
@@ -85,21 +85,13 @@ export const SinhalaString = () => {
         ),
       },
     ],
-    studentSelectionSpeech: {
-      english:
-        "Welcome! You are in the main menu. Our first option is a fun Puzzle! Can you solve it? The second option is a magical Story. Are you ready to dive into a world of imagination? The third option is a Playlist. Let's listen to some cool tunes together! And last but not least, the fourth option is Settings. Here you can change things to make them just right for you! So, what will it be?",
-      sinhala:
-        "සාදරයෙන් පිළිගනිමු! ඔබ ප්‍රධාන මෙනුවේ සිටී. අපගේ පළමු විකල්පය විනෝදජනක ප්‍රහේලිකාවකි! ඔබට එය විසඳිය හැකිද? දෙවන විකල්පය ඉන්ද්‍රජාලික කතාවකි. ඔබ පරිකල්පන ලෝකයකට කිමිදීමට සූදානම්ද? තුන්වන විකල්පය ධාවන ලැයිස්තුවකි. අපි බලමු එකට සිසිල් නාද කිහිපයකට සවන් දෙන්න! අවසාන වශයෙන් නොව, අවම වශයෙන්, හතරවන විකල්පය වන්නේ සැකසීම් ය. මෙහිදී ඔබට ඒවා ඔබට ගැලපෙන පරිදි වෙනස් කළ හැක! ඉතින්, එය කුමක් වේවිද?",
-    },
+    studentSelectionSpeech:
+      "සාදරයෙන් පිළිගනිමු! ඔබ ප්‍රධාන මෙනුවේ සිටී. අපගේ පළමු විකල්පය විනෝදජනක ප්‍රහේලිකාවකි! ඔබට එය විසඳිය හැකිද? දෙවන විකල්පය ඉන්ද්‍රජාලික කතාවකි. ඔබ පරිකල්පන ලෝකයකට කිමිදීමට සූදානම්ද? තුන්වන විකල්පය ධාවන ලැයිස්තුවකි. අපි බලමු එකට සිසිල් නාද කිහිපයකට සවන් දෙන්න! අවසාන වශයෙන් නොව, අවම වශයෙන්, හතරවන විකල්පය වන්නේ සැකසීම් ය. මෙහිදී ඔබට ඒවා ඔබට ගැලපෙන පරිදි වෙනස් කළ හැක! ඉතින්, එය කුමක් වේවිද?",
 
-    storySelectionSpeech: {
-      english:
-        "You are in story-based games section! Now, it's time to pick a magical adventure. Your first choice is the enchanting tale of Cinderella, next is the high-flying journey of Rapunzel with her long golden hair, and last but not least, the mighty and brave Hercules. So, which fantastic journey will you embark on today? Cinderella, Rapunzel, or Hercules? I am waiting for your answer!",
-      singhala:
-        "ඔබ සිටින්නේ කතන්දර පාදක ක්‍රීඩා අංශයේය! දැන්, ඉන්ද්‍රජාලික වික්‍රමාන්විතයක් තෝරා ගැනීමට කාලයයි. ඔබේ පළමු තේරීම සින්ඩරෙල්ලාගේ සිත් ඇදගන්නා කතාවයි, ඊළඟට ඇගේ දිගු රන්වන් හිසකෙස් ඇති රපුන්සෙල්ගේ ඉහළ පියාසර ගමනයි, සහ අවසාන වශයෙන් නොව අවම වශයෙන් නොවේ. , බලසම්පන්න සහ නිර්භීත හර්කියුලිස්, ඉතින්, ඔබ අද ආරම්භ කරන්නේ කුමන අපූරු ගමනක්ද?",
-    },
+    storySelectionSpeech:
+      "ඔබ සිටින්නේ කතන්දර පාදක ක්‍රීඩා අංශයේය! දැන්, ඉන්ද්‍රජාලික වික්‍රමාන්විතයක් තෝරා ගැනීමට කාලයයි. ඔබේ පළමු තේරීම සින්ඩරෙල්ලාගේ සිත් ඇදගන්නා කතාවයි, ඊළඟට ඇගේ දිගු රන්වන් හිසකෙස් ඇති රපුන්සෙල්ගේ ඉහළ පියාසර ගමනයි, සහ අවසාන වශයෙන් නොව අවම වශයෙන් නොවේ. , බලසම්පන්න සහ නිර්භීත හර්කියුලිස්, ඉතින්, ඔබ අද ආරම්භ කරන්නේ කුමන අපූරු ගමනක්ද?",
 
-    CinderellaStoryContentInSinhala: [
+    CinderellaStoryContent: [
       {
         imageId: cinderellaStoryImages.cinderellaImage1,
         passageId: 1,
@@ -458,7 +450,7 @@ export const SinhalaString = () => {
       },
     ],
 
-    RapunzelStoryContentInSinhala: [
+    RapunzelStoryContent: [
       {
         imageId: RapunzelStoryImages.rapunzelImage1,
         passageId: 1,

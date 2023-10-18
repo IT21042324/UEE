@@ -11,8 +11,13 @@ export const StudentMainManuSelectionCard = ({
   const onPressHandler = () => {
     console.log(title);
 
-    if (title !== "Settings") navigation.navigate(`${title}Selection`);
-    else toggleModal(true);
+    if (title === "Settings" || title === "සැකසීම්") toggleModal(true);
+    else if (title === "කතාව" || title === "Story")
+      navigation.navigate("StorySelection");
+    else if (title === "ප්රහේලිකාව" || title === "Puzzle")
+      navigation.navigate("PuzzleSelection");
+    else if (title === "ධාවන ලැයිස්තුව" || title === "Playlist")
+      navigation.navigate("PlaylistSelection");
   };
 
   return (

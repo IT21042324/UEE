@@ -18,20 +18,25 @@ export const StudentSelectionScreen = ({ navigation }) => {
 
   const [strings, setStrings] = useState(EnglishString());
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     async function loadStrings() {
       const settings = await getSettings();
       if (settings?.language) {
         if (settings.language === "si-LK") setStrings(SinhalaString());
       }
+      setIsLoading(false);
     }
     loadStrings();
+  }, []);
 
+  useEffect(() => {
     const onFocus = navigation.addListener("didFocus", () => {
       if (!muted) {
         stopSpeaking();
         const speak = async () => {
-          await startSpeaking(strings.studentSelectionSpeech.english);
+          await startSpeaking(strings.studentSelectionSpeech);
         };
         speak();
       }
@@ -53,62 +58,64 @@ export const StudentSelectionScreen = ({ navigation }) => {
     setModalVisible(status);
   };
 
-  return (
-    <View style={styles.mainContainer}>
-      {modalVisible && <SettingsModal toggleModal={toggleModal} />}
+  if (!isLoading) {
+    return (
+      <View style={styles.mainContainer}>
+        {modalVisible && <SettingsModal toggleModal={toggleModal} />}
 
-      <View styles={styles.welcomeContiner}>
-        <Text style={styles.welcomeContinerText}>Welcome Nimal</Text>
-        <Divider width={2} />
+        <View styles={styles.welcomeContiner}>
+          <Text style={styles.welcomeContinerText}>Welcome Nimal</Text>
+          <Divider width={2} />
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <FlatList
+            data={strings.studentSelectionOptions}
+            keyExtractor={(item) => item.title}
+            contentContainerStyle={styles.flatListStyle}
+            showsHorizontalScrollIndicator={false}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              {
+                useNativeDriver: false,
+              }
+            )}
+            horizontal
+            decelerationRate={"normal"}
+            scrollEventThrottle={4}
+            renderItem={({ item }) => (
+              <StudentMainManuSelectionCard
+                Icon={item.Icon}
+                title={item.title}
+                navigation={navigation}
+                toggleModal={toggleModal}
+              />
+            )}
+            snapToAlignment={"start"}
+            snapToInterval={400}
+          />
+
+          <ExpandingDot
+            data={strings.studentSelectionOptions}
+            expandingDotWidth={30}
+            scrollX={scrollX}
+            inActiveDotOpacity={0.6}
+            dotStyle={{
+              width: 10,
+              height: 10,
+              backgroundColor: "#347af0",
+              borderRadius: 5,
+              marginHorizontal: 5,
+            }}
+            containerStyle={{
+              position: "absolute",
+              bottom: 30,
+            }}
+          />
+        </View>
       </View>
-
-      <View style={{ flex: 1 }}>
-        <FlatList
-          data={strings.studentSelectionOptions}
-          keyExtractor={(item) => item.title}
-          contentContainerStyle={styles.flatListStyle}
-          showsHorizontalScrollIndicator={false}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            {
-              useNativeDriver: false,
-            }
-          )}
-          horizontal
-          decelerationRate={"normal"}
-          scrollEventThrottle={4}
-          renderItem={({ item }) => (
-            <StudentMainManuSelectionCard
-              Icon={item.Icon}
-              title={item.title}
-              navigation={navigation}
-              toggleModal={toggleModal}
-            />
-          )}
-          snapToAlignment={"start"}
-          snapToInterval={400}
-        />
-
-        <ExpandingDot
-          data={strings.studentSelectionOptions}
-          expandingDotWidth={30}
-          scrollX={scrollX}
-          inActiveDotOpacity={0.6}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            backgroundColor: "#347af0",
-            borderRadius: 5,
-            marginHorizontal: 5,
-          }}
-          containerStyle={{
-            position: "absolute",
-            bottom: 30,
-          }}
-        />
-      </View>
-    </View>
-  );
+    );
+  }
 };
 
 const styles = StyleSheet.create({

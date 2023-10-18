@@ -6,13 +6,19 @@ import { globalStyles } from "../../../styles/global";
 export const StoryOptionCard = ({ option, title, navigation }) => {
   const [selectedOption, setSelectedOption] = useState(3);
 
+  console.log(title);
+
   useEffect(() => {
     setSelectedOption(option);
   }, [selectedOption]);
 
   const onPressHandler = () => {
-    //use a second parameter as a object to pass data between screens
-    navigation.navigate(`${title}Story`);
+    if (title === "Cinderella" || title === "සින්ඩරෙල්ලා")
+      navigation.navigate("CinderellaStory");
+    else if (title === "Rapunzel" || title === "රපුන්සෙල්")
+      navigation.navigate("RapunzelStory");
+    else if (title === "Hercules" || title === "හර්කියුලිස්")
+      navigation.navigate("HerculesStory");
   };
 
   return (

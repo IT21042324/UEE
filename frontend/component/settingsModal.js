@@ -8,7 +8,11 @@ import {
   fontStyle,
 } from "../constants/globalConstants";
 import { AntDesign } from "@expo/vector-icons";
-import { mergeSettings, saveSettings } from "../asyncStorage/asyncStorage";
+import {
+  getSettings,
+  mergeSettings,
+  saveSettings,
+} from "../asyncStorage/asyncStorage";
 import Toast from "react-native-toast-message";
 
 export const SettingsModal = ({ toggleModal }) => {
@@ -19,7 +23,13 @@ export const SettingsModal = ({ toggleModal }) => {
   };
 
   const onSaveBtnHandler = async () => {
-    await mergeSettings({ language: selectedLanguage });
+    const settings = await getSettings();
+
+    if (settings) {
+      await mergeSettings({ language: selectedLanguage });
+    } else await saveSettings({ language: selectedLanguage });
+
+    console.log(settings, selectedLanguage);
 
     toggleModal(false);
 

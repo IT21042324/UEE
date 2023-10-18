@@ -1,16 +1,16 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import { Foundation } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getSettings } from "../../../asyncStorage/asyncStorage";
+import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
 import {
   colorVariants,
   fontFamily,
   fontStyle,
 } from "../../../constants/globalConstants";
-import { Foundation } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
-import { EnglishString } from "../../../constants/strings";
-import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
-import { UseSpeechContext } from "../../../useHook/useSpeechContext";
-import { getSettings } from "../../../asyncStorage/asyncStorage";
 import { SinhalaString } from "../../../constants/sinhalaString";
+import { EnglishString } from "../../../constants/strings";
+import { UseSpeechContext } from "../../../useHook/useSpeechContext";
 
 export const CinderellaStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -25,26 +25,36 @@ export const CinderellaStoryPage = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { startSpeaking, stopSpeaking } = UseSpeechContext();
-
   const [strings, setStrings] = useState(EnglishString());
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStrings() {
       const settings = await getSettings();
+
       if (settings?.language) {
         if (settings.language === "si-LK") setStrings(SinhalaString());
       }
+
+      setLoading(false);
     }
     loadStrings();
-
-    setStoryContent(strings.CinderellaStoryContent);
-    setCurrentStoryPageObjectNumber(0);
-    setStartTime(new Date().getTime());
   }, []);
 
   useEffect(() => {
-    setDisplayObject(storyContent[currentStoryPageObjectNumber]);
-    setTotalStoryPages(storyContent.length);
+    if (!loading) {
+      setStoryContent(strings.CinderellaStoryContent);
+      setCurrentStoryPageObjectNumber(0);
+      setStartTime(new Date().getTime());
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    if (!loading) {
+      setDisplayObject(storyContent[currentStoryPageObjectNumber]);
+      setTotalStoryPages(storyContent.length);
+    }
   }, [currentStoryPageObjectNumber]);
 
   useEffect(() => {

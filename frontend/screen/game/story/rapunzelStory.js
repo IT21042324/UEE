@@ -22,29 +22,40 @@ export const RapunzelStoryPage = ({ navigation }) => {
 
   const [startTime, setStartTime] = useState(0);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const { startSpeaking, stopSpeaking } = UseSpeechContext();
   const [strings, setStrings] = useState(EnglishString());
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStrings() {
       const settings = await getSettings();
+
       if (settings?.language) {
         if (settings.language === "si-LK") setStrings(SinhalaString());
       }
+
+      setLoading(false);
     }
     loadStrings();
-
-    setStoryContent(strings.RapunzelStoryContent);
-    setCurrentStoryPageObjectNumber(0);
-
-    setStartTime(new Date().getTime());
   }, []);
 
   useEffect(() => {
-    setDisplayObject(storyContent[currentStoryPageObjectNumber]);
-    setTotalStoryPages(storyContent.length);
-  }, [currentStoryPageObjectNumber]);
+    if (!loading) {
+      setStoryContent(strings.RapunzelStoryContent);
+      setCurrentStoryPageObjectNumber(0);
+      setStartTime(new Date().getTime());
+    }
+  }, [loading]);
 
-  const { startSpeaking, stopSpeaking } = UseSpeechContext();
+  useEffect(() => {
+    if (!loading) {
+      setDisplayObject(storyContent[currentStoryPageObjectNumber]);
+      setTotalStoryPages(storyContent.length);
+    }
+  }, [currentStoryPageObjectNumber]);
 
   useEffect(() => {
     async function speaking() {
@@ -73,8 +84,6 @@ export const RapunzelStoryPage = ({ navigation }) => {
     }
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
-
   const setModalVisiblity = (state) => {
     setModalVisible(state);
   };
@@ -82,7 +91,6 @@ export const RapunzelStoryPage = ({ navigation }) => {
   const onNextPressHandler = () => {
     setModalVisible(true);
   };
-
   return (
     <View style={styles.mainContainer}>
       {storyContent.length > 0 && (

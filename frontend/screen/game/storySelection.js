@@ -5,6 +5,7 @@ import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
 import { UseSpeechContext } from "../../useHook/useSpeechContext";
 import { EnglishString } from "../../constants/strings";
 import { getSettings } from "../../asyncStorage/asyncStorage";
+import { SinhalaString } from "../../constants/sinhalaString";
 
 export const StorySelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -12,19 +13,25 @@ export const StorySelectionScreen = ({ navigation }) => {
 
   const [strings, setStrings] = useState(EnglishString());
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     async function loadStrings() {
       const settings = await getSettings();
       if (settings?.language) {
         if (settings.language === "si-LK") setStrings(SinhalaString());
       }
+      setIsLoading(false);
     }
-    loadStrings();
 
+    loadStrings();
+  }, []);
+
+  useEffect(() => {
     const onFocus = navigation.addListener("didFocus", () => {
       stopSpeaking();
       const speak = async () => {
-        await startSpeaking(strings.storySelectionSpeech.english);
+        await startSpeaking(strings.storySelectionSpeech);
       };
       speak();
     });
@@ -39,51 +46,53 @@ export const StorySelectionScreen = ({ navigation }) => {
     };
   }, []);
 
-  return (
-    <View style={styles.mainContainer}>
-      <FlatList
-        data={strings.storySelectionOptions}
-        keyExtractor={(item) => item.ref}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          {
-            useNativeDriver: false,
-          }
-        )}
-        renderItem={({ item }) => (
-          <StoryOptionCard
-            option={item.ref}
-            title={item.title}
-            navigation={navigation}
-          />
-        )}
-      />
+  if (!isLoading) {
+    return (
+      <View style={styles.mainContainer}>
+        <FlatList
+          data={strings.storySelectionOptions}
+          keyExtractor={(item) => item.ref}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            {
+              useNativeDriver: false,
+            }
+          )}
+          renderItem={({ item }) => (
+            <StoryOptionCard
+              option={item.ref}
+              title={item.title}
+              navigation={navigation}
+            />
+          )}
+        />
 
-      <ExpandingDot
-        data={strings.storySelectionOptions}
-        expandingDotWidth={30}
-        scrollX={scrollX}
-        inActiveDotOpacity={0.6}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          backgroundColor: "#347af0",
-          borderRadius: 5,
-          marginHorizontal: 5,
-          alignSelf: "center",
-        }}
-        containerStyle={{
-          position: "absolute",
-          bottom: 30,
-          alignSelf: "center",
-          width: "100%",
-          justifyContent: "center",
-        }}
-      />
-    </View>
-  );
+        <ExpandingDot
+          data={strings.storySelectionOptions}
+          expandingDotWidth={30}
+          scrollX={scrollX}
+          inActiveDotOpacity={0.6}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            backgroundColor: "#347af0",
+            borderRadius: 5,
+            marginHorizontal: 5,
+            alignSelf: "center",
+          }}
+          containerStyle={{
+            position: "absolute",
+            bottom: 30,
+            alignSelf: "center",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        />
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

@@ -35,7 +35,6 @@ export const UseSpeechContext = () => {
       ? { voice: voice.name, ...speechOptions }
       : { ...speechOptions };
 
-    console.log(text, options);
     Speech.speak(text, options);
   };
 
