@@ -1,27 +1,40 @@
 import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
-import {
-  studentSelectionOptions,
-  studentSelectionSpeech,
-} from "../constants/strings";
+import { EnglishString } from "../constants/strings";
 import { StudentMainManuSelectionCard } from "../component/studentSelectionCard";
 import { Divider } from "@rneui/themed";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { useEffect, useRef, useState } from "react";
 import { UseSpeechContext } from "../useHook/useSpeechContext";
 import { SettingsModal } from "../component/settingsModal";
+import { UseAppGeneralSettingsContext } from "../useHook/generalSettingsContext";
+import { getSettings } from "../asyncStorage/asyncStorage";
+import { SinhalaString } from "../constants/sinhalaString";
 
 export const StudentSelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const { startSpeaking, stopSpeaking } = UseSpeechContext();
+  const { muted } = UseAppGeneralSettingsContext();
+
+  const [strings, setStrings] = useState(EnglishString());
 
   useEffect(() => {
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (settings.language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+
     const onFocus = navigation.addListener("didFocus", () => {
-      stopSpeaking();
-      const speak = async () => {
-        await startSpeaking(studentSelectionSpeech.english);
-      };
-      speak();
+      if (!muted) {
+        stopSpeaking();
+        const speak = async () => {
+          await startSpeaking(strings.studentSelectionSpeech.english);
+        };
+        speak();
+      }
     });
 
     const onBlur = navigation.addListener("willBlur", () => {
@@ -51,7 +64,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
 
       <View style={{ flex: 1 }}>
         <FlatList
-          data={studentSelectionOptions}
+          data={strings.studentSelectionOptions}
           keyExtractor={(item) => item.title}
           contentContainerStyle={styles.flatListStyle}
           showsHorizontalScrollIndicator={false}
@@ -77,7 +90,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
         />
 
         <ExpandingDot
-          data={studentSelectionOptions}
+          data={strings.studentSelectionOptions}
           expandingDotWidth={30}
           scrollX={scrollX}
           inActiveDotOpacity={0.6}

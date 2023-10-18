@@ -1,22 +1,30 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Animated, FlatList, StyleSheet, View } from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
-import {
-  storySelectionOptions,
-  storySelectionSpeech,
-} from "../../constants/strings";
 import { UseSpeechContext } from "../../useHook/useSpeechContext";
+import { EnglishString } from "../../constants/strings";
+import { getSettings } from "../../asyncStorage/asyncStorage";
 
 export const StorySelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const { startSpeaking, stopSpeaking } = UseSpeechContext();
 
+  const [strings, setStrings] = useState(EnglishString());
+
   useEffect(() => {
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (settings.language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+
     const onFocus = navigation.addListener("didFocus", () => {
       stopSpeaking();
       const speak = async () => {
-        await startSpeaking(storySelectionSpeech.english);
+        await startSpeaking(strings.storySelectionSpeech.english);
       };
       speak();
     });
@@ -34,7 +42,7 @@ export const StorySelectionScreen = ({ navigation }) => {
   return (
     <View style={styles.mainContainer}>
       <FlatList
-        data={storySelectionOptions}
+        data={strings.storySelectionOptions}
         keyExtractor={(item) => item.ref}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -54,7 +62,7 @@ export const StorySelectionScreen = ({ navigation }) => {
       />
 
       <ExpandingDot
-        data={storySelectionOptions}
+        data={strings.storySelectionOptions}
         expandingDotWidth={30}
         scrollX={scrollX}
         inActiveDotOpacity={0.6}

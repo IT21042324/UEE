@@ -6,9 +6,11 @@ import {
 } from "../../../constants/globalConstants";
 import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { CinderellaStoryContent } from "../../../constants/strings";
+import { EnglishString } from "../../../constants/strings";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
 import { UseSpeechContext } from "../../../useHook/useSpeechContext";
+import { getSettings } from "../../../asyncStorage/asyncStorage";
+import { SinhalaString } from "../../../constants/sinhalaString";
 
 export const CinderellaStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -24,8 +26,18 @@ export const CinderellaStoryPage = ({ navigation }) => {
 
   const { startSpeaking, stopSpeaking } = UseSpeechContext();
 
+  const [strings, setStrings] = useState(EnglishString());
+
   useEffect(() => {
-    setStoryContent(CinderellaStoryContent);
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (settings.language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+
+    setStoryContent(strings.CinderellaStoryContent);
     setCurrentStoryPageObjectNumber(0);
     setStartTime(new Date().getTime());
   }, []);

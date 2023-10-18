@@ -14,6 +14,16 @@ export const SpeechContextProvider = ({ children }) => {
       case "setLanguage": {
         return { ...state, language: action.payload.language };
       }
+      case "mute":
+        return {
+          ...state,
+          muted: true,
+        };
+      case "unmute":
+        return {
+          ...state,
+          muted: false,
+        };
       default:
         return state;
     }
@@ -23,6 +33,7 @@ export const SpeechContextProvider = ({ children }) => {
     speechText: "",
     voice: {},
     language: "en-US",
+    muted: false,
   });
 
   return (

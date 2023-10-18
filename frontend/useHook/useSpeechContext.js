@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { SpeechContext } from "../context/speechContext";
 import * as Speech from "expo-speech";
 
 export const UseSpeechContext = () => {
   const speechContext = useContext(SpeechContext);
-  const { dispatch, speechText, voice, language } = speechContext;
+  const { dispatch, speechText, voice } = speechContext;
 
   const speechOptions = {
     rate: 0.8,
@@ -43,18 +43,6 @@ export const UseSpeechContext = () => {
     Speech.stop();
   };
 
-  const setLanguageToSinhala = () => {
-    dispatch({ type: "setLanguage", payload: { language: "si-LK" } });
-  };
-
-  const setLanguageToDefault = () => {
-    dispatch({ type: "setLanguage", payload: { language: "en-US" } });
-  };
-
-  const setLanguageToTamil = () => {
-    dispatch({ type: "setLanguage", payload: { language: "ta-IN" } });
-  };
-
   return {
     speechDispatch: dispatch,
     setSpeechText,
@@ -64,9 +52,5 @@ export const UseSpeechContext = () => {
     stopSpeaking,
     setVoice,
     getVoice,
-    setLanguageToSinhala,
-    setLanguageToDefault,
-    setLanguageToTamil,
-    language,
   };
 };

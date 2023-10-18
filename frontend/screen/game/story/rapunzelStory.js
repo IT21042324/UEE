@@ -6,9 +6,11 @@ import {
 } from "../../../constants/globalConstants";
 import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { RapunzelStoryContent } from "../../../constants/strings";
+import { EnglishString } from "../../../constants/strings";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
 import { UseSpeechContext } from "../../../useHook/useSpeechContext";
+import { SinhalaString } from "../../../constants/sinhalaString";
+import { getSettings } from "../../../asyncStorage/asyncStorage";
 
 export const RapunzelStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -20,8 +22,18 @@ export const RapunzelStoryPage = ({ navigation }) => {
 
   const [startTime, setStartTime] = useState(0);
 
+  const [strings, setStrings] = useState(EnglishString());
+
   useEffect(() => {
-    setStoryContent(RapunzelStoryContent);
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (settings.language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+
+    setStoryContent(strings.RapunzelStoryContent);
     setCurrentStoryPageObjectNumber(0);
 
     setStartTime(new Date().getTime());

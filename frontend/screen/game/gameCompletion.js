@@ -1,22 +1,23 @@
+import moment from "moment";
+import "moment-duration-format";
+import { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
   FlatList,
-  Button,
+  Image,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
+import { brilliantImage } from "../../assets/images/imageIndex";
+import { getSettings } from "../../asyncStorage/asyncStorage";
 import {
   colorVariants,
   fontFamily,
   fontWeight,
 } from "../../constants/globalConstants";
-import { brilliantImage } from "../../assets/images/imageIndex";
-import { gameStats } from "../../constants/strings";
-import { useEffect, useState } from "react";
-import "moment-duration-format";
-import moment from "moment";
+import { SinhalaString } from "../../constants/sinhalaString";
+import { EnglishString } from "../../constants/strings";
 
 export const GameCompletion = ({ navigation }) => {
   const incorrectAttempts = navigation.getParam("incorrectAttempts");
@@ -25,7 +26,17 @@ export const GameCompletion = ({ navigation }) => {
 
   const [timer, setTimer] = useState(0);
 
+  const [strings, setStrings] = useState(EnglishString());
+
   useEffect(() => {
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+
     setTimer(new Date().getTime() - startTime);
   }, []);
 
@@ -37,9 +48,9 @@ export const GameCompletion = ({ navigation }) => {
     .duration(timer / 5)
     .format("hh:mm:ss", { trim: false });
 
-  gameStats[0].value = formattedTimer;
-  gameStats[1].value = incorrectAttempts;
-  gameStats[2].value = timeForQuestion;
+  strings.gameStats[0].value = formattedTimer;
+  strings.gameStats[1].value = incorrectAttempts;
+  strings.gameStats[2].value = timeForQuestion;
 
   const navigateToMainMenu = () => {
     navigation.navigate("StorySelection");
@@ -51,7 +62,9 @@ export const GameCompletion = ({ navigation }) => {
         style={styles.buttonContainer}
         onPress={navigateToMainMenu}
       >
-        <Text style={styles.proceedBtnText}>Proceed To Main Menu</Text>
+        <Text style={styles.proceedBtnText}>
+          {strings.gameCompletionText.proceedToMainMenu}
+        </Text>
       </TouchableOpacity>
       <View style={StyleSheet.mainContainer}>
         <View style={styles.imageContainer}>
@@ -62,11 +75,13 @@ export const GameCompletion = ({ navigation }) => {
           />
         </View>
         <View style={styles.mainHeadingContainer}>
-          <Text style={styles.mainHeadingContainerText}>Statistics</Text>
+          <Text style={styles.mainHeadingContainerText}>
+            {strings.gameCompletionText.statistics}
+          </Text>
         </View>
         <View style={styles.statsContainer}>
           <FlatList
-            data={gameStats}
+            data={strings.gameStats}
             keyExtractor={(item) => item.text}
             renderItem={({ item }) => (
               <View style={styles.statsRowContainer}>

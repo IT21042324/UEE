@@ -6,9 +6,11 @@ import {
 } from "../../../constants/globalConstants";
 import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { HerculesStoryContent } from "../../../constants/strings";
+import { EnglishString } from "../../../constants/strings";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
 import { UseSpeechContext } from "../../../useHook/useSpeechContext";
+import { getSettings } from "../../../asyncStorage/asyncStorage";
+import { SinhalaString } from "../../../constants/sinhalaString";
 
 export const HerculesStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -20,9 +22,18 @@ export const HerculesStoryPage = ({ navigation }) => {
   const [startTime, setStartTime] = useState(0);
 
   const { startSpeaking, stopSpeaking } = UseSpeechContext();
+  const [strings, setStrings] = useState(EnglishString());
 
   useEffect(() => {
-    setStoryContent(HerculesStoryContent);
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (settings.language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+
+    setStoryContent(strings.HerculesStoryContent);
     setCurrentStoryPageObjectNumber(0);
     setStartTime(new Date().getTime());
   }, []);
