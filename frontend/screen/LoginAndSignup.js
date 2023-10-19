@@ -1,43 +1,89 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { fontFamily } from "../constants/globalConstants";
 import { UseBackendAPI } from "../api/useBackendAPI";
 import { UseUserContext } from "../useHook/useUserContext";
+import Toast from "react-native-toast-message";
+import { getSettings, saveLoginInfo } from "../asyncStorage/asyncStorage";
 
 export const LoginAndSignup = ({ navigation }) => {
+  useEffect(() => {
+    async function loadSettings() {
+      const settings = await getSettings();
+      if (settings?.studentInfo) {
+        setUser(settings.studentInfo);
+        navigation.navigate("LoadingScreen");
+      }
+    }
+
+    loadSettings();
+  }, []);
+
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [showTeacherSignup, setShowTeacherSignup] = useState(true);
   const [loginErrors, setLoginErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { signup, login } = UseBackendAPI();
   const { setUser } = UseUserContext();
 
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    setIsLoading(true);
+    const userInfo = await login({
+      userName,
+      password,
+    });
+    setIsLoading(false);
+
+    if (userInfo?.userType === "student") {
+      setUser(userInfo);
+
+      saveLoginInfo({
+        studentInfo: userInfo,
+      });
+      navigation.navigate("LoadingScreen");
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Invalid Credentials",
+      });
+    }
+  };
 
   const handleTeacherSignup = async () => {
-    try {
-      const signupDetails = await signup({
-        userName,
-        password,
-        userType: "teacher",
-      });
+    setIsLoading(true);
+    const userInfo = await signup({
+      userName,
+      password,
+      userType: "teacher",
+    });
+    setIsLoading(false);
 
-      setUser(signupDetails);
-    } catch (err) {
-      console.log("first");
-      setLoginErrors("User name already exists");
+    if (userInfo) {
+      setUser(userInfo);
+
+      saveLoginInfo({
+        studentInfo: userInfo,
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Username already exists",
+      });
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>
         {showTeacherSignup ? "Enter Your Credentials To Login" : "Quick Singup"}
       </Text>
@@ -96,14 +142,16 @@ export const LoginAndSignup = ({ navigation }) => {
             }
           }}
         >
-          {showTeacherSignup ? (
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : showTeacherSignup ? (
             <Text style={styles.loginButtonText}>Log In</Text>
           ) : (
             <Text style={styles.loginButtonText}>Sign Up</Text>
           )}
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -113,6 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+    flexGrow: 1,
   },
   title: {
     fontSize: 24,

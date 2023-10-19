@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView,
+} from "react-native";
 import * as Speech from "expo-speech";
 import { UseSpeechContext } from "../useHook/useSpeechContext";
 import { getSettings, saveSettings } from "../asyncStorage/asyncStorage";
@@ -83,10 +89,10 @@ export default function LoadingScreen({ navigation, route }) {
   }, [loading]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.text}>Loading voices...</Text>
       <ActivityIndicator size="large" color="#0000ff" />
-    </View>
+    </ScrollView>
   );
 }
 

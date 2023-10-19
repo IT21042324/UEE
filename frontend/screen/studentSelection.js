@@ -1,6 +1,13 @@
 import { Divider } from "@rneui/themed";
 import { useEffect, useRef, useState } from "react";
-import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Animated,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { getSettings } from "../asyncStorage/asyncStorage";
 import { SettingsModal } from "../component/settingsModal";
@@ -60,7 +67,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
 
   if (!isLoading) {
     return (
-      <View style={styles.mainContainer}>
+      <ScrollView contentContainerStyle={styles.mainContainer}>
         {modalVisible && (
           <SettingsModal toggleModal={toggleModal} navigation={navigation} />
         )}
@@ -115,7 +122,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
             }}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 };

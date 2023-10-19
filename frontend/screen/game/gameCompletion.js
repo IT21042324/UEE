@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -57,7 +58,7 @@ export const GameCompletion = ({ navigation }) => {
   };
 
   return (
-    <>
+    <ScrollView>
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={navigateToMainMenu}
@@ -96,7 +97,7 @@ export const GameCompletion = ({ navigation }) => {
           />
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 

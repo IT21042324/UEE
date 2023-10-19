@@ -1,5 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export const saveLoginInfo = async (loginInfo) => {
+  const settings = await getSettings();
+
+  if (settings) mergeSettings(loginInfo);
+  else saveSettings(loginInfo);
+};
+
 export const saveSettings = async (settings) => {
   try {
     const jsonValue = JSON.stringify(settings);
