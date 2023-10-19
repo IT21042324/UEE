@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -15,9 +15,9 @@ import {
   fontFamily,
   fontStyle,
 } from "../constants/globalConstants";
-import { UseSpeechContext } from "../useHook/useSpeechContext";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SinhalaString } from "../constants/sinhalaString";
 import { EnglishString } from "../constants/strings";
+import { UseSpeechContext } from "../useHook/useSpeechContext";
 
 export const SettingsModal = ({ toggleModal, navigation }) => {
   const [strings, setStrings] = useState(EnglishString());
