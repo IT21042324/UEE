@@ -11,6 +11,7 @@ import { CustomToast } from "./component/games/customToast";
 import { SpeechContextProvider } from "./context/speechContext";
 import * as SplashScreen from "expo-splash-screen";
 import Toast from "react-native-toast-message";
+import { UserContextProvider } from "./context/userContext";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -34,13 +35,15 @@ export default function App() {
         <RapiLayout>
           <MenuProvider>
             <ThemeProvider>
-              <AppGeneralSettingsContextProvider>
-                <SpeechContextProvider>
-                  <Toast />
-                  <Navigator />
-                  <CustomToast />
-                </SpeechContextProvider>
-              </AppGeneralSettingsContextProvider>
+              <UserContextProvider>
+                <AppGeneralSettingsContextProvider>
+                  <SpeechContextProvider>
+                    <Toast />
+                    <Navigator />
+                    <CustomToast />
+                  </SpeechContextProvider>
+                </AppGeneralSettingsContextProvider>
+              </UserContextProvider>
             </ThemeProvider>
           </MenuProvider>
         </RapiLayout>

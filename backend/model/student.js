@@ -5,7 +5,6 @@ const studentSchema = new Schema(
   {
     parentId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
     },
 
     gender: String,

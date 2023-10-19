@@ -1,6 +1,6 @@
 const userModel = require("../model/user");
 const studentModel = require("../model/student");
-const teacherModel = require("../model/student");
+const teacherModel = require("../model/teacher");
 
 const jwt = require("jsonwebtoken");
 
@@ -19,15 +19,15 @@ const userLogin = async (req, res) => {
     let data;
 
     if (user.userType === "student")
-      data = await studentModel.findOne({ parent: user._id });
-    else data = await teacherModel.findOne({ parent: user._id });
+      data = await studentModel.findOne({ parentId: user._id });
+    else data = await teacherModel.findOne({ parentId: user._id });
 
     res.json({
       ...user.toObject(),
       parentId: user._id,
       token,
       childId: data._id,
-      ...data,
+      ...data.toObject(),
     });
   } catch (err) {
     console.log(err.message);
@@ -40,8 +40,6 @@ const userSignUp = async function (req, res) {
   try {
     const user = await userModel.signup(userName, password, userType);
 
-    res.status(200).json(user);
-
     let data;
 
     userType === "student"
@@ -50,12 +48,12 @@ const userSignUp = async function (req, res) {
 
     const token = createToken(user._id);
 
-    res.status(200).json({
+    res.status(201).json({
       ...user.toObject(),
       parentId: user._id,
       token,
       childId: data._id,
-      ...data,
+      ...data.toObject(),
     });
   } catch (err) {
     console.log(err.message);
@@ -65,27 +63,27 @@ const userSignUp = async function (req, res) {
 
 const createStudent = async (userId, gender, plugins) => {
   try {
-    const data = await storeOwnerModel.create({
-      parent: userId,
+    const data = await studentModel.create({
+      parentId: userId,
       gender,
       plugins,
     });
     return data;
   } catch (err) {
     console.log(err.message);
-    res.json({ err: err.message });
+    throw new Error("Error in creating student account");
   }
 };
 
 const createTeacher = async (userId) => {
   try {
-    const data = await normalUserModel.create({
-      parent: userId,
+    const data = await teacherModel.create({
+      parentId: userId,
     });
     return data;
   } catch (err) {
     console.log(err.message);
-    res.json({ err: err.message });
+    throw new Error("Error in creating teacher account");
   }
 };
 

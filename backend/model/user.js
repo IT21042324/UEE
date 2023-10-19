@@ -29,10 +29,6 @@ userSchema.statics.signup = async function (userName, password, userType) {
   if (!userName || !password || !userType)
     throw Error("Please fill all fields");
 
-  if (!validator.isEmail(userName)) {
-    throw Error("UserName is invalid");
-  }
-
   if (exist) {
     throw Error("UserName is already in use");
   }
