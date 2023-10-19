@@ -1,26 +1,30 @@
 import axios from "axios";
 
 export const UseBackendAPI = () => {
+  const BACKENDURL = "https://uee-backend-hvq8.onrender.com";
+
   return {
-    signup: async (signupDetails) => {
+    signup: async function (insertionData) {
       try {
-        const { data } = await axios.post(
-          "http://localhost:8084/api/users/signup",
-          signupDetails
+        const info = await axios.post(
+          `${BACKENDURL}/api/users/signup`,
+          insertionData
         );
-        return data;
+        console.log(2);
+        return info.data;
       } catch (err) {
+        console.log(3);
         console.log(err);
       }
     },
 
-    login: async (loginDetails) => {
+    login: async function (insertionData) {
       try {
-        const { data } = await axios.post(
-          "http://localhost:8084/api/users/login",
-          loginDetails
+        const info = await axios.post(
+          `${BACKENDURL}/api/users/login`,
+          insertionData
         );
-        return data;
+        return info.data;
       } catch (err) {
         console.log(err);
       }

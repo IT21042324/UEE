@@ -1,24 +1,39 @@
-import React, { useState } from "react";
-import { Button, Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import Modal from "react-native-modal";
+import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import React, { useEffect, useState } from "react";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Modal from "react-native-modal";
+import Toast from "react-native-toast-message";
+import {
+  getSettings,
+  mergeSettings,
+  removeSetting,
+  saveSettings,
+} from "../asyncStorage/asyncStorage";
 import {
   colorVariants,
   fontFamily,
   fontStyle,
 } from "../constants/globalConstants";
-import { AntDesign } from "@expo/vector-icons";
-import {
-  getSettings,
-  mergeSettings,
-  saveSettings,
-} from "../asyncStorage/asyncStorage";
-import Toast from "react-native-toast-message";
 import { UseSpeechContext } from "../useHook/useSpeechContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { EnglishString } from "../constants/strings";
+import { SinhalaString } from "../constants/sinhalaString";
 
 export const SettingsModal = ({ toggleModal, navigation }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
+  const [strings, setStrings] = useState(EnglishString());
 
+  useEffect(() => {
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (settings.language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+  }, []);
+
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US");
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
   };
@@ -47,22 +62,68 @@ export const SettingsModal = ({ toggleModal, navigation }) => {
     });
   };
 
+  const onLogoutBtnHandler = async () => {
+    Alert.alert(
+      strings.settingsModal.logout,
+      strings.settingsModal.logoutConfirmation,
+      [
+        {
+          text: strings.settingsModal.cancel,
+          onPress: () => console.log(strings.settingsModal.cancelPress),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            const done = await removeSetting("studentInfo");
+
+            if (done) {
+              toggleModal(false);
+              navigation.replace("LoginAndSignup");
+            } else {
+              toggleModal(false);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={{ flex: 1, position: "absolute" }}>
       <Modal style={styles.modal} isVisible={true}>
         <View style={styles.modalContent}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Settings</Text>
-            <AntDesign
-              name="closecircleo"
-              size={40}
-              color="red"
-              onPress={() => toggleModal(false)}
-            />
+            <Text style={styles.headerText}>
+              {strings.settingsModal.settings}
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: 100,
+              }}
+            >
+              <MaterialCommunityIcons
+                name="logout"
+                size={40}
+                color="red"
+                onPress={onLogoutBtnHandler}
+              />
+
+              <AntDesign
+                name="closecircleo"
+                size={40}
+                color="red"
+                onPress={() => toggleModal(false)}
+              />
+            </View>
           </View>
 
           <View style={styles.body}>
-            <Text style={styles.label}>Select language:</Text>
+            <Text style={styles.label}>
+              {strings.settingsModal.selectedLanguage}
+            </Text>
 
             <Picker
               selectedValue={selectedLanguage}
@@ -87,11 +148,14 @@ export const SettingsModal = ({ toggleModal, navigation }) => {
               />
             </Picker>
           </View>
+
           <TouchableOpacity
             style={styles.savebtnContainer}
             onPress={onSaveBtnHandler}
           >
-            <Text style={styles.saveBtnText}>Save Settings</Text>
+            <Text style={styles.saveBtnText}>
+              {strings.settingsModal.saveSettings}
+            </Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -147,6 +211,20 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   saveBtnText: {
+    fontFamily: fontFamily.normalText,
+    fontSize: 20,
+    color: colorVariants.white,
+  },
+  logoutBtnContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colorVariants.red,
+    width: 200,
+    padding: 10,
+    marginTop: 20,
+    left: 20,
+  },
+  logoutBtnText: {
     fontFamily: fontFamily.normalText,
     fontSize: 20,
     color: colorVariants.white,

@@ -23,12 +23,14 @@ const screens = {
     screen: LoadingScreen,
     navigationOptions: {
       headerTitle: () => <Header title={"Loading"} />,
+      headerLeft: () => null,
     },
   },
   StudentSelection: {
     screen: StudentSelectionScreen,
     navigationOptions: {
       headerTitle: () => <Header title={screenTitles.MainMenu} />,
+      headerLeft: () => null,
     },
   },
   StorySelection: {

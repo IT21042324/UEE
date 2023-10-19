@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Animated, FlatList, StyleSheet, View } from "react-native";
+import { Animated, FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { getSettings } from "../../asyncStorage/asyncStorage";
 import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
@@ -52,7 +52,7 @@ export const StorySelectionScreen = ({ navigation }) => {
 
   if (!isLoading) {
     return (
-      <View style={styles.mainContainer}>
+      <ScrollView contentContainerStyle={styles.mainContainer}>
         <FlatList
           data={strings.storySelectionOptions}
           keyExtractor={(item) => item.ref}
@@ -94,7 +94,7 @@ export const StorySelectionScreen = ({ navigation }) => {
             justifyContent: "center",
           }}
         />
-      </View>
+      </ScrollView>
     );
   }
 };

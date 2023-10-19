@@ -42,6 +42,28 @@ export const EnglishString = () => {
       proceedToMainMenu: "Proceed To Main Menu",
       statistics: "Statistics",
     },
+    settingsModal: {
+      logout: "Logout",
+      logoutConfirmation: "Do you want to logout?",
+      cancel: "Cancel",
+      cancelPress: "Cancel Pressed",
+      settings: "Settings",
+      selectedLanguage: "Select Language",
+      saveSettings: "Save Settings",
+    },
+    loginAndSignup: {
+      invalidCredentials: "Invalid Credentials",
+      credentialsExist: "Username already exists",
+      enterCredentialsToLogin: "Enter Your Credentials To Login",
+      quickSignup: "Quick Signup",
+      userName: "user name",
+      password: "password",
+      signUpTeacher: "sign up as a teacher?",
+      login: "login?",
+      btnLogin: "Log In",
+      btnSignup: "Sign Up",
+    },
+
     CinderellaStoryContent: [
       {
         imageId: cinderellaStoryImages.cinderellaImage1,
