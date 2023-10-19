@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const userRoutes = require("./routes/user");
 const progressRoutes = require("./routes/progress");
-const studentRoutes = requuire("./routes/student");
+const studentRoutes = require("./routes/student");
 const teacherRoutes = require("./routes/teacher");
 
 const app = express();

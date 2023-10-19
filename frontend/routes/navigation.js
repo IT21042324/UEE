@@ -10,8 +10,15 @@ import { GameCompletion } from "../screen/game/gameCompletion";
 import { StudentSelectionScreen } from "../screen/studentSelection";
 import LoadingScreen from "../screen/loading";
 import { screenTitles } from "../constants/commonStrings";
+import { LoginAndSignup } from "../screen/LoginAndSignup";
 
 const screens = {
+  LoginAndSignup: {
+    screen: LoginAndSignup,
+    navigationOptions: {
+      headerTitle: () => <Header title={"Welcome"} />,
+    },
+  },
   LoadingScreen: {
     screen: LoadingScreen,
     navigationOptions: {

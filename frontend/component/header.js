@@ -3,7 +3,7 @@ import { globalStyles } from "../styles/global";
 import { Ionicons } from "@expo/vector-icons";
 import { UseAppGeneralSettingsContext } from "../useHook/generalSettingsContext";
 
-export const Header = ({ title, muteButton }) => {
+export const Header = ({ title }) => {
   const { muted, mute, unMute } = UseAppGeneralSettingsContext();
 
   const muteOnPressHandler = () => {
@@ -12,13 +12,19 @@ export const Header = ({ title, muteButton }) => {
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity style={styles.volumeIcon} onPress={muteOnPressHandler}>
-        {muted ? (
-          <Ionicons name="volume-mute" size={40} color="black" />
-        ) : (
-          <Ionicons name="volume-high" size={40} color="black" />
-        )}
-      </TouchableOpacity>
+      {title !== "Welcome" && (
+        <TouchableOpacity
+          style={styles.volumeIcon}
+          onPress={muteOnPressHandler}
+        >
+          {muted ? (
+            <Ionicons name="volume-mute" size={40} color="black" />
+          ) : (
+            <Ionicons name="volume-high" size={40} color="black" />
+          )}
+        </TouchableOpacity>
+      )}
+
       <View>
         <Text style={globalStyles.titleText}>{title}</Text>
       </View>
