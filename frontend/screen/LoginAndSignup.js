@@ -66,7 +66,7 @@ export const LoginAndSignup = ({ navigation }) => {
       saveLoginInfo({
         studentInfo: userInfo,
       });
-      navigation.navigate("LoadingScreen");
+      navigation.replace("LoadingScreen");
     } else {
       Toast.show({
         type: "error",

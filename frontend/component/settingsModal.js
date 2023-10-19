@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -8,17 +8,16 @@ import {
   getSettings,
   mergeSettings,
   removeSetting,
-  saveSettings,
+  removeStudentInfo,
 } from "../asyncStorage/asyncStorage";
 import {
   colorVariants,
   fontFamily,
   fontStyle,
 } from "../constants/globalConstants";
-import { UseSpeechContext } from "../useHook/useSpeechContext";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { EnglishString } from "../constants/strings";
 import { SinhalaString } from "../constants/sinhalaString";
+import { EnglishString } from "../constants/strings";
+import { UseSpeechContext } from "../useHook/useSpeechContext";
 
 export const SettingsModal = ({ toggleModal, navigation }) => {
   const [strings, setStrings] = useState(EnglishString());
@@ -41,13 +40,8 @@ export const SettingsModal = ({ toggleModal, navigation }) => {
   const { stopSpeaking } = UseSpeechContext();
 
   const onSaveBtnHandler = async () => {
-    const settings = await getSettings();
+    await mergeSettings({ language: selectedLanguage });
 
-    if (settings) {
-      await mergeSettings({ language: selectedLanguage });
-    } else {
-      await saveSettings({ language: selectedLanguage });
-    }
     stopSpeaking();
 
     navigation.replace("LoadingScreen");
@@ -75,14 +69,12 @@ export const SettingsModal = ({ toggleModal, navigation }) => {
         {
           text: "OK",
           onPress: async () => {
-            const done = await removeSetting("studentInfo");
+            await removeStudentInfo();
 
-            if (done) {
-              toggleModal(false);
-              navigation.replace("LoginAndSignup");
-            } else {
-              toggleModal(false);
-            }
+            stopSpeaking();
+
+            toggleModal(false);
+            navigation.replace("LoginAndSignup");
           },
         },
       ]

@@ -16,6 +16,29 @@ export const saveSettings = async (settings) => {
   }
 };
 
+export const removeStudentInfo = async () => {
+  try {
+    // Get the current settings from AsyncStorage
+    const settings = await AsyncStorage.getItem("settings");
+
+    // Parse the JSON string into an object
+    const settingsObj = JSON.parse(settings);
+
+    // Delete the studentInfo property
+    delete settingsObj.studentInfo;
+
+    // Convert the object back to a JSON string
+    const newSettings = JSON.stringify(settingsObj);
+
+    // Save the updated settings back to AsyncStorage
+    await AsyncStorage.setItem("settings", newSettings);
+
+    console.log("Successfully removed studentInfo from AsyncStorage.");
+  } catch (e) {
+    console.error(`Error removing studentInfo from AsyncStorage: ${e}`);
+  }
+};
+
 export const getSettings = async () => {
   try {
     const settings = await AsyncStorage.getItem("settings");

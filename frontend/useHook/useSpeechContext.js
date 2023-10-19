@@ -29,6 +29,8 @@ export const UseSpeechContext = () => {
     return voice;
   };
   const startSpeaking = async (thingsToSay) => {
+    const voice = await getSettings("voice");
+
     const text = thingsToSay || speechText;
 
     setSpeechText(text);
