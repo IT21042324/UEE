@@ -7,20 +7,15 @@ import {
   ScrollView,
 } from "react-native";
 import * as Speech from "expo-speech";
-import { UseSpeechContext } from "../useHook/useSpeechContext";
-import { getSettings, saveSettings } from "../asyncStorage/asyncStorage";
+import { getSettings, mergeSettings } from "../asyncStorage/asyncStorage";
 
-export default function LoadingScreen({ navigation, route }) {
+export default function LoadingScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
-  const { setVoice } = UseSpeechContext();
+  // const { setVoice } = UseSpeechContext();
 
   const [language, setLanguage] = useState("en-US");
 
   const [isLoadingLanguage, setIsLoadingLanguage] = useState(true);
-
-  const { load } = route?.params || {};
-
-  console.log(load);
 
   useEffect(() => {
     setIsLoadingLanguage(true);
@@ -30,12 +25,12 @@ export default function LoadingScreen({ navigation, route }) {
 
       settings?.language
         ? setLanguage(settings.language)
-        : saveSettings({ language: "en-US" });
+        : mergeSettings({ language: "en-US" });
 
       setIsLoadingLanguage(false);
     };
     loadLanugageSettings();
-  }, [load]);
+  }, []);
 
   useEffect(() => {
     const loadVoices = async () => {
@@ -46,9 +41,11 @@ export default function LoadingScreen({ navigation, route }) {
       if (voices.length) {
         const voice = voices.find((v) => v.language === language);
 
-        setVoice(voice);
+        // setVoice(voice);
+
+        await mergeSettings({ voice });
+
         setLoading(false);
-        console.log(voice);
       } else {
         console.log("No Voices Available. Trying again to get voices...");
         console.log("Waiting 1000ms");
@@ -70,7 +67,9 @@ export default function LoadingScreen({ navigation, route }) {
         if (tryAgainResult.length) {
           const voice1 = tryAgainResult.find((v) => v.language === language);
 
-          setVoice(voice1);
+          // setVoice(voice1);
+          await mergeSettings({ voice: voice1 });
+
           setLoading(false);
           console.log(voice1);
         } else {
