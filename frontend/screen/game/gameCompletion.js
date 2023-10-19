@@ -33,7 +33,7 @@ export const GameCompletion = ({ navigation }) => {
     async function loadStrings() {
       const settings = await getSettings();
       if (settings?.language) {
-        if (language === "si-LK") setStrings(SinhalaString());
+        if (settings.language === "si-LK") setStrings(SinhalaString());
       }
     }
     loadStrings();

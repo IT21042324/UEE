@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import {
-  View,
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-  ScrollView,
+  View,
 } from "react-native";
-import { fontFamily } from "../constants/globalConstants";
-import { UseBackendAPI } from "../api/useBackendAPI";
-import { UseUserContext } from "../useHook/useUserContext";
 import Toast from "react-native-toast-message";
+import { UseBackendAPI } from "../api/useBackendAPI";
 import { getSettings, saveLoginInfo } from "../asyncStorage/asyncStorage";
-import { EnglishString } from "../constants/strings";
+import { fontFamily } from "../constants/globalConstants";
 import { SinhalaString } from "../constants/sinhalaString";
+import { EnglishString } from "../constants/strings";
+import { UseUserContext } from "../useHook/useUserContext";
 
 export const LoginAndSignup = ({ navigation }) => {
   const [strings, setStrings] = useState(EnglishString());

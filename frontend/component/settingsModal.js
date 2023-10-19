@@ -1,6 +1,6 @@
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
@@ -15,9 +15,10 @@ import {
   fontFamily,
   fontStyle,
 } from "../constants/globalConstants";
-import { SinhalaString } from "../constants/sinhalaString";
-import { EnglishString } from "../constants/strings";
 import { UseSpeechContext } from "../useHook/useSpeechContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { EnglishString } from "../constants/strings";
+import { SinhalaString } from "../constants/sinhalaString";
 
 export const SettingsModal = ({ toggleModal, navigation }) => {
   const [strings, setStrings] = useState(EnglishString());
@@ -31,6 +32,8 @@ export const SettingsModal = ({ toggleModal, navigation }) => {
     }
     loadStrings();
   }, []);
+
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US");
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
   };
@@ -47,7 +50,7 @@ export const SettingsModal = ({ toggleModal, navigation }) => {
     }
     stopSpeaking();
 
-    navigation.navigate("LoadingScreen");
+    navigation.replace("LoadingScreen");
 
     toggleModal(false);
 
