@@ -35,19 +35,31 @@ export const mergeSettings = async (dataToMerge) => {
   }
 };
 
-// const getAllKeys = async () => {
-//   let keys = [];
-//   try {
-//     keys = await AsyncStorage.getAllKeys();
-//   } catch (e) {
-//     console.error(e);
+export const removeSetting = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+    return true;
+  } catch (e) {
+    console.error(e);
 
-//     console.error("Mutliple keys retreiving error");
-//   }
+    console.error("Problem with removing data");
+    return false;
+  }
+};
 
-//   console.log(keys);
-//   return keys;
-// };
+const getAllKeys = async () => {
+  let keys = [];
+  try {
+    keys = await AsyncStorage.getAllKeys();
+  } catch (e) {
+    console.error(e);
+
+    console.error("Mutliple keys retreiving error");
+  }
+
+  console.log(keys);
+  return keys;
+};
 
 // export const clearSeatAllocations = async () => {
 //   const keys = await getAllKeys();

@@ -13,11 +13,27 @@ import { UseBackendAPI } from "../api/useBackendAPI";
 import { UseUserContext } from "../useHook/useUserContext";
 import Toast from "react-native-toast-message";
 import { getSettings, saveLoginInfo } from "../asyncStorage/asyncStorage";
+import { EnglishString } from "../constants/strings";
+import { SinhalaString } from "../constants/sinhalaString";
 
 export const LoginAndSignup = ({ navigation }) => {
+  const [strings, setStrings] = useState(EnglishString());
+
+  useEffect(() => {
+    async function loadStrings() {
+      const settings = await getSettings();
+      if (settings?.language) {
+        if (settings.language === "si-LK") setStrings(SinhalaString());
+      }
+    }
+    loadStrings();
+  }, []);
+
   useEffect(() => {
     async function loadSettings() {
       const settings = await getSettings();
+
+      console.log(settings);
       if (settings?.studentInfo) {
         setUser(settings.studentInfo);
         navigation.navigate("LoadingScreen");
@@ -54,7 +70,7 @@ export const LoginAndSignup = ({ navigation }) => {
     } else {
       Toast.show({
         type: "error",
-        text1: "Invalid Credentials",
+        text1: strings.loginAndSignup.invalidCredentials,
       });
     }
   };
@@ -77,7 +93,7 @@ export const LoginAndSignup = ({ navigation }) => {
     } else {
       Toast.show({
         type: "error",
-        text1: "Username already exists",
+        text1: strings.loginAndSignup.credentialsExist,
       });
     }
   };
@@ -85,18 +101,20 @@ export const LoginAndSignup = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>
-        {showTeacherSignup ? "Enter Your Credentials To Login" : "Quick Singup"}
+        {showTeacherSignup
+          ? strings.loginAndSignup.enterCredentialsToLogin
+          : strings.loginAndSignup.quickSignup}
       </Text>
       <View style={styles.form}>
         <TextInput
           style={styles.input}
-          placeholder="user name"
+          placeholder={strings.loginAndSignup.userName}
           value={userName}
           onChangeText={setUserName}
         />
         <TextInput
           style={styles.input}
-          placeholder="password"
+          placeholder={strings.loginAndSignup.password}
           secureTextEntry={true}
           value={password}
           onChangeText={setPassword}
@@ -121,14 +139,18 @@ export const LoginAndSignup = ({ navigation }) => {
             style={styles.signupLink}
             onPress={() => setShowTeacherSignup(false)}
           >
-            <Text style={styles.signupLinkText}>sign up as a teacher?</Text>
+            <Text style={styles.signupLinkText}>
+              {strings.loginAndSignup.signUpTeacher}
+            </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={styles.signupLink}
             onPress={() => setShowTeacherSignup(true)}
           >
-            <Text style={styles.signupLinkText}>login?</Text>
+            <Text style={styles.signupLinkText}>
+              {strings.loginAndSignup.login}
+            </Text>
           </TouchableOpacity>
         )}
 
@@ -145,9 +167,13 @@ export const LoginAndSignup = ({ navigation }) => {
           {isLoading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : showTeacherSignup ? (
-            <Text style={styles.loginButtonText}>Log In</Text>
+            <Text style={styles.loginButtonText}>
+              {strings.loginAndSignup.btnLogin}
+            </Text>
           ) : (
-            <Text style={styles.loginButtonText}>Sign Up</Text>
+            <Text style={styles.loginButtonText}>
+              {strings.loginAndSignup.btnSignup}
+            </Text>
           )}
         </TouchableOpacity>
       </View>

@@ -6,7 +6,6 @@ export const UseBackendAPI = () => {
   return {
     signup: async function (insertionData) {
       try {
-        console.log(BACKENDURL);
         const info = await axios.post(
           `${BACKENDURL}/api/users/signup`,
           insertionData
@@ -20,8 +19,6 @@ export const UseBackendAPI = () => {
     },
 
     login: async function (insertionData) {
-      console.log(BACKENDURL);
-
       try {
         const info = await axios.post(
           `${BACKENDURL}/api/users/login`,
