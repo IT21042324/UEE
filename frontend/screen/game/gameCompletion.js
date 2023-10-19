@@ -157,11 +157,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 0,
-    right: 0,
-    margin: 50,
+    top: 0,
+    left: 0,
+    margin: 15,
     backgroundColor: colorVariants.dodgerblue,
-    padding: 20,
+    padding: 15,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
   },
   proceedBtnText: {
     fontFamily: fontFamily.normalText,
-    fontWeight: fontWeight.bold,
     fontSize: 20,
     color: colorVariants.white,
   },

@@ -1,13 +1,15 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SpeechContext } from "../context/speechContext";
 import * as Speech from "expo-speech";
+import { getSettings } from "../asyncStorage/asyncStorage";
+import { cinderellaStoryImages } from "../assets/images/imageIndex";
 
 export const UseSpeechContext = () => {
   const speechContext = useContext(SpeechContext);
   const { dispatch, speechText, voice } = speechContext;
 
   const speechOptions = {
-    rate: 0.8,
+    rate: 0.6,
     pitch: 1,
   };
 

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppGeneralSettingsContext } from "../context/generalSettingsContext";
 import { UseSpeechContext } from "./useSpeechContext";
 
@@ -25,11 +25,14 @@ export const UseAppGeneralSettingsContext = () => {
     setDispatchToMute();
   };
 
-  const unMute = () => {
+  useEffect(() => {
     if (initialSpeechText) {
       setSpeechText(initialSpeechText);
     }
-    startSpeaking();
+  }, [unMute]);
+
+  const unMute = () => {
+    startSpeaking(speechText);
     setDispatchToUnMute();
   };
 

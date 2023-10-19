@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Animated, FlatList, StyleSheet, View } from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
-import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
-import { UseSpeechContext } from "../../useHook/useSpeechContext";
-import { EnglishString } from "../../constants/strings";
 import { getSettings } from "../../asyncStorage/asyncStorage";
+import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
 import { SinhalaString } from "../../constants/sinhalaString";
+import { EnglishString } from "../../constants/strings";
+import { UseAppGeneralSettingsContext } from "../../useHook/generalSettingsContext";
+import { UseSpeechContext } from "../../useHook/useSpeechContext";
 
 export const StorySelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -14,6 +15,7 @@ export const StorySelectionScreen = ({ navigation }) => {
   const [strings, setStrings] = useState(EnglishString());
 
   const [isLoading, setIsLoading] = useState(true);
+  const { muted } = UseAppGeneralSettingsContext();
 
   useEffect(() => {
     async function loadStrings() {
@@ -23,17 +25,19 @@ export const StorySelectionScreen = ({ navigation }) => {
       }
       setIsLoading(false);
     }
-
     loadStrings();
   }, []);
 
   useEffect(() => {
     const onFocus = navigation.addListener("didFocus", () => {
-      stopSpeaking();
-      const speak = async () => {
-        await startSpeaking(strings.storySelectionSpeech);
-      };
-      speak();
+      if (!muted) {
+        stopSpeaking();
+        const speak = async () => {
+          await startSpeaking(strings.storySelectionSpeech);
+        };
+
+        speak();
+      }
     });
 
     const onBlur = navigation.addListener("willBlur", () => {
@@ -44,7 +48,7 @@ export const StorySelectionScreen = ({ navigation }) => {
       onFocus.remove();
       onBlur.remove();
     };
-  }, []);
+  }, [isLoading]);
 
   if (!isLoading) {
     return (

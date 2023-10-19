@@ -1,14 +1,14 @@
-import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
-import { EnglishString } from "../constants/strings";
-import { StudentMainManuSelectionCard } from "../component/studentSelectionCard";
 import { Divider } from "@rneui/themed";
-import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { useEffect, useRef, useState } from "react";
-import { UseSpeechContext } from "../useHook/useSpeechContext";
-import { SettingsModal } from "../component/settingsModal";
-import { UseAppGeneralSettingsContext } from "../useHook/generalSettingsContext";
+import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
+import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { getSettings } from "../asyncStorage/asyncStorage";
+import { SettingsModal } from "../component/settingsModal";
+import { StudentMainManuSelectionCard } from "../component/studentSelectionCard";
 import { SinhalaString } from "../constants/sinhalaString";
+import { EnglishString } from "../constants/strings";
+import { UseAppGeneralSettingsContext } from "../useHook/generalSettingsContext";
+import { UseSpeechContext } from "../useHook/useSpeechContext";
 
 export const StudentSelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -50,7 +50,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
       onFocus.remove();
       onBlur.remove();
     };
-  }, []);
+  }, [isLoading]);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -61,7 +61,9 @@ export const StudentSelectionScreen = ({ navigation }) => {
   if (!isLoading) {
     return (
       <View style={styles.mainContainer}>
-        {modalVisible && <SettingsModal toggleModal={toggleModal} />}
+        {modalVisible && (
+          <SettingsModal toggleModal={toggleModal} navigation={navigation} />
+        )}
 
         <View styles={styles.welcomeContiner}>
           <Text style={styles.welcomeContinerText}>Welcome Nimal</Text>

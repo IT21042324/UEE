@@ -135,15 +135,17 @@ const styles = StyleSheet.create({
     flex: 0.8,
   },
   questionTextContainer: {
-    flex: 0.2,
+    flex: 0.3,
+    padding: 5,
   },
   questionText: {
     fontFamily: fontFamily.normalText,
     fontSize: fontSize.xxxLarge,
+    padding: 5,
   },
   imageContainer: { flex: 0.4, backgroundColor: "orange" },
   questionContainer: {
-    flex: 0.6,
+    flex: 0.5,
   },
   answerContainer: {
     flex: 1,

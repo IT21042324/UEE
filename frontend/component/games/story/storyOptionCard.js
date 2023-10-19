@@ -6,8 +6,6 @@ import { globalStyles } from "../../../styles/global";
 export const StoryOptionCard = ({ option, title, navigation }) => {
   const [selectedOption, setSelectedOption] = useState(3);
 
-  console.log(title);
-
   useEffect(() => {
     setSelectedOption(option);
   }, [selectedOption]);

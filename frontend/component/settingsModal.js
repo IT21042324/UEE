@@ -14,22 +14,28 @@ import {
   saveSettings,
 } from "../asyncStorage/asyncStorage";
 import Toast from "react-native-toast-message";
+import { UseSpeechContext } from "../useHook/useSpeechContext";
 
-export const SettingsModal = ({ toggleModal }) => {
+export const SettingsModal = ({ toggleModal, navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
   };
 
+  const { stopSpeaking } = UseSpeechContext();
+
   const onSaveBtnHandler = async () => {
     const settings = await getSettings();
 
     if (settings) {
       await mergeSettings({ language: selectedLanguage });
-    } else await saveSettings({ language: selectedLanguage });
+    } else {
+      await saveSettings({ language: selectedLanguage });
+    }
+    stopSpeaking();
 
-    console.log(settings, selectedLanguage);
+    navigation.replace("LoadingScreen");
 
     toggleModal(false);
 
