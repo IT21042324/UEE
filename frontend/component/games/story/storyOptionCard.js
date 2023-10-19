@@ -45,10 +45,10 @@ export const StoryOptionCard = ({ option, title, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     width: 300,
-    height: 300,
+    height: 350,
     margin: 40,
     borderWidth: 2,
-    padding: 10,
+    padding: 5,
   },
   image: {
     width: "100%",
@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
   textContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 10,
   },
 });
