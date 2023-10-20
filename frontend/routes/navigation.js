@@ -12,6 +12,9 @@ import LoadingScreen from "../screen/loading";
 import { screenTitles } from "../constants/commonStrings";
 import { LoginAndSignup } from "../screen/LoginAndSignup";
 import HomePuzzle from "../screen/game/puzzle/HomePuzzle";
+import StartColorPuzzle from "../screen/game/puzzle/ChooseTheColor/StartColorPuzzle";
+import StartOddPuzzle from "../screen/game/puzzle/ChooseTheOddOne/StartOddPuzzle";
+import StartPuzzle from "../screen/game/puzzle/ChooseBigOne/StartPuzzle";
 
 const screens = {
   LoginAndSignup: {
@@ -71,6 +74,18 @@ const screens = {
   //// Puzzle ////
   PuzzleSelection: {
     screen: HomePuzzle,
+  },
+
+  StartPuzzle: {
+    screen: StartPuzzle,
+  },
+
+  StartColorPuzzle: {
+    screen: StartColorPuzzle,
+  },
+
+  StartOddPuzzle: {
+    screen: StartOddPuzzle,
   },
 };
 

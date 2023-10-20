@@ -12,6 +12,7 @@ import { SpeechContextProvider } from "./context/speechContext";
 import * as SplashScreen from "expo-splash-screen";
 import Toast from "react-native-toast-message";
 import { UserContextProvider } from "./context/userContext";
+import { PaperProvider } from "react-native-paper";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -32,21 +33,23 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <SafeAreaView style={globalStyles.container}>
-        <RapiLayout>
-          <MenuProvider>
-            <ThemeProvider>
-              <UserContextProvider>
-                <AppGeneralSettingsContextProvider>
-                  <SpeechContextProvider>
-                    <Toast />
-                    <Navigator />
-                    <CustomToast />
-                  </SpeechContextProvider>
-                </AppGeneralSettingsContextProvider>
-              </UserContextProvider>
-            </ThemeProvider>
-          </MenuProvider>
-        </RapiLayout>
+        <PaperProvider>
+          <RapiLayout>
+            <MenuProvider>
+              <ThemeProvider>
+                <UserContextProvider>
+                  <AppGeneralSettingsContextProvider>
+                    <SpeechContextProvider>
+                      <Toast />
+                      <Navigator />
+                      <CustomToast />
+                    </SpeechContextProvider>
+                  </AppGeneralSettingsContextProvider>
+                </UserContextProvider>
+              </ThemeProvider>
+            </MenuProvider>
+          </RapiLayout>
+        </PaperProvider>
       </SafeAreaView>
     );
   } else {

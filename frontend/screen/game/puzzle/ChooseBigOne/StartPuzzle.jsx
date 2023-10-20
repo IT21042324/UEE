@@ -12,7 +12,7 @@ import { Card } from "react-native-paper";
 import SuccessModel from "../common/SuccessModel";
 import PuzzleOver from "../common/PuzzleOver";
 import TryAgain from "../toast/TryAgain";
-import ChooseBigOneDS from "../../Constant/Datasets/ChooseBigOneDS";
+import ChooseBigOneDS from "../../../../constants/Datasets/ChooseBigOneDS";
 
 const difficulty = "easy";
 

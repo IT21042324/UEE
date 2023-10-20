@@ -12,7 +12,7 @@ import SuccessModel from "../common/SuccessModel";
 import PuzzleOver from "../common/PuzzleOver";
 import TryAgain from "../toast/TryAgain";
 import { Card } from "react-native-paper";
-import ChooseOddOneDS from "../../Constant/Datasets/ChooseOddOneDS";
+import ChooseOddOneDS from "../../../../constants/Datasets/ChooseOddOneDS";
 
 function StartOddPuzzle({ navigation }) {
   const [border, setBorder] = useState({

@@ -3,7 +3,7 @@ import { Modal, Text, View, StyleSheet, Button } from "react-native";
 function PuzzleOver({ visible, onClose, points, navigation, progress }) {
   function OnFinishHandler() {
     console.log(progress);
-    navigation.navigate("Home");
+    navigation.navigate("PuzzleSelection");
   }
   return (
     <>

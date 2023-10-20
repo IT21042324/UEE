@@ -4,7 +4,7 @@ import { Card } from "react-native-paper";
 function SuccessModel({ visible, onClose, points, navigation, progress }) {
   function OnFinishHandler() {
     console.log(progress);
-    navigation.navigate("Home");
+    navigation.navigate("PuzzleSelection");
   }
   return (
     <>
