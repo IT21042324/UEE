@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import * as Speech from "expo-speech";
 import { getSettings, mergeSettings } from "../asyncStorage/asyncStorage";
+import { UseUserContext } from "../useHook/useUserContext";
 
 export default function LoadingScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,8 @@ export default function LoadingScreen({ navigation }) {
   const [language, setLanguage] = useState("en-US");
 
   const [isLoadingLanguage, setIsLoadingLanguage] = useState(true);
+
+  const { setUser, doesUserExistInContext } = UseUserContext();
 
   useEffect(() => {
     setIsLoadingLanguage(true);
@@ -26,6 +29,8 @@ export default function LoadingScreen({ navigation }) {
       settings?.language
         ? setLanguage(settings.language)
         : mergeSettings({ language: "en-US" });
+
+      !doesUserExistInContext() && setUser(settings.userInfo);
 
       setIsLoadingLanguage(false);
     };

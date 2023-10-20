@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/userContext";
 
 export const UseUserContext = () => {
@@ -11,9 +11,14 @@ export const UseUserContext = () => {
     });
   }
 
+  const doesUserExistInContext = () => {
+    return user && user?.userName;
+  };
+
   return {
     dispatch,
     user,
     setUser,
+    doesUserExistInContext,
   };
 };

@@ -19,6 +19,7 @@ import {
 } from "../../constants/globalConstants";
 import { SinhalaString } from "../../constants/sinhalaString";
 import { EnglishString } from "../../constants/strings";
+import { UseUserContext } from "../../useHook/useUserContext";
 
 export const GameCompletion = ({ navigation }) => {
   const incorrectAttempts = navigation.getParam("incorrectAttempts");
@@ -28,6 +29,9 @@ export const GameCompletion = ({ navigation }) => {
   const [timer, setTimer] = useState(0);
 
   const [strings, setStrings] = useState(EnglishString());
+
+  const { user } = UseUserContext();
+  console.log(user);
 
   useEffect(() => {
     async function loadStrings() {
@@ -58,7 +62,7 @@ export const GameCompletion = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <View>
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={navigateToMainMenu}
@@ -97,7 +101,7 @@ export const GameCompletion = ({ navigation }) => {
           />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
