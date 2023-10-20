@@ -80,6 +80,7 @@ export const RapunzelStoryPage = ({ navigation }) => {
         incorrectAttempts,
         startTime,
         questionCount: totalStoryPages,
+        gameName: "CinderellaStory",
       });
     }
   };

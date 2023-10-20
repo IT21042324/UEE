@@ -80,6 +80,7 @@ export const HerculesStoryPage = ({ navigation }) => {
         incorrectAttempts,
         startTime,
         questionCount: totalStoryPages,
+        gameName: "CinderellaStory",
       });
     }
   };

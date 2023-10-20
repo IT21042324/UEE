@@ -1,10 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const saveLoginInfo = async (loginInfo) => {
-  const settings = await getSettings();
-
-  if (settings) mergeSettings(loginInfo);
-  else saveSettings(loginInfo);
+  mergeSettings(loginInfo);
 };
 
 export const saveSettings = async (settings) => {

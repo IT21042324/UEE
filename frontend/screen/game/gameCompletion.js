@@ -2,14 +2,16 @@ import moment from "moment";
 import "moment-duration-format";
 import { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
+import { UseBackendAPI } from "../../api/useBackendAPI";
 import { brilliantImage } from "../../assets/images/imageIndex";
 import { getSettings } from "../../asyncStorage/asyncStorage";
 import {
@@ -19,16 +21,46 @@ import {
 } from "../../constants/globalConstants";
 import { SinhalaString } from "../../constants/sinhalaString";
 import { EnglishString } from "../../constants/strings";
+import { UseUserContext } from "../../useHook/useUserContext";
 
 export const GameCompletion = ({ navigation }) => {
-  const incorrectAttempts = navigation.getParam("incorrectAttempts");
+  const incorrectAttempts = parseInt(navigation.getParam("incorrectAttempts"));
   const startTime = navigation.getParam("startTime");
-  const questionCount = navigation.getParam("questionCount");
+  const questionCount = parseInt(navigation.getParam("questionCount"));
+  const gameName = navigation.getParam("gameName");
 
   const [timer, setTimer] = useState(0);
 
   const [strings, setStrings] = useState(EnglishString());
 
+  const findVerdict = (incorrectAttempts, questionCount) => {
+    const correctAttempts = questionCount - incorrectAttempts;
+    const successRate = correctAttempts / questionCount;
+
+    if (successRate === 1) {
+      return {
+        display: strings.gameCompletion.excellentJobVerdict,
+        finalVerdict: strings.gameCompletion.excellent,
+      };
+    } else if (successRate >= 0.75) {
+      return {
+        display: strings.gameCompletion.greatJobVerdict,
+        finalVerdict: strings.gameCompletion.great,
+      };
+    } else if (successRate >= 0.5) {
+      return {
+        display: strings.gameCompletion.goodJobVerdict,
+        finalVerdict: strings.gameCompletion.good,
+      };
+    } else {
+      return {
+        display: strings.gameCompletion.practiseVerdict,
+        finalVerdict: strings.gameCompletion.practise,
+      };
+    }
+  };
+
+  const { user } = UseUserContext();
   useEffect(() => {
     async function loadStrings() {
       const settings = await getSettings();
@@ -49,23 +81,54 @@ export const GameCompletion = ({ navigation }) => {
     .duration(timer / 5)
     .format("hh:mm:ss", { trim: false });
 
+  const finalVerdict = findVerdict(incorrectAttempts, questionCount);
+
   strings.gameStats[0].value = formattedTimer;
   strings.gameStats[1].value = incorrectAttempts;
   strings.gameStats[2].value = timeForQuestion;
+  strings.gameStats[3].value = finalVerdict.display;
 
-  const navigateToMainMenu = () => {
+  const { saveProgress } = UseBackendAPI();
+
+  const [isSavingToDB, setIsSavingToDB] = useState(false);
+
+  const navigateToMainMenu = async () => {
+    setIsSavingToDB(true);
+    const data = await saveProgress({
+      studentId: user.childId,
+      parentId: user._id,
+      gameType: "Story",
+      gameName,
+      gameCompletionTime: formattedTimer,
+      incorrectAttempts,
+      questionCount,
+      maximumAttempts: questionCount + incorrectAttempts,
+      questions: { type: Number, default: 0 },
+      verdict: finalVerdict.finalVerdict,
+    });
+
+    if (data) navigation.navigate("StorySelection");
+    else
+      Toast.show({
+        type: "error",
+        text1: strings.loginAndSignup.credentialsExist,
+      });
     navigation.navigate("StorySelection");
   };
 
   return (
-    <ScrollView>
+    <View>
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={navigateToMainMenu}
       >
-        <Text style={styles.proceedBtnText}>
-          {strings.gameCompletionText.proceedToMainMenu}
-        </Text>
+        {isSavingToDB ? (
+          <ActivityIndicator color="white" size="large" />
+        ) : (
+          <Text style={styles.proceedBtnText}>
+            {strings.gameCompletionText.proceedToMainMenu}
+          </Text>
+        )}
       </TouchableOpacity>
       <View style={StyleSheet.mainContainer}>
         <View style={styles.imageContainer}>
@@ -97,7 +160,7 @@ export const GameCompletion = ({ navigation }) => {
           />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
