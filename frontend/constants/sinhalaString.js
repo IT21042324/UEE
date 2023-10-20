@@ -37,6 +37,7 @@ export const SinhalaString = () => {
         value: 0,
         unit: "minutes",
       },
+      { text: "අවසාන තීන්දුව", value: "විශිෂ්ටයි" },
     ],
     gameCompletionText: {
       proceedToMainMenu: "ප්රධාන මෙනුව වෙත යන්න",
@@ -109,6 +110,18 @@ export const SinhalaString = () => {
       login: "ඇතුල් වන්න?",
       btnLogin: "ඇතුල් වන්න",
       btnSignup: "ලියාපදිංචි වන්න",
+    },
+
+    gameCompletion: {
+      excellentJobVerdict: "විශිෂ්ට රැකියාවක්! ඔබට සියලු ප්‍රශ්න නිවැරදියි!",
+      greatJobVerdict: "නියමයි! ඔයා ඇත්තටම හොඳට කළා!",
+      goodJobVerdict:
+        "හොඳ වැඩක්! ඔබ හොඳින් කළා, නමුත් වැඩිදියුණු කිරීමට ඉඩක් තිබේ.",
+      practiseVerdict: "දිගටම පුහුණු වන්න! කාලයත් සමඟ ඔබ හොඳ වනු ඇත.",
+      excellent: "Excellent",
+      great: "Great",
+      good: "Good",
+      practise: "need more practise",
     },
 
     CinderellaStoryContent: [

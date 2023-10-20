@@ -5,13 +5,14 @@ const progressSchema = new Schema(
   {
     studentId: {
       type: Schema.Types.ObjectId,
-      ref: "Student",
     },
-    parentId: { type: Schema.Types.ObjectId, ref: "User" },
+    parentId: { type: Schema.Types.ObjectId },
     gameType: String,
     gameName: String,
+    gameCompletionTime: { type: String },
+    incorrectAttempts: { type: String },
+    questionCount: { type: Number },
     maximumAttempts: { type: Number, default: 0 },
-    questions: { type: Number, default: 0 },
     verdict: String,
   },
   { timestamps: true }

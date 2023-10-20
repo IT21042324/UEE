@@ -37,6 +37,7 @@ export const EnglishString = () => {
         value: 0,
         unit: "minutes",
       },
+      { text: "Final Verdict", value: "Excellent" },
     ],
     gameCompletionText: {
       proceedToMainMenu: "Proceed To Main Menu",
@@ -62,6 +63,20 @@ export const EnglishString = () => {
       login: "login?",
       btnLogin: "Log In",
       btnSignup: "Sign Up",
+    },
+
+    gameCompletion: {
+      excellentJobVerdict: "Excellent job! You got all the questions right!",
+      greatJobVerdict: "Great job! You did really well!",
+      goodJobVerdict:
+        "Good job! You did okay, but there's room for improvement.",
+      practiseVerdict: "Keep practicing! You'll get better with time.",
+      excellent: "Excellent",
+      great: "Great",
+      good: "Good",
+      practise: "need more practise",
+      failureToast:
+        "Couldnt save data to database. Please check your connection",
     },
 
     CinderellaStoryContent: [

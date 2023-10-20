@@ -60,7 +60,7 @@ export const LoginAndSignup = ({ navigation }) => {
     });
     setIsLoading(false);
 
-    if (userInfo?.userType) {
+    if (userInfo?.userType === "student") {
       setUser(userInfo);
 
       saveLoginInfo({

@@ -30,7 +30,7 @@ export default function LoadingScreen({ navigation }) {
         ? setLanguage(settings.language)
         : mergeSettings({ language: "en-US" });
 
-      !doesUserExistInContext() && setUser(settings.userInfo);
+      !doesUserExistInContext() && setUser(settings.studentInfo);
 
       setIsLoadingLanguage(false);
     };
@@ -39,8 +39,6 @@ export default function LoadingScreen({ navigation }) {
 
   useEffect(() => {
     const loadVoices = async () => {
-      console.log(language);
-
       const voices = await Speech.getAvailableVoicesAsync();
 
       if (voices.length) {
