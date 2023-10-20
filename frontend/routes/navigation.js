@@ -11,6 +11,7 @@ import { StudentSelectionScreen } from "../screen/studentSelection";
 import LoadingScreen from "../screen/loading";
 import { screenTitles } from "../constants/commonStrings";
 import { LoginAndSignup } from "../screen/LoginAndSignup";
+import HomePuzzle from "../screen/game/puzzle/HomePuzzle";
 
 const screens = {
   LoginAndSignup: {
@@ -66,6 +67,10 @@ const screens = {
     navigationOptions: {
       headerTitle: () => <Header title={screenTitles.GameCompletion} />,
     },
+  },
+  //// Puzzle ////
+  PuzzleSelection: {
+    screen: HomePuzzle,
   },
 };
 
