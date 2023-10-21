@@ -48,6 +48,11 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
 
   const [isSavingToDB, setIsSavingToDB] = useState(false);
 
+  const finalVerdict = findVerdict(
+    progress.tries - progress.question,
+    progress.question
+  );
+
   async function OnFinishHandler() {
     setIsSavingToDB(true);
 
@@ -60,10 +65,7 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
       questionCount: progress.question,
       maximumAttempts: progress.tries,
       questions: { type: Number, default: 0 },
-      verdict: findVerdict(
-        progress.tries - progress.question,
-        progress.question
-      ),
+      verdict: finalVerdict.finalVerdict,
     });
     console.log(data);
 
