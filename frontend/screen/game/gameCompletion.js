@@ -34,8 +34,8 @@ export const GameCompletion = ({ navigation }) => {
   const [strings, setStrings] = useState(EnglishString());
 
   const findVerdict = (incorrectAttempts, questionCount) => {
-    const correctAttempts = questionCount - incorrectAttempts;
-    const successRate = correctAttempts / questionCount;
+    const correctAttempts = questionCount;
+    const successRate = correctAttempts / (questionCount + incorrectAttempts);
 
     if (successRate === 1) {
       return {

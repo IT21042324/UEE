@@ -1,6 +1,11 @@
 import { Button, View, StyleSheet, Image, Pressable } from "react-native";
+import { UseUserContext } from "../../../useHook/useUserContext";
 
 function HomePuzzle({ navigation }) {
+  const { user } = UseUserContext();
+
+  console.log(user);
+
   return (
     <>
       <View style={styles.btnContainer}>

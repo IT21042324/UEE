@@ -38,12 +38,7 @@ export const UseBackendAPI = () => {
       try {
         const { data } = await axios.post(
           `${BACKENDURL}/api/progress`,
-          progressData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          progressData
         );
         return data;
       } catch (err) {
