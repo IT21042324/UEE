@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,6 +16,7 @@ import { fontFamily } from "../constants/globalConstants";
 import { SinhalaString } from "../constants/sinhalaString";
 import { EnglishString } from "../constants/strings";
 import { UseUserContext } from "../useHook/useUserContext";
+import { Card } from "react-native-paper";
 
 export const LoginAndSignup = ({ navigation }) => {
   const [strings, setStrings] = useState(EnglishString());
@@ -100,83 +102,93 @@ export const LoginAndSignup = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>
-        {showTeacherSignup
-          ? strings.loginAndSignup.enterCredentialsToLogin
-          : strings.loginAndSignup.quickSignup}
-      </Text>
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder={strings.loginAndSignup.userName}
-          value={userName}
-          onChangeText={setUserName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder={strings.loginAndSignup.password}
-          secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
-        />
+      <ImageBackground
+        source={require("../assets/auth/login.jpg")}
+        resizeMode="cover"
+        style={styles.bgImage}
+      >
+        <Card style={styles.cardContainer}>
+          <Card.Content style={styles.cardTitle}>
+            <Text style={styles.title}>
+              {showTeacherSignup
+                ? strings.loginAndSignup.enterCredentialsToLogin
+                : strings.loginAndSignup.quickSignup}
+            </Text>
+          </Card.Content>
+          <Card.Content style={styles.form}>
+            <TextInput
+              style={styles.input}
+              placeholder={strings.loginAndSignup.userName}
+              value={userName}
+              onChangeText={setUserName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder={strings.loginAndSignup.password}
+              secureTextEntry={true}
+              value={password}
+              onChangeText={setPassword}
+            />
 
-        {loginErrors && (
-          <View style={styles.verificationContainer}>
-            <Text
-              style={{
-                fontFamily: fontFamily.normalText,
-                fontSize: 15,
-                color: "red",
+            {loginErrors && (
+              <View style={styles.verificationContainer}>
+                <Text
+                  style={{
+                    fontFamily: fontFamily.normalText,
+                    fontSize: 15,
+                    color: "red",
+                  }}
+                >
+                  {loginErrors}
+                </Text>
+              </View>
+            )}
+
+            {showTeacherSignup ? (
+              <TouchableOpacity
+                style={styles.signupLink}
+                onPress={() => setShowTeacherSignup(false)}
+              >
+                <Text style={styles.signupLinkText}>
+                  {strings.loginAndSignup.signUpTeacher}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.signupLink}
+                onPress={() => setShowTeacherSignup(true)}
+              >
+                <Text style={styles.signupLinkText}>
+                  {strings.loginAndSignup.login}
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => {
+                if (showTeacherSignup) {
+                  handleLogin();
+                } else {
+                  handleTeacherSignup();
+                }
               }}
             >
-              {loginErrors}
-            </Text>
-          </View>
-        )}
-
-        {showTeacherSignup ? (
-          <TouchableOpacity
-            style={styles.signupLink}
-            onPress={() => setShowTeacherSignup(false)}
-          >
-            <Text style={styles.signupLinkText}>
-              {strings.loginAndSignup.signUpTeacher}
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.signupLink}
-            onPress={() => setShowTeacherSignup(true)}
-          >
-            <Text style={styles.signupLinkText}>
-              {strings.loginAndSignup.login}
-            </Text>
-          </TouchableOpacity>
-        )}
-
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => {
-            if (showTeacherSignup) {
-              handleLogin();
-            } else {
-              handleTeacherSignup();
-            }
-          }}
-        >
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : showTeacherSignup ? (
-            <Text style={styles.loginButtonText}>
-              {strings.loginAndSignup.btnLogin}
-            </Text>
-          ) : (
-            <Text style={styles.loginButtonText}>
-              {strings.loginAndSignup.btnSignup}
-            </Text>
-          )}
-        </TouchableOpacity>
-      </View>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : showTeacherSignup ? (
+                <Text style={styles.loginButtonText}>
+                  {strings.loginAndSignup.btnLogin}
+                </Text>
+              ) : (
+                <Text style={styles.loginButtonText}>
+                  {strings.loginAndSignup.btnSignup}
+                </Text>
+              )}
+            </TouchableOpacity>
+          </Card.Content>
+        </Card>
+      </ImageBackground>
     </ScrollView>
   );
 };
@@ -195,7 +207,9 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   form: {
+    marginLeft: "10%",
     width: "80%",
+    marginRight: "10%",
   },
   input: {
     borderWidth: 1,
@@ -241,5 +255,19 @@ const styles = StyleSheet.create({
     color: "#007AFF",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  bgImage: {
+    width: "100%",
+    height: "100%",
+  },
+  cardContainer: {
+    width: "65%",
+    marginTop: "7%",
+    marginLeft: "17%",
+    marginRight: "20%",
+  },
+  cardTitle: {
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 });
