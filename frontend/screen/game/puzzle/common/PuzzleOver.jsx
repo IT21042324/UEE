@@ -1,9 +1,71 @@
 import { Modal, Text, View, StyleSheet, Button } from "react-native";
+import { UseUserContext } from "../../../../useHook/useUserContext";
+import { UseBackendAPI } from "../../../../api/useBackendAPI";
+import { useState } from "react";
+import { EnglishString } from "../../../../constants/strings";
+import { ActivityIndicator } from "react-native-paper";
 
 function PuzzleOver({ visible, onClose, points, navigation, progress }) {
-  function OnFinishHandler() {
-    console.log(progress);
-    navigation.navigate("PuzzleSelection");
+  const { user } = UseUserContext();
+
+  const { saveProgress } = UseBackendAPI();
+
+  const findVerdict = (incorrectAttempts, questionCount) => {
+    const correctAttempts = questionCount;
+    const successRate = correctAttempts / (questionCount + incorrectAttempts);
+
+    const strings = EnglishString();
+
+    if (successRate === 1) {
+      return {
+        display: strings.gameCompletion.excellentJobVerdict,
+        finalVerdict: strings.gameCompletion.excellent,
+      };
+    } else if (successRate >= 0.75) {
+      return {
+        display: strings.gameCompletion.greatJobVerdict,
+        finalVerdict: strings.gameCompletion.great,
+      };
+    } else if (successRate >= 0.5) {
+      return {
+        display: strings.gameCompletion.goodJobVerdict,
+        finalVerdict: strings.gameCompletion.good,
+      };
+    } else {
+      return {
+        display: strings.gameCompletion.practiseVerdict,
+        finalVerdict: strings.gameCompletion.practise,
+      };
+    }
+  };
+
+  const [isSavingToDB, setIsSavingToDB] = useState(false);
+
+  const finalVerdict = findVerdict(
+    progress.tries - progress.question,
+    progress.question
+  );
+
+  async function OnFinishHandler() {
+    setIsSavingToDB(true);
+
+    const data = await saveProgress({
+      studentId: user.childId,
+      parentId: user._id,
+      gameType: "Puzzle",
+      gameName: progress.gameName,
+      incorrectAttempts: progress.tries - progress.question,
+      questionCount: progress.question,
+      maximumAttempts: progress.tries,
+      questions: { type: Number, default: 0 },
+      verdict: finalVerdict.finalVerdict,
+    });
+    console.log(data);
+
+    if (data) {
+      navigation.navigate("PuzzleSelection");
+      setIsSavingToDB(false);
+    }
   }
   return (
     <>
@@ -17,11 +79,15 @@ function PuzzleOver({ visible, onClose, points, navigation, progress }) {
               Thank you for Playing this Game!
             </Text>
             <View style={styles.btnContainer}>
-              <Button
-                title="Finish"
-                style={styles.buttonText}
-                onPress={() => OnFinishHandler()}
-              />
+              {isSavingToDB ? (
+                <ActivityIndicator color="red" size="large" />
+              ) : (
+                <Button
+                  title="Finish"
+                  style={styles.buttonText}
+                  onPress={() => OnFinishHandler()}
+                />
+              )}
             </View>
           </View>
         </View>

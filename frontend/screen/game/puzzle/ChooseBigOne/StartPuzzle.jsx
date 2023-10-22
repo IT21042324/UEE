@@ -94,7 +94,7 @@ function StartPuzzle({ navigation }) {
                                   width: 250,
                                   height: 250,
                                 });
-                              }, 3000);
+                              }, 2000);
                             });
 
                             setTimeout(() => {
@@ -108,7 +108,7 @@ function StartPuzzle({ navigation }) {
                                 setVisible(true);
                                 setCount(tempCount + 1);
                               }
-                            }, 3000);
+                            }, 2000);
                           }
                         : () => {
                             setTryCount(tempTryCount + 1);
@@ -165,7 +165,7 @@ function StartPuzzle({ navigation }) {
                                   width: 250,
                                   height: 250,
                                 });
-                              }, 3000);
+                              }, 2000);
                             });
 
                             setTimeout(() => {
@@ -179,7 +179,7 @@ function StartPuzzle({ navigation }) {
                                 setVisible(true);
                                 setCount(tempCount + 1);
                               }
-                            }, 3000);
+                            }, 2000);
                           }
                         : () => {
                             setTryCount(tempTryCount + 1);

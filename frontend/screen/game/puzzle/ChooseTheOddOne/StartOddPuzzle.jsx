@@ -94,7 +94,7 @@ function StartOddPuzzle({ navigation }) {
                                   width: 250,
                                   height: 250,
                                 });
-                              }, 3000);
+                              }, 2000);
                             });
 
                             setTimeout(() => {
@@ -108,7 +108,7 @@ function StartOddPuzzle({ navigation }) {
                                 setCount(tempCount + 1);
                                 setVisible(true);
                               }
-                            }, 3000);
+                            }, 2000);
                           }
                         : () => {
                             setTryCount(tempTryCount + 1);
@@ -164,7 +164,7 @@ function StartOddPuzzle({ navigation }) {
                                   width: 250,
                                   height: 250,
                                 });
-                              }, 3000);
+                              }, 2000);
                             });
 
                             setTimeout(() => {
@@ -178,7 +178,7 @@ function StartOddPuzzle({ navigation }) {
                                 setCount(tempCount + 1);
                                 setVisible(true);
                               }
-                            }, 3000);
+                            }, 2000);
                           }
                         : () => {
                             setTryCount(tempTryCount + 1);
@@ -234,7 +234,7 @@ function StartOddPuzzle({ navigation }) {
                                   width: 250,
                                   height: 250,
                                 });
-                              }, 3000);
+                              }, 2000);
                             });
 
                             setTimeout(() => {
@@ -248,7 +248,7 @@ function StartOddPuzzle({ navigation }) {
                                 setCount(tempCount + 1);
                                 setVisible(true);
                               }
-                            }, 3000);
+                            }, 2000);
                           }
                         : () => {
                             setTryCount(tempTryCount + 1);
