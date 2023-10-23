@@ -14,14 +14,12 @@ import { SettingsModal } from "../component/settingsModal";
 import { StudentMainManuSelectionCard } from "../component/studentSelectionCard";
 import { SinhalaString } from "../constants/sinhalaString";
 import { EnglishString } from "../constants/strings";
-import { UseAppGeneralSettingsContext } from "../useHook/generalSettingsContext";
-import { UseSpeechContext } from "../useHook/useSpeechContext";
+import { UseGeneralSpeechCombination } from "../useHook/mergeSpeechAndGeneralSettings";
 
 export const StudentSelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const { startSpeaking, stopSpeaking } = UseSpeechContext();
-  const { muted } = UseAppGeneralSettingsContext();
+  const { startSpeaking, stopSpeaking } = UseGeneralSpeechCombination();
 
   const [strings, setStrings] = useState(EnglishString());
 
@@ -39,24 +37,14 @@ export const StudentSelectionScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const onFocus = navigation.addListener("didFocus", () => {
-      if (!muted) {
-        stopSpeaking();
-        const speak = async () => {
-          await startSpeaking(strings.studentSelectionSpeech);
-        };
-        speak();
-      }
-    });
-
-    const onBlur = navigation.addListener("willBlur", () => {
+    if (!isLoading) {
       stopSpeaking();
-    });
+      const speak = async () => {
+        await startSpeaking(strings.studentSelectionSpeech);
+      };
 
-    return () => {
-      onFocus.remove();
-      onBlur.remove();
-    };
+      speak();
+    }
   }, [isLoading]);
 
   const [modalVisible, setModalVisible] = useState(false);

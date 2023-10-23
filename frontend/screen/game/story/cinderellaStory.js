@@ -10,7 +10,7 @@ import {
 } from "../../../constants/globalConstants";
 import { SinhalaString } from "../../../constants/sinhalaString";
 import { EnglishString } from "../../../constants/strings";
-import { UseSpeechContext } from "../../../useHook/useSpeechContext";
+import { UseGeneralSpeechCombination } from "../../../useHook/mergeSpeechAndGeneralSettings";
 
 export const CinderellaStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -24,7 +24,7 @@ export const CinderellaStoryPage = ({ navigation }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { startSpeaking, stopSpeaking } = UseSpeechContext();
+  const { startSpeaking, stopSpeaking } = UseGeneralSpeechCombination();
   const [strings, setStrings] = useState(EnglishString());
 
   const [loading, setLoading] = useState(true);
@@ -58,11 +58,13 @@ export const CinderellaStoryPage = ({ navigation }) => {
   }, [currentStoryPageObjectNumber]);
 
   useEffect(() => {
-    async function speaking() {
-      stopSpeaking();
-      await startSpeaking(displayObject?.passageContent);
+    if (!loading) {
+      async function speaking() {
+        stopSpeaking();
+        await startSpeaking(displayObject.passageContent);
+      }
+      speaking();
     }
-    speaking();
   }, [displayObject]);
 
   const [incorrectAttempts, setIncorrectAttempts] = useState(0);
@@ -103,6 +105,7 @@ export const CinderellaStoryPage = ({ navigation }) => {
           modalVisible={modalVisible}
           setModalVisiblity={setModalVisiblity}
           onIncorrectAnswerSelected={onIncorrectAnswerSelected}
+          popupQuestionToast={strings.PopupQuestionToast}
         />
       )}
       <View style={styles.storyDisplayContainer}>

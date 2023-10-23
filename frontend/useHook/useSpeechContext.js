@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { SpeechContext } from "../context/speechContext";
 import * as Speech from "expo-speech";
 import { getSettings } from "../asyncStorage/asyncStorage";
-import { cinderellaStoryImages } from "../assets/images/imageIndex";
+import { LogBox } from "react-native";
 
 export const UseSpeechContext = () => {
   const speechContext = useContext(SpeechContext);
@@ -28,18 +28,20 @@ export const UseSpeechContext = () => {
   const getVoice = () => {
     return voice;
   };
+
   const startSpeaking = async (thingsToSay) => {
+    LogBox.ignoreAllLogs(true);
     const voice = await getSettings("voice");
 
-    const text = thingsToSay || speechText;
-
-    setSpeechText(text);
+    setSpeechText(thingsToSay);
 
     const options = voice?.name
       ? { voice: voice.name, ...speechOptions }
       : { ...speechOptions };
 
-    Speech.speak(text, options);
+    Speech.speak(thingsToSay, options);
+
+    LogBox.ignoreAllLogs(false);
   };
 
   const stopSpeaking = () => {

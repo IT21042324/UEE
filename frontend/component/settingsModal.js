@@ -7,7 +7,6 @@ import Toast from "react-native-toast-message";
 import {
   getSettings,
   mergeSettings,
-  removeSetting,
   removeStudentInfo,
 } from "../asyncStorage/asyncStorage";
 import {
@@ -17,7 +16,7 @@ import {
 } from "../constants/globalConstants";
 import { SinhalaString } from "../constants/sinhalaString";
 import { EnglishString } from "../constants/strings";
-import { UseSpeechContext } from "../useHook/useSpeechContext";
+import { UseGeneralSpeechCombination } from "../useHook/mergeSpeechAndGeneralSettings";
 
 export const SettingsModal = ({ toggleModal, navigation }) => {
   const [strings, setStrings] = useState(EnglishString());
@@ -37,7 +36,7 @@ export const SettingsModal = ({ toggleModal, navigation }) => {
     setSelectedLanguage(language);
   };
 
-  const { stopSpeaking } = UseSpeechContext();
+  const { stopSpeaking } = UseGeneralSpeechCombination();
 
   const onSaveBtnHandler = async () => {
     await mergeSettings({ language: selectedLanguage });

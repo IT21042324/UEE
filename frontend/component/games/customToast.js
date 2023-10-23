@@ -48,7 +48,7 @@ export const toastConfig = {
       }}
       text1Style={{
         color: "white",
-        fontSize: 30,
+        fontSize: 20,
         fontWeight: "bold",
         textAlign: "center",
       }}
@@ -57,7 +57,7 @@ export const toastConfig = {
       <Text
         style={{
           color: "white",
-          fontSize: 30,
+          fontSize: 20,
           fontWeight: "bold",
           textAlign: "center",
         }}

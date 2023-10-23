@@ -123,6 +123,11 @@ export const SinhalaString = () => {
       good: "Good",
       practise: "need more practise",
     },
+    PopupQuestionToast: {
+      correctAnswer: "නිවැරදි පිළිතුර",
+      incorrectAnswer:
+        "හොඳයි, නමුත් සමහර විට වඩා හොඳ පිළිතුරක් තිබේ. ඔබට එය සොයාගත හැකිද?",
+    },
 
     CinderellaStoryContent: [
       {

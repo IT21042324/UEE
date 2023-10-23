@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  StyleSheet,
-  Text,
   FlatList,
   Image,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
+import Modal from "react-native-modal";
+import Toast from "react-native-toast-message";
 import {
   colorVariants,
   fontFamily,
   fontSize,
 } from "../../../../constants/globalConstants";
-import Modal from "react-native-modal";
-import Toast from "react-native-toast-message";
-import { UseSpeechContext } from "../../../../useHook/useSpeechContext";
+import { UseGeneralSpeechCombination } from "../../../../useHook/mergeSpeechAndGeneralSettings";
 
 export const PopupQuestionModal = ({
   questionBank,
@@ -23,12 +23,13 @@ export const PopupQuestionModal = ({
   modalVisible,
   setModalVisiblity,
   onIncorrectAnswerSelected,
+  popupQuestionToast,
 }) => {
   const questionsArray = questionBank.easy;
 
   const [randomIndex, setRandomIndex] = useState(0);
 
-  const { stopSpeaking, startSpeaking } = UseSpeechContext();
+  const { stopSpeaking, startSpeaking } = UseGeneralSpeechCombination();
 
   useEffect(() => {
     if (modalVisible) {
@@ -61,15 +62,14 @@ export const PopupQuestionModal = ({
     if (answer === randomQuestion.correctAnswer) {
       Toast.show({
         type: "success",
-        text1: "Correct Answer",
+        text1: popupQuestionToast.correctAnswer,
       });
       setModalVisiblity(false);
       onCorrectAnswerSelected();
     } else {
       Toast.show({
         type: "error",
-        text1:
-          "Good Guess, but maybe there is a better answer. Can you find it?",
+        text1: popupQuestionToast.incorrectAnswer,
       });
 
       onIncorrectAnswerSelected();
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colorVariants.white,
-    padding: 30,
+    padding: 5,
     marginTop: 70,
   },
   imageAnswerContainer: {
@@ -135,17 +135,20 @@ const styles = StyleSheet.create({
     flex: 0.8,
   },
   questionTextContainer: {
-    flex: 0.3,
-    padding: 5,
+    flex: 0.1,
   },
   questionText: {
     fontFamily: fontFamily.normalText,
-    fontSize: fontSize.xxxLarge,
+    fontSize: fontSize.xLarge,
     padding: 5,
   },
   imageContainer: { flex: 0.4, backgroundColor: "orange" },
   questionContainer: {
-    flex: 0.5,
+    flex: 0.6,
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    top: 30,
   },
   answerContainer: {
     flex: 1,
@@ -156,6 +159,7 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
   },
   answerText: {
     fontFamily: fontFamily.normalText,

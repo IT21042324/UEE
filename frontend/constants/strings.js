@@ -1395,6 +1395,11 @@ export const EnglishString = () => {
         ),
       },
     ],
+    PopupQuestionToast: {
+      correctAnswer: "Correct Answer",
+      incorrectAnswer:
+        "Good Guess, but maybe there is a better answer. Can you find it?",
+    },
     studentSelectionSpeech:
       "Welcome! You are in the main menu. Our first option is a fun Puzzle! Can you solve it? The second option is a magical Story. Are you ready to dive into a world of imagination? The third option is a Playlist. Let's listen to some cool tunes together! And last but not least, the fourth option is Settings. Here you can change things to make them just right for you! So, what will it be?",
     storySelectionSpeech:

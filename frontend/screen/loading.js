@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
 import * as Speech from "expo-speech";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
 import { getSettings, mergeSettings } from "../asyncStorage/asyncStorage";
 import { UseUserContext } from "../useHook/useUserContext";
 
 export default function LoadingScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
-  // const { setVoice } = UseSpeechContext();
 
   const [language, setLanguage] = useState("en-US");
 
@@ -86,7 +79,7 @@ export default function LoadingScreen({ navigation }) {
 
   useEffect(() => {
     if (!loading) {
-      navigation.navigate("StudentSelection");
+      navigation.replace("StudentSelection");
     }
   }, [loading]);
 

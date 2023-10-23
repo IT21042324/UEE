@@ -5,17 +5,15 @@ import { getSettings } from "../../asyncStorage/asyncStorage";
 import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
 import { SinhalaString } from "../../constants/sinhalaString";
 import { EnglishString } from "../../constants/strings";
-import { UseAppGeneralSettingsContext } from "../../useHook/generalSettingsContext";
-import { UseSpeechContext } from "../../useHook/useSpeechContext";
+import { UseGeneralSpeechCombination } from "../../useHook/mergeSpeechAndGeneralSettings";
 
 export const StorySelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
-  const { startSpeaking, stopSpeaking } = UseSpeechContext();
+  const { startSpeaking, stopSpeaking } = UseGeneralSpeechCombination();
 
   const [strings, setStrings] = useState(EnglishString());
 
   const [isLoading, setIsLoading] = useState(true);
-  const { muted } = UseAppGeneralSettingsContext();
 
   useEffect(() => {
     async function loadStrings() {
@@ -29,25 +27,13 @@ export const StorySelectionScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const onFocus = navigation.addListener("didFocus", () => {
-      if (!muted) {
-        stopSpeaking();
-        const speak = async () => {
-          await startSpeaking(strings.storySelectionSpeech);
-        };
-
-        speak();
-      }
-    });
-
-    const onBlur = navigation.addListener("willBlur", () => {
+    if (!isLoading) {
       stopSpeaking();
-    });
-
-    return () => {
-      onFocus.remove();
-      onBlur.remove();
-    };
+      const speak = async () => {
+        await startSpeaking(strings.storySelectionSpeech);
+      };
+      speak();
+    }
   }, [isLoading]);
 
   if (!isLoading) {

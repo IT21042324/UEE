@@ -22,6 +22,7 @@ import {
 import { SinhalaString } from "../../constants/sinhalaString";
 import { EnglishString } from "../../constants/strings";
 import { UseUserContext } from "../../useHook/useUserContext";
+import { UseGeneralSpeechCombination } from "../../useHook/mergeSpeechAndGeneralSettings";
 
 export const GameCompletion = ({ navigation }) => {
   const incorrectAttempts = parseInt(navigation.getParam("incorrectAttempts"));
@@ -61,8 +62,13 @@ export const GameCompletion = ({ navigation }) => {
   };
 
   const { user } = UseUserContext();
+
+  const { stopSpeaking } = UseGeneralSpeechCombination();
+
   useEffect(() => {
     async function loadStrings() {
+      stopSpeaking();
+
       const settings = await getSettings();
       if (settings?.language) {
         if (settings.language === "si-LK") setStrings(SinhalaString());

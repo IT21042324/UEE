@@ -2,16 +2,28 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { globalStyles } from "../styles/global";
 import { Ionicons } from "@expo/vector-icons";
 import { UseAppGeneralSettingsContext } from "../useHook/generalSettingsContext";
+import { UseSpeechContext } from "../useHook/useSpeechContext";
+import { CustomHeaderBackButton } from "./headerBackButton";
+import { screenTitles } from "../constants/commonStrings";
 
-export const Header = ({ title }) => {
+export const Header = ({ title, navigation }) => {
   const { muted, mute, unMute } = UseAppGeneralSettingsContext();
+  const { speechText } = UseSpeechContext();
 
   const muteOnPressHandler = () => {
-    muted ? unMute() : mute();
+    muted ? unMute(speechText) : mute();
   };
 
   return (
     <View style={styles.header}>
+      {title !== "Welcome" &&
+        title !== screenTitles.MainMenu &&
+        title !== "Loading" && (
+          <TouchableOpacity style={styles.backBtn} onPress={muteOnPressHandler}>
+            <CustomHeaderBackButton navigation={navigation} title={title} />
+          </TouchableOpacity>
+        )}
+
       {title !== "Welcome" && (
         <TouchableOpacity
           style={styles.volumeIcon}
@@ -46,5 +58,9 @@ const styles = StyleSheet.create({
   volumeIcon: {
     position: "absolute",
     right: 0,
+  },
+  backBtn: {
+    marginRight: 30,
+    left: 0,
   },
 });

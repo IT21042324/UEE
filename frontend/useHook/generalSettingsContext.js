@@ -3,13 +3,10 @@ import { AppGeneralSettingsContext } from "../context/generalSettingsContext";
 import { UseSpeechContext } from "./useSpeechContext";
 
 export const UseAppGeneralSettingsContext = () => {
-  const { setSpeechText, startSpeaking, stopSpeaking, speechText } =
-    UseSpeechContext();
+  const { startSpeaking, stopSpeaking } = UseSpeechContext();
 
   const appGeneralSettingsContext = useContext(AppGeneralSettingsContext);
   const { dispatch, muted, language } = appGeneralSettingsContext;
-
-  const [initialSpeechText, setInitialSpeechText] = useState("");
 
   const setDispatchToMute = () => {
     dispatch({ type: "mute" });
@@ -20,19 +17,13 @@ export const UseAppGeneralSettingsContext = () => {
   };
 
   const mute = () => {
-    setInitialSpeechText(speechText);
     stopSpeaking();
+
     setDispatchToMute();
   };
 
-  useEffect(() => {
-    if (initialSpeechText) {
-      setSpeechText(initialSpeechText);
-    }
-  }, [unMute]);
-
-  const unMute = () => {
-    startSpeaking(speechText);
+  const unMute = (thingsToSay) => {
+    startSpeaking(thingsToSay);
     setDispatchToUnMute();
   };
 

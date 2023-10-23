@@ -1,26 +1,28 @@
-import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import { Header } from "../component/header";
-import { colorVariants } from "../constants/globalConstants";
-import { StorySelectionScreen } from "../screen/game/storySelection";
-import { CinderellaStoryPage } from "../screen/game/story/cinderellaStory";
-import { RapunzelStoryPage } from "../screen/game/story/rapunzelStory";
-import { HerculesStoryPage } from "../screen/game/story/herculesStory";
-import { GameCompletion } from "../screen/game/gameCompletion";
-import { StudentSelectionScreen } from "../screen/studentSelection";
-import LoadingScreen from "../screen/loading";
+import { CustomHeaderBackButton } from "../component/headerBackButton";
 import { screenTitles } from "../constants/commonStrings";
+import { colorVariants } from "../constants/globalConstants";
 import { LoginAndSignup } from "../screen/LoginAndSignup";
-import HomePuzzle from "../screen/game/puzzle/HomePuzzle";
+import { GameCompletion } from "../screen/game/gameCompletion";
+import StartPuzzle from "../screen/game/puzzle/ChooseBigOne/StartPuzzle";
 import StartColorPuzzle from "../screen/game/puzzle/ChooseTheColor/StartColorPuzzle";
 import StartOddPuzzle from "../screen/game/puzzle/ChooseTheOddOne/StartOddPuzzle";
-import StartPuzzle from "../screen/game/puzzle/ChooseBigOne/StartPuzzle";
+import HomePuzzle from "../screen/game/puzzle/HomePuzzle";
+import { CinderellaStoryPage } from "../screen/game/story/cinderellaStory";
+import { HerculesStoryPage } from "../screen/game/story/herculesStory";
+import { RapunzelStoryPage } from "../screen/game/story/rapunzelStory";
+import { StorySelectionScreen } from "../screen/game/storySelection";
+import LoadingScreen from "../screen/loading";
+import { StudentSelectionScreen } from "../screen/studentSelection";
 
 const screens = {
   LoginAndSignup: {
     screen: LoginAndSignup,
     navigationOptions: {
       headerTitle: () => <Header title={"Welcome"} />,
+      headerLeft: () => null,
     },
   },
   LoadingScreen: {
@@ -30,6 +32,7 @@ const screens = {
       headerLeft: () => null,
     },
   },
+
   StudentSelection: {
     screen: StudentSelectionScreen,
     navigationOptions: {
@@ -37,38 +40,52 @@ const screens = {
       headerLeft: () => null,
     },
   },
+
   StorySelection: {
     screen: StorySelectionScreen,
-    navigationOptions: {
-      headerTitle: () => <Header title={screenTitles.StorySelection} />,
-    },
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: () => (
+        <Header title={screenTitles.StorySelection} navigation={navigation} />
+      ),
+      headerLeft: () => null,
+    }),
   },
   CinderellaStory: {
     screen: CinderellaStoryPage,
 
-    navigationOptions: {
-      headerTitle: () => <Header title={screenTitles.CinderellaStory} />,
-    },
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: () => (
+        <Header title={screenTitles.CinderellaStory} navigation={navigation} />
+      ),
+      headerLeft: () => null,
+    }),
   },
   RapunzelStory: {
     screen: RapunzelStoryPage,
 
-    navigationOptions: {
-      headerTitle: () => <Header title={screenTitles.RapunzelStory} />,
-    },
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: () => (
+        <Header title={screenTitles.RapunzelStory} navigation={navigation} />
+      ),
+      headerLeft: () => null,
+    }),
   },
   HerculesStory: {
     screen: HerculesStoryPage,
 
-    navigationOptions: {
-      headerTitle: () => <Header title={screenTitles.HerculesStory} />,
-    },
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: () => (
+        <Header title={screenTitles.HerculesStory} navigation={navigation} />
+      ),
+      headerLeft: () => null,
+    }),
   },
   GameCompletion: {
     screen: GameCompletion,
 
     navigationOptions: {
       headerTitle: () => <Header title={screenTitles.GameCompletion} />,
+      headerLeft: () => null,
     },
   },
   //// Puzzle ////

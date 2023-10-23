@@ -12,11 +12,11 @@ export const StoryOptionCard = ({ option, title, navigation }) => {
 
   const onPressHandler = () => {
     if (title === "Cinderella" || title === "සින්ඩරෙල්ලා")
-      navigation.navigate("CinderellaStory");
+      navigation.replace("CinderellaStory");
     else if (title === "Rapunzel" || title === "රපුන්සෙල්")
-      navigation.navigate("RapunzelStory");
+      navigation.replace("RapunzelStory");
     else if (title === "Hercules" || title === "හර්කියුලිස්")
-      navigation.navigate("HerculesStory");
+      navigation.replace("HerculesStory");
   };
 
   return (
