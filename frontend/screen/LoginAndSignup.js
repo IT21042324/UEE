@@ -259,12 +259,11 @@ const styles = StyleSheet.create({
   bgImage: {
     width: "100%",
     height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   cardContainer: {
     width: "65%",
-    marginTop: "7%",
-    marginLeft: "17%",
-    marginRight: "20%",
   },
   cardTitle: {
     marginLeft: "auto",
