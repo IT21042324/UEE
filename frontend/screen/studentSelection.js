@@ -15,6 +15,7 @@ import { StudentMainManuSelectionCard } from "../component/studentSelectionCard"
 import { SinhalaString } from "../constants/sinhalaString";
 import { EnglishString } from "../constants/strings";
 import { UseGeneralSpeechCombination } from "../useHook/mergeSpeechAndGeneralSettings";
+import { UseUserContext } from "../useHook/useUserContext";
 
 export const StudentSelectionScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -25,11 +26,18 @@ export const StudentSelectionScreen = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const [welcomeLanguageDecider, setWelcomeLanguageDecider] =
+    useState("English");
+
   useEffect(() => {
     async function loadStrings() {
       const settings = await getSettings();
+
       if (settings?.language) {
-        if (settings.language === "si-LK") setStrings(SinhalaString());
+        if (settings.language === "si-LK") {
+          setStrings(SinhalaString());
+          setWelcomeLanguageDecider("Sinhala");
+        }
       }
       setIsLoading(false);
     }
@@ -53,6 +61,8 @@ export const StudentSelectionScreen = ({ navigation }) => {
     setModalVisible(status);
   };
 
+  const { user } = UseUserContext();
+
   if (!isLoading) {
     return (
       <ScrollView contentContainerStyle={styles.mainContainer}>
@@ -61,7 +71,24 @@ export const StudentSelectionScreen = ({ navigation }) => {
         )}
 
         <View styles={styles.welcomeContiner}>
-          <Text style={styles.welcomeContinerText}>Welcome Nimal</Text>
+          <Text style={styles.welcomeContinerText}>
+            <Text style={styles.welcomeContinerText}>
+              {welcomeLanguageDecider === "Sinhala"
+                ? `${
+                    user.userName
+                      ? user.userName.charAt(0).toUpperCase() +
+                        user.userName.slice(1)
+                      : ""
+                  } ${strings.studentSelection.welcome}`
+                : `${strings.studentSelection.welcome} ${
+                    user.userName
+                      ? user.userName.charAt(0).toUpperCase() +
+                        user.userName.slice(1)
+                      : ""
+                  }`}
+            </Text>
+          </Text>
+
           <Divider width={2} />
         </View>
 

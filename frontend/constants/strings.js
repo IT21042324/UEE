@@ -65,6 +65,13 @@ export const EnglishString = () => {
       btnSignup: "Sign Up",
     },
 
+    studentSelection: {
+      welcome: "Welcome",
+    },
+
+    studentSelection: {
+      welcome: "Welcome",
+    },
     gameCompletion: {
       excellentJobVerdict: "Excellent job! You got all the questions right!",
       greatJobVerdict: "Great job! You did really well!",

@@ -44,6 +44,10 @@ export const SinhalaString = () => {
       statistics: "සංඛ්යාලේඛන",
     },
 
+    studentSelection: {
+      welcome: "සාදරයෙන් පිළිගනිමු",
+    },
+
     studentSelectionOptions: [
       {
         title: "ප්රහේලිකාව",

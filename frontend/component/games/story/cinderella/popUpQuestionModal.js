@@ -27,17 +27,14 @@ export const PopupQuestionModal = ({
 }) => {
   const questionsArray = questionBank.easy;
 
-  const [randomIndex, setRandomIndex] = useState(0);
-
   const { stopSpeaking, startSpeaking } = UseGeneralSpeechCombination();
 
   useEffect(() => {
     if (modalVisible) {
       const newRandomIndex = Math.floor(Math.random() * questionsArray?.length);
-      setRandomIndex(newRandomIndex);
       const newRandomQuestion = questionsArray[newRandomIndex];
       setRandomQuestion(newRandomQuestion);
-      const newRandomOptions = [...newRandomQuestion.options]; // Create a copy
+      const newRandomOptions = [...newRandomQuestion.options];
       shuffleArray(newRandomOptions);
 
       setRandomOptions(newRandomOptions);
