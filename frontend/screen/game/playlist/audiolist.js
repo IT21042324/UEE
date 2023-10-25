@@ -62,6 +62,7 @@ export const Audiolist = () => {
 
     // pause audio
     if (
+      soundObj !== null &&
       soundObj?.isLoaded &&
       soundObj?.isPlaying &&
       currentItem.id === currentlyPlayingAudio?.id
@@ -72,6 +73,7 @@ export const Audiolist = () => {
 
     //resume playing audio
     if (
+      soundObj !== null &&
       soundObj?.isLoaded &&
       !soundObj?.isPlaying &&
       currentlyPlayingAudio?.id === currentItem.id
@@ -81,7 +83,11 @@ export const Audiolist = () => {
     }
 
     //select another audio
-    if (soundObj.isLoaded && currentlyPlayingAudio?.id !== currentItem.id) {
+    if (
+      soundObj !== null &&
+      soundObj.isLoaded &&
+      currentlyPlayingAudio?.id !== currentItem.id
+    ) {
       const status = await playNextAudio(playBackObj, currentItem.url);
       setCurrentlyPlayingAudio(currentItem);
       setSoundObj(status);
