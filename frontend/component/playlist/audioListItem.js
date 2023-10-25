@@ -8,11 +8,32 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import { colorVariants } from "../../constants/globalConstants";
 
+const renderPlayPauseIcon = (isPlaying) => {
+  if (isPlaying)
+    return (
+      <Entypo
+        name="controller-paus"
+        size={24}
+        color={colorVariants.ACTIVE_FONT}
+      />
+    );
+
+  return (
+    <Entypo
+      name="controller-play"
+      size={24}
+      color={colorVariants.ACTIVE_FONT}
+    />
+  );
+};
+
 export const AudioListItem = ({
   title,
   duration,
   onOptionPressHandler,
   onAudioPressHandler,
+  isPlaying,
+  activeListItem,
 }) => {
   const getThumbNailText = () => {
     return title[0];
@@ -22,8 +43,21 @@ export const AudioListItem = ({
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={onAudioPressHandler}>
         <View style={styles.leftContainer}>
-          <View style={styles.thumbnail}>
-            <Text style={styles.thumbNailText}>{getThumbNailText()}</Text>
+          <View
+            style={[
+              styles.thumbnail,
+              {
+                backgroundColor: activeListItem
+                  ? colorVariants.ACTIVE_BG
+                  : colorVariants.FONT_LIGHT,
+              },
+            ]}
+          >
+            <Text style={styles.thumbNailText}>
+              {activeListItem
+                ? renderPlayPauseIcon(isPlaying)
+                : getThumbNailText()}
+            </Text>
           </View>
 
           <View style={styles.titleContainer}>

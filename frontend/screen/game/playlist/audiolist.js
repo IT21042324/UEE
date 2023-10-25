@@ -43,9 +43,13 @@ export const Audiolist = () => {
     playBackObj,
     soundObj,
     currentlyPlayingAudio,
+    currentAudioIndex,
+    audioFiles,
     setPlayBackObj,
     setSoundObj,
     setCurrentlyPlayingAudio,
+    setIsPlaying,
+    setCurrentAudioIndex,
   } = UseAudioContext();
 
   const onAudioPressHandler = async (currentItem) => {
@@ -54,10 +58,12 @@ export const Audiolist = () => {
     if (soundObj === null) {
       const playBackObject = new Audio.Sound();
       const status = await playAudio(playBackObject, currentItem.url);
+      const index = audioFiles.indexOf(currentItem);
 
       setCurrentlyPlayingAudio(currentItem);
       setPlayBackObj(playBackObject);
       setSoundObj(status);
+      setCurrentAudioIndex(index);
     }
 
     // pause audio
@@ -68,7 +74,9 @@ export const Audiolist = () => {
       currentItem.id === currentlyPlayingAudio?.id
     ) {
       const status = await pauseAudio(playBackObj);
+
       setSoundObj(status);
+      setIsPlaying(false);
     }
 
     //resume playing audio
@@ -80,6 +88,7 @@ export const Audiolist = () => {
     ) {
       const status = await resumeAudio(playBackObj);
       setSoundObj(status);
+      setIsPlaying(true);
     }
 
     //select another audio
@@ -89,16 +98,22 @@ export const Audiolist = () => {
       currentlyPlayingAudio?.id !== currentItem.id
     ) {
       const status = await playNextAudio(playBackObj, currentItem.url);
+      const index = audioFiles.indexOf(currentItem);
+
       setCurrentlyPlayingAudio(currentItem);
       setSoundObj(status);
+      setIsPlaying(true);
+      setCurrentAudioIndex(index);
     }
   };
 
-  const rowRenderer = (type, item) => {
+  const rowRenderer = (type, item, index, extendedState) => {
     return (
       <AudioListItem
         title={item.title}
         duration={item.duration}
+        isPlaying={extendedState.isPlaying}
+        activeListItem={currentAudioIndex === index}
         onOptionPressHandler={() => {
           setOptionModalVisible(true);
           setCurrentItem(item);
@@ -110,13 +125,14 @@ export const Audiolist = () => {
 
   return (
     <AudioContext.Consumer>
-      {({ dataProvider }) => {
+      {({ dataProvider, isPlaying }) => {
         return (
           <View style={styles.mainContainer}>
             <RecyclerListView
               dataProvider={dataProvider}
               layoutProvider={layoutProvider}
               rowRenderer={rowRenderer}
+              extendedState={{ isPlaying }} //to say recyclerview to check the state of the component all the time
             />
             <OptionModal
               onPlayPress={() => {

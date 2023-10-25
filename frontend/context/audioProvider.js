@@ -13,9 +13,13 @@ export const AudioContext = createContext({
   playBackObj: null,
   soundObj: null,
   currentlyPlayingAudio: null,
+  isPlaying: false,
+  currentAudioIndex: null,
   setPlayBackObj: () => {},
   setSoundObj: () => {},
   setCurrentlyPlayingAudio: () => {},
+  setIsPlaying: () => {},
+  setCurrentAudioIndex: () => {},
 });
 
 export const AudioProvider = ({ children }) => {
@@ -30,6 +34,8 @@ export const AudioProvider = ({ children }) => {
   const [playBackObj, setPlayBackObj] = useState(null);
   const [soundObj, setSoundObj] = useState(null);
   const [currentlyPlayingAudio, setCurrentlyPlayingAudio] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentAudioIndex, setCurrentAudioIndex] = useState(null);
 
   const permissionAlert = () => {
     Alert.alert("Permission Required", "This app needs to read audio files!", [
@@ -59,7 +65,6 @@ export const AudioProvider = ({ children }) => {
   const getPermission = async () => {
     const permission = await MediaLibrary.getPermissionsAsync();
 
-    console.log(permission);
     if (permission.granted) {
       getAudioFiles();
     }
@@ -116,9 +121,13 @@ export const AudioProvider = ({ children }) => {
         playBackObj,
         soundObj,
         currentlyPlayingAudio,
+        isPlaying,
+        currentAudioIndex,
         setPlayBackObj,
         setSoundObj,
         setCurrentlyPlayingAudio,
+        setIsPlaying,
+        setCurrentAudioIndex,
       }}
     >
       {children}
