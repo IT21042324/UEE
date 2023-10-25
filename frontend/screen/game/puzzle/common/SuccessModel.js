@@ -67,7 +67,6 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
       questions: { type: Number, default: 0 },
       verdict: finalVerdict.finalVerdict,
     });
-    console.log(data);
 
     if (data) {
       navigation.navigate("PuzzleSelection");

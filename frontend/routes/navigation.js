@@ -1,11 +1,11 @@
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { Header } from "../component/header";
-import { CustomHeaderBackButton } from "../component/headerBackButton";
 import { screenTitles } from "../constants/commonStrings";
 import { colorVariants } from "../constants/globalConstants";
 import { LoginAndSignup } from "../screen/LoginAndSignup";
 import { GameCompletion } from "../screen/game/gameCompletion";
+import { PlayListNavigator } from "../screen/game/playlist/playListNavigator";
 import StartPuzzle from "../screen/game/puzzle/ChooseBigOne/StartPuzzle";
 import StartColorPuzzle from "../screen/game/puzzle/ChooseTheColor/StartColorPuzzle";
 import StartOddPuzzle from "../screen/game/puzzle/ChooseTheOddOne/StartOddPuzzle";
@@ -87,6 +87,10 @@ const screens = {
       headerTitle: () => <Header title={screenTitles.GameCompletion} />,
       headerLeft: () => null,
     },
+  },
+  PlayListSelection: {
+    screen: PlayListNavigator,
+    navigationOptions: {},
   },
   //// Puzzle ////
   PuzzleSelection: {

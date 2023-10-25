@@ -16,8 +16,8 @@ export const StudentMainManuSelectionCard = ({
       navigation.navigate("StorySelection");
     else if (title === "ප්රහේලිකාව" || title === "Puzzle")
       navigation.navigate("PuzzleSelection");
-    else if (title === "ධාවන ලැයිස්තුව" || title === "Playlist")
-      navigation.navigate("PlaylistSelection");
+    else if (title === "ධාවන ලැයිස්තුව" || title === "PlayList")
+      navigation.navigate("PlayListSelection");
   };
 
   return (

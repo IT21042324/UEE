@@ -72,6 +72,10 @@ export const EnglishString = () => {
     studentSelection: {
       welcome: "Welcome",
     },
+    audioProivder: {
+      haventAcceptedPermission:
+        "It looks like you haven't accept the permission.",
+    },
     gameCompletion: {
       excellentJobVerdict: "Excellent job! You got all the questions right!",
       greatJobVerdict: "Great job! You did really well!",

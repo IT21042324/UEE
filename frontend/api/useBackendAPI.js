@@ -14,10 +14,8 @@ export const UseBackendAPI = () => {
           `${BACKENDURL}/api/users/signup`,
           insertionData
         );
-        console.log(2);
         return info.data;
       } catch (err) {
-        console.log(3);
         console.log(err);
       }
     },

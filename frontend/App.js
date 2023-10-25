@@ -13,6 +13,8 @@ import * as SplashScreen from "expo-splash-screen";
 import Toast from "react-native-toast-message";
 import { UserContextProvider } from "./context/userContext";
 import { PaperProvider } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import AudioProvider from "./context/audioProvider";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -37,15 +39,19 @@ export default function App() {
           <RapiLayout>
             <MenuProvider>
               <ThemeProvider>
-                <UserContextProvider>
-                  <AppGeneralSettingsContextProvider>
-                    <SpeechContextProvider>
-                      <Toast />
-                      <Navigator />
-                      <CustomToast />
-                    </SpeechContextProvider>
-                  </AppGeneralSettingsContextProvider>
-                </UserContextProvider>
+                <AudioProvider>
+                  <UserContextProvider>
+                    <AppGeneralSettingsContextProvider>
+                      <SpeechContextProvider>
+                        <Toast />
+                        <NavigationContainer>
+                          <Navigator />
+                        </NavigationContainer>
+                        <CustomToast />
+                      </SpeechContextProvider>
+                    </AppGeneralSettingsContextProvider>
+                  </UserContextProvider>
+                </AudioProvider>
               </ThemeProvider>
             </MenuProvider>
           </RapiLayout>

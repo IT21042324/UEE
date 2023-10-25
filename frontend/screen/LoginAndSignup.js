@@ -35,7 +35,6 @@ export const LoginAndSignup = ({ navigation }) => {
     async function loadSettings() {
       const settings = await getSettings();
 
-      console.log(settings);
       if (settings?.studentInfo) {
         setUser(settings.studentInfo);
         navigation.navigate("LoadingScreen");
