@@ -12,7 +12,7 @@ import { selectAudio } from "../../helper/audioController";
 import { UseAudioContext } from "../../useHook/useAudioContext";
 import { AudioListItem } from "./audioListItem";
 
-const PlayListDetail = ({ visible, playList, onClose }) => {
+export const PlayListDetail = ({ visible, playList, onClose }) => {
   const context = UseAudioContext();
 
   const playAudio = (audio) => {
@@ -27,7 +27,7 @@ const PlayListDetail = ({ visible, playList, onClose }) => {
       onRequestClose={onClose}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>{playList.title}</Text>
+        <Text style={styles.title}>{playList?.title}</Text>
         <FlatList
           contentContainerStyle={styles.listContainer}
           data={playList.audios}
@@ -35,8 +35,8 @@ const PlayListDetail = ({ visible, playList, onClose }) => {
           renderItem={({ item }) => (
             <View style={{ marginBottom: 10 }}>
               <AudioListItem
-                title={item.filename}
-                duration={item.duration}
+                title={item?.title}
+                duration={item?.duration}
                 onAudioPress={() => playAudio(item)}
               />
             </View>

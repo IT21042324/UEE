@@ -40,7 +40,6 @@ export const Audiolist = ({ navigation }) => {
   const onAudioPressHandler = async (currentItem) => {
     //playing audio for the first time
 
-    console.log(currentItem, "haha");
     await selectAudio(currentItem, context);
   };
 
@@ -65,6 +64,7 @@ export const Audiolist = ({ navigation }) => {
   };
 
   const navigateToPlaylist = () => {
+    setOptionModalVisible(false);
     setAddToPlayList(currentItem);
     navigation.navigate("PlayList");
   };

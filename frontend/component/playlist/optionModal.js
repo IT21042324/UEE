@@ -14,8 +14,6 @@ export const OptionModal = ({
   currentItem,
   onCloseHandler,
   options,
-  onPlayListPress,
-  onPlayPress,
 }) => {
   const { title } = currentItem;
   return (

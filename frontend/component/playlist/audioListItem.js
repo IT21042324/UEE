@@ -78,7 +78,7 @@ export const AudioListItem = ({
             size={24}
             color={colorVariants.FONT_MEDIUM}
             onPress={onOptionPressHandler}
-            style={{ alignSelf: "center", padding: 10 }}
+            style={{ padding: 10 }}
           />
         </View>
       </View>

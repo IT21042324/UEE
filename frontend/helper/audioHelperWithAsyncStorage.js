@@ -27,5 +27,5 @@ export const convertTime = (minutes) => {
     }
     return `${minute}:${sec}`;
   }
-  return 20;
+  return "00:00";
 };

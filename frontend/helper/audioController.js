@@ -19,6 +19,12 @@ export const playAudio = async (playBackObj, url, lastPosition) => {
   }
 };
 
+// error inside playNextAudio helper method Cannot complete operation because sound is not loaded.
+// LOG  error inside playNextAudio helper method Cannot complete operation because sound is not loaded.
+// LOG  error inside play helper method The Sound is already loading.
+// LOG  error inside play helper method The Sound is already loading.
+// LOG  error inside cahnge audio method. Property 'onPlaybackStatusUpdate' doesn't exist
+
 export const pauseAudio = async (playBackObj) => {
   try {
     return await playBackObj.setStatusAsync({ shouldPlay: false });
@@ -49,7 +55,7 @@ export const selectAudio = async (audio, context, playListInfo = {}) => {
   const {
     soundObj,
     playBackObj,
-    currentAudio,
+    currentlyPlayingAudio,
     audioFiles,
     onPlaybackStatusUpdate,
     setSoundObj,
@@ -85,9 +91,9 @@ export const selectAudio = async (audio, context, playListInfo = {}) => {
     if (
       soundObj?.isLoaded &&
       soundObj?.isPlaying &&
-      currentAudio.id === audio.id
+      currentlyPlayingAudio.id === audio.id
     ) {
-      const status = await pause(playBackObj);
+      const status = await pauseAudio(playBackObj);
 
       setSoundObj(status);
       setIsPlaying(false);
@@ -98,15 +104,15 @@ export const selectAudio = async (audio, context, playListInfo = {}) => {
     if (
       soundObj?.isLoaded &&
       !soundObj.isPlaying &&
-      currentAudio.id === audio.id
+      currentlyPlayingAudio.id === audio.id
     ) {
-      const status = await resume(playBackObj);
+      const status = await resumeAudio(playBackObj);
       setSoundObj(status);
       setIsPlaying(true);
     }
 
     // select another audio
-    if (soundObj?.isLoaded && currentAudio.id !== audio.id) {
+    if (soundObj?.isLoaded && currentlyPlayingAudio.id !== audio.id) {
       const status = await playNextAudio(playBackObj, audio.url);
       const index = audioFiles.findIndex(({ id }) => id === audio.id);
 
@@ -126,7 +132,7 @@ export const selectAudio = async (audio, context, playListInfo = {}) => {
 
 const selectAudioFromPlayList = async (context, select) => {
   const {
-    currentAudio,
+    currentlyPlayingAudio,
     audioFiles,
     playBackObj,
     setSoundObj,
@@ -140,7 +146,7 @@ const selectAudioFromPlayList = async (context, select) => {
   let nextIndex;
 
   const indexOnPlayList = activePlayList.audios.findIndex(
-    ({ id }) => id === currentAudio.id
+    ({ id }) => id === currentlyPlayingAudio.id
   );
 
   if (select === "next") {
@@ -179,6 +185,7 @@ export const changeAudio = async (context, select) => {
     setPlaybackDuration,
     isPlayListRunning,
     setPlaybackPosition,
+    onPlaybackStatusUpdate,
   } = context;
 
   if (isPlayListRunning) return selectAudioFromPlayList(context, select);
@@ -250,7 +257,7 @@ export const changeAudio = async (context, select) => {
 
     storeAudioForNextOpening(audio, index);
   } catch (error) {
-    console.log("error inside cahnge audio method.", error.message);
+    console.log("error inside change audio method.", error.message);
   }
 };
 
@@ -267,7 +274,7 @@ export const moveAudio = async (context, value) => {
     setSoundObj(status);
     setPlaybackPosition(status.positionMillis);
 
-    await resume(playBackObj);
+    await resumeAudio(playBackObj);
   } catch (error) {
     console.log("error inside onSlidingComplete callback", error);
   }

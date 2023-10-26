@@ -8,6 +8,8 @@ import { DataProvider } from "recyclerlistview";
 import * as MediaLibrary from "expo-media-library";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { storeAudioForNextOpening } from "../helper/audioHelperWithAsyncStorage";
+import { Audio } from "expo-av";
+import { playNextAudio } from "../helper/audioController";
 
 export const AudioContext = createContext({
   audioFiles: [],
@@ -26,6 +28,7 @@ export const AudioContext = createContext({
   playbackDuration: null,
   totalAudioCount: 0,
   setPlayBackObj: () => {},
+  setPlayList: () => {},
   setSoundObj: () => {},
   setCurrentlyPlayingAudio: () => {},
   setIsPlaying: () => {},
@@ -50,6 +53,7 @@ export const AudioProvider = ({ children }) => {
 
   const [playBackObj, setPlayBackObj] = useState(null);
   const [soundObj, setSoundObj] = useState(null);
+  const [playList, setPlayList] = useState([]); // Changed this line [
   const [currentlyPlayingAudio, setCurrentlyPlayingAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(null);
@@ -78,9 +82,9 @@ export const AudioProvider = ({ children }) => {
       mediaType: "audio",
     });
 
-    setTotalAudioCount(media.totalCount);
-
     media.assets = mediaListWithDuration;
+    setTotalAudioCount(mediaListWithDuration.length);
+
     setDataProvider(
       dataProvider.cloneWithRows([...audioFiles, ...media.assets])
     );
@@ -165,7 +169,7 @@ export const AudioProvider = ({ children }) => {
           ({ id }) => id === audio.id
         );
 
-        const status = await playNext(playBackObj, audio.url);
+        const status = await playNextAudio(playBackObj, audio.url);
 
         setSoundObj(status);
         setIsPlaying(true);
@@ -184,11 +188,11 @@ export const AudioProvider = ({ children }) => {
         setPlaybackPosition(null);
         setPlaybackDuration(null);
 
-        return await storeAudioForNextOpening(state.audioFiles[0], 0);
+        return await storeAudioForNextOpening(audioFiles[0], 0);
       }
       // otherwise we want to select the next audio
       const audio = audioFiles[nextAudioIndex];
-      const status = await playNext(state.playBackObj, audio.url);
+      const status = await playNextAudio(playBackObj, audio.url);
 
       setSoundObj(status);
       setCurrentlyPlayingAudio(audio);
@@ -201,6 +205,10 @@ export const AudioProvider = ({ children }) => {
 
   useEffect(() => {
     getPermission();
+
+    if (playBackObj === null) {
+      setPlayBackObj(new Audio.Sound());
+    }
 
     const loadDurationForAudioTracks = async () => {
       const mediaListNew = await addDurationsToMediaList(mediaList);
@@ -231,6 +239,8 @@ export const AudioProvider = ({ children }) => {
         currentAudioIndex,
         totalAudioCount,
         addToPlayList,
+        playList,
+        setPlayList,
         loadPreviousAudio,
         setPlayBackObj,
         setSoundObj,

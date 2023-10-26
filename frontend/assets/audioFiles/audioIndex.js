@@ -7,6 +7,9 @@ export const twinkleTwinkle = require("./twinkle.mp3");
 export const washingHands = require("./washingHands.mp3");
 export const birthdayMusicalChair = require("./musicalChair.mp3");
 export const tenInBed = require("./tenInBed.mp3");
+export const abc = require("./ABC.mp3");
+export const evenAndOdd = require("./evenAndOdd.mp3");
+export const skipCounting = require("./skipCounting.mp3");
 
 export const mediaList = [
   {
@@ -50,6 +53,24 @@ export const mediaList = [
     title: "Ten In Bed",
     album: "Kids Songs",
     url: tenInBed,
+  },
+  {
+    id: 8,
+    title: "Alphabet Song",
+    album: "Kids Songs",
+    url: abc,
+  },
+  {
+    id: 9,
+    title: "Even And Odd",
+    album: "Kids Songs",
+    url: evenAndOdd,
+  },
+  {
+    id: 10,
+    title: "Skip Counting By 10",
+    album: "Kids Songs",
+    url: skipCounting,
   },
 ];
 
