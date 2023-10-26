@@ -40,47 +40,50 @@ export const AudioListItem = ({
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={onAudioPressHandler}>
-        <View style={styles.leftContainer}>
-          <View
-            style={[
-              styles.thumbnail,
-              {
-                backgroundColor: activeListItem
-                  ? colorVariants.ACTIVE_BG
-                  : colorVariants.FONT_LIGHT,
-              },
-            ]}
-          >
-            <Text style={styles.thumbNailText}>
-              {activeListItem
-                ? renderPlayPauseIcon(isPlaying)
-                : getThumbNailText()}
-            </Text>
-          </View>
+    <>
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={onAudioPressHandler}>
+          <View style={styles.leftContainer}>
+            <View
+              style={[
+                styles.thumbnail,
+                {
+                  backgroundColor: activeListItem
+                    ? colorVariants.ACTIVE_BG
+                    : colorVariants.FONT_LIGHT,
+                },
+              ]}
+            >
+              <Text style={styles.thumbNailText}>
+                {activeListItem
+                  ? renderPlayPauseIcon(isPlaying)
+                  : getThumbNailText()}
+              </Text>
+            </View>
 
-          <View style={styles.titleContainer}>
-            <Text style={styles.title} numberOfLines={1}>
-              {title}
-            </Text>
-            <Text style={styles.timeText} numberOfLines={1}>
-              {duration}
-            </Text>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title} numberOfLines={1}>
+                {title}
+              </Text>
+              <Text style={styles.timeText} numberOfLines={1}>
+                {duration}
+              </Text>
+            </View>
           </View>
+        </TouchableWithoutFeedback>
+
+        <View style={styles.rightContainer}>
+          <Entypo
+            name="dots-three-vertical"
+            size={24}
+            color={colorVariants.FONT_MEDIUM}
+            onPress={onOptionPressHandler}
+            style={{ alignSelf: "center", padding: 10 }}
+          />
         </View>
-      </TouchableWithoutFeedback>
-
-      <View style={styles.rightContainer}>
-        <Entypo
-          name="dots-three-vertical"
-          size={24}
-          color={colorVariants.FONT_MEDIUM}
-          onPress={onOptionPressHandler}
-          style={{ alignSelf: "center", padding: 10 }}
-        />
       </View>
-    </View>
+      <View style={styles.seperator} />
+    </>
   );
 };
 

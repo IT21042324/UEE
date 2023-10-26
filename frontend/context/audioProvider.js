@@ -6,20 +6,37 @@ import {
 } from "../assets/audioFiles/audioIndex";
 import { DataProvider } from "recyclerlistview";
 import * as MediaLibrary from "expo-media-library";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { storeAudioForNextOpening } from "../helper/audioHelperWithAsyncStorage";
 
 export const AudioContext = createContext({
   audioFiles: [],
+  playList: [],
+  addToPlayList: null,
+  permissionError: false,
   dataProvider: new DataProvider((r1, r2) => r1 !== r2),
   playBackObj: null,
   soundObj: null,
-  currentlyPlayingAudio: null,
+  currentlyPlayingAudio: {},
   isPlaying: false,
+  isPlayListRunning: false,
+  activePlayList: [],
   currentAudioIndex: null,
+  playbackPosition: null,
+  playbackDuration: null,
+  totalAudioCount: 0,
   setPlayBackObj: () => {},
   setSoundObj: () => {},
   setCurrentlyPlayingAudio: () => {},
   setIsPlaying: () => {},
   setCurrentAudioIndex: () => {},
+  setIsPlayListRunning: () => {},
+  setPlaybackPosition: () => {},
+  setPlaybackDuration: () => {},
+  setActivePlayList: () => {},
+  setTotalAudioCount: () => {},
+  loadPreviousAudio: () => {},
+  setAddToPlayList: () => {},
 });
 
 export const AudioProvider = ({ children }) => {
@@ -36,6 +53,12 @@ export const AudioProvider = ({ children }) => {
   const [currentlyPlayingAudio, setCurrentlyPlayingAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(null);
+  const [playbackPosition, setPlaybackPosition] = useState(null);
+  const [playbackDuration, setPlaybackDuration] = useState(null);
+  const [activePlayList, setActivePlayList] = useState([]);
+  const [isPlayListRunning, setIsPlayListRunning] = useState(false);
+  const [totalAudioCount, setTotalAudioCount] = useState(0);
+  const [addToPlayList, setAddToPlayList] = useState(null);
 
   const permissionAlert = () => {
     Alert.alert("Permission Required", "This app needs to read audio files!", [
@@ -55,11 +78,31 @@ export const AudioProvider = ({ children }) => {
       mediaType: "audio",
     });
 
+    setTotalAudioCount(media.totalCount);
+
     media.assets = mediaListWithDuration;
     setDataProvider(
       dataProvider.cloneWithRows([...audioFiles, ...media.assets])
     );
     setAudioFiles([...audioFiles, ...media.assets]);
+  };
+
+  const loadPreviousAudio = async () => {
+    let previousAudio = await AsyncStorage.getItem("previousAudio");
+    let currentlyPlayingAudio;
+    let currentAudioIndex;
+
+    if (previousAudio === null) {
+      currentlyPlayingAudio = audioFiles[0]; // Changed this line
+      currentAudioIndex = 0;
+    } else {
+      previousAudio = JSON.parse(previousAudio);
+      currentlyPlayingAudio = previousAudio.audio;
+      currentAudioIndex = previousAudio.index;
+    }
+
+    setCurrentlyPlayingAudio(currentlyPlayingAudio);
+    setCurrentAudioIndex(currentAudioIndex);
   };
 
   const getPermission = async () => {
@@ -93,6 +136,69 @@ export const AudioProvider = ({ children }) => {
     }
   };
 
+  const onPlaybackStatusUpdate = async (playbackStatus) => {
+    if (playbackStatus?.isLoaded && playbackStatus.isPlaying) {
+      setPlaybackPosition(playbackStatus.positionMillis);
+      setPlaybackDuration(playbackStatus.durationMillis);
+    }
+
+    if (playbackStatus?.isLoaded && !playbackStatus.isPlaying) {
+      storeAudioForNextOpening(
+        currentlyPlayingAudio,
+        currentAudioIndex,
+        playbackStatus.positionMillis
+      );
+    }
+
+    if (playbackStatus.didJustFinish) {
+      if (isPlayListRunning) {
+        let audio;
+        const indexOnPlayList = activePlayList.audios.findIndex(
+          ({ id }) => id === currentlyPlayingAudio.id
+        );
+        const nextIndex = indexOnPlayList + 1;
+        audio = activePlayList.audios[nextIndex];
+
+        if (!audio) audio = activePlayList.audios[0];
+
+        const indexOnAllList = audioFiles.findIndex(
+          ({ id }) => id === audio.id
+        );
+
+        const status = await playNext(playBackObj, audio.url);
+
+        setSoundObj(status);
+        setIsPlaying(true);
+        setCurrentlyPlayingAudio(audio);
+        setCurrentAudioIndex(indexOnAllList);
+      }
+
+      const nextAudioIndex = currentAudioIndex + 1;
+      if (nextAudioIndex >= totalAudioCount) {
+        playBackObj.unloadAsync();
+
+        setSoundObj(null);
+        setIsPlaying(false);
+        setCurrentAudioIndex(0);
+        setCurrentlyPlayingAudio(audioFiles[0]);
+        setPlaybackPosition(null);
+        setPlaybackDuration(null);
+
+        return await storeAudioForNextOpening(state.audioFiles[0], 0);
+      }
+      // otherwise we want to select the next audio
+      const audio = audioFiles[nextAudioIndex];
+      const status = await playNext(state.playBackObj, audio.url);
+
+      setSoundObj(status);
+      setCurrentlyPlayingAudio(audio);
+      setIsPlaying(true);
+      setCurrentAudioIndex(nextAudioIndex);
+
+      await storeAudioForNextOpening(audio, nextAudioIndex);
+    }
+  };
+
   useEffect(() => {
     getPermission();
 
@@ -123,11 +229,25 @@ export const AudioProvider = ({ children }) => {
         currentlyPlayingAudio,
         isPlaying,
         currentAudioIndex,
+        totalAudioCount,
+        addToPlayList,
+        loadPreviousAudio,
         setPlayBackObj,
         setSoundObj,
         setCurrentlyPlayingAudio,
         setIsPlaying,
         setCurrentAudioIndex,
+        playbackDuration,
+        setPlaybackDuration,
+        activePlayList,
+        setActivePlayList,
+        isPlayListRunning,
+        setIsPlayListRunning,
+        setTotalAudioCount,
+        playbackPosition,
+        setPlaybackPosition,
+        onPlaybackStatusUpdate,
+        setAddToPlayList,
       }}
     >
       {children}

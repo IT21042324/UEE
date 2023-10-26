@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Audiolist } from "./audiolist";
-import { Player } from "./player";
 import { PlayList } from "./playlist.js";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Player } from "./player";
 
 const Tab = createBottomTabNavigator();
 
