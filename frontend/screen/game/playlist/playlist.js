@@ -103,8 +103,8 @@ export const PlayList = ({ navigation }) => {
 
       if (sameAudio) {
         Alert.alert(
-          "Found same audio!",
-          `${addToPlayList.title} is already inside the list.`
+          "Audio Already Exists!",
+          `"${addToPlayList.title}" already exists in your current playlist. 😊`
         );
         sameAudio = false;
 
@@ -133,7 +133,7 @@ export const PlayList = ({ navigation }) => {
               style={styles.playListBanner}
               onPress={() => handleBannerPress(item)}
             >
-              <Text>{item.title}</Text>
+              <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.audioCount}>
                 {item.audios.length > 1
                   ? `${item.audios.length} Songs`
@@ -183,7 +183,10 @@ const styles = StyleSheet.create({
     color: colorVariants.ACTIVE_BG,
     letterSpacing: 1,
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 16,
     padding: 5,
+  },
+  title: {
+    fontSize: 24,
   },
 });

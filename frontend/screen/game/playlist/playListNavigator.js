@@ -5,6 +5,7 @@ import { Audiolist } from "./audiolist";
 import { Player } from "./player";
 import { PlayList } from "./playlist";
 import PlayListDetail from "./playListDetail";
+import { useNavigation } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,10 +21,12 @@ const PlayListScreen = () => {
 };
 
 export const PlayListNavigator = () => {
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="AudioList"
+        name="Audio List"
         component={Audiolist}
         options={{
           header: () => {},
@@ -50,6 +53,12 @@ export const PlayListNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="library-music" size={size} color={color} />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate("PlayList", { screen: "Your PlayList" });
+          },
         }}
       />
     </Tab.Navigator>

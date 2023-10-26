@@ -66,7 +66,7 @@ export const Audiolist = ({ navigation }) => {
   const navigateToPlaylist = () => {
     setOptionModalVisible(false);
     setAddToPlayList(currentItem);
-    navigation.navigate("PlayList");
+    navigation.navigate("PlayList", { screen: "Your PlayList" });
   };
 
   return (
