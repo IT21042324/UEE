@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  FlatList,
-  Image,
+  View,
   StyleSheet,
   Text,
+  FlatList,
+  Image,
   TouchableOpacity,
-  View,
 } from "react-native";
-import Modal from "react-native-modal";
-import Toast from "react-native-toast-message";
 import {
   colorVariants,
   fontFamily,
   fontSize,
 } from "../../../../constants/globalConstants";
-import { UseGeneralSpeechCombination } from "../../../../useHook/mergeSpeechAndGeneralSettings";
+import Modal from "react-native-modal";
+import Toast from "react-native-toast-message";
+import { UseSpeechContext } from "../../../../useHook/useSpeechContext";
 
 export const PopupQuestionModal = ({
   questionBank,
@@ -23,18 +23,20 @@ export const PopupQuestionModal = ({
   modalVisible,
   setModalVisiblity,
   onIncorrectAnswerSelected,
-  popupQuestionToast,
 }) => {
   const questionsArray = questionBank.easy;
 
-  const { stopSpeaking, startSpeaking } = UseGeneralSpeechCombination();
+  const [randomIndex, setRandomIndex] = useState(0);
+
+  const { stopSpeaking, startSpeaking } = UseSpeechContext();
 
   useEffect(() => {
     if (modalVisible) {
       const newRandomIndex = Math.floor(Math.random() * questionsArray?.length);
+      setRandomIndex(newRandomIndex);
       const newRandomQuestion = questionsArray[newRandomIndex];
       setRandomQuestion(newRandomQuestion);
-      const newRandomOptions = [...newRandomQuestion.options];
+      const newRandomOptions = [...newRandomQuestion.options]; // Create a copy
       shuffleArray(newRandomOptions);
 
       setRandomOptions(newRandomOptions);
@@ -59,14 +61,15 @@ export const PopupQuestionModal = ({
     if (answer === randomQuestion.correctAnswer) {
       Toast.show({
         type: "success",
-        text1: popupQuestionToast.correctAnswer,
+        text1: "Correct Answer",
       });
       setModalVisiblity(false);
       onCorrectAnswerSelected();
     } else {
       Toast.show({
         type: "error",
-        text1: popupQuestionToast.incorrectAnswer,
+        text1:
+          "Good Guess, but maybe there is a better answer. Can you find it?",
       });
 
       onIncorrectAnswerSelected();
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colorVariants.white,
-    padding: 5,
+    padding: 30,
     marginTop: 70,
   },
   imageAnswerContainer: {
@@ -132,20 +135,18 @@ const styles = StyleSheet.create({
     flex: 0.8,
   },
   questionTextContainer: {
-    flex: 0.1,
+    flex: 0.3,
+    padding: 5,
+    marginBottom: 30,
   },
   questionText: {
     fontFamily: fontFamily.normalText,
-    fontSize: fontSize.xLarge,
+    fontSize: fontSize.xxxLarge,
     padding: 5,
   },
   imageContainer: { flex: 0.4, backgroundColor: "orange" },
   questionContainer: {
-    flex: 0.6,
-    justifyContent: "center",
-    width: "100%",
-    height: "100%",
-    top: 30,
+    flex: 0.5,
   },
   answerContainer: {
     flex: 1,
@@ -156,7 +157,6 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
   },
   answerText: {
     fontFamily: fontFamily.normalText,

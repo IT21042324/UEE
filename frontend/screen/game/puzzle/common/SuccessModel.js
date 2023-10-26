@@ -1,13 +1,6 @@
 import { useState } from "react";
-import {
-  ActivityIndicator,
-  Button,
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { Card } from "react-native-paper";
+import { ActivityIndicator, Modal, StyleSheet, Text, View } from "react-native";
+import { Card, Button } from "react-native-paper";
 import { UseBackendAPI } from "../../../../api/useBackendAPI";
 import { EnglishString } from "../../../../constants/strings";
 import { UseUserContext } from "../../../../useHook/useUserContext";
@@ -67,6 +60,7 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
       questions: { type: Number, default: 0 },
       verdict: finalVerdict.finalVerdict,
     });
+    console.log(data);
 
     if (data) {
       navigation.navigate("PuzzleSelection");
@@ -82,22 +76,26 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
             <Text style={styles.descriptionText}>
               You have earned {points} points.✴️
             </Text>
-            <View style={styles.btnContainerFinish}>
+            <Card.Content style={styles.btnContainerFinish}>
               {isSavingToDB ? (
                 <ActivityIndicator color="red" size="large" />
               ) : (
                 <Button
-                  color="red"
-                  title="Finish"
+                  mode="contained"
+                  buttonColor="red"
                   onPress={() => OnFinishHandler()}
-                />
+                >
+                  Finish
+                </Button>
               )}
-            </View>
+            </Card.Content>
 
             {!isSavingToDB && (
-              <View style={styles.btnContainerNext}>
-                <Button title="Next" onPress={onClose} />
-              </View>
+              <Card.Content style={styles.btnContainerNext}>
+                <Button mode="outlined" onPress={onClose}>
+                  Next
+                </Button>
+              </Card.Content>
             )}
           </Card.Content>
         </Card>

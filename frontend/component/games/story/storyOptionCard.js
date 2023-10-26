@@ -12,11 +12,11 @@ export const StoryOptionCard = ({ option, title, navigation }) => {
 
   const onPressHandler = () => {
     if (title === "Cinderella" || title === "සින්ඩරෙල්ලා")
-      navigation.replace("CinderellaStory");
+      navigation.navigate("CinderellaStory");
     else if (title === "Rapunzel" || title === "රපුන්සෙල්")
-      navigation.replace("RapunzelStory");
+      navigation.navigate("RapunzelStory");
     else if (title === "Hercules" || title === "හර්කියුලිස්")
-      navigation.replace("HerculesStory");
+      navigation.navigate("HerculesStory");
   };
 
   return (
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     margin: 40,
     borderWidth: 2,
     padding: 5,
+    backgroundColor: "white",
   },
   image: {
     width: "100%",

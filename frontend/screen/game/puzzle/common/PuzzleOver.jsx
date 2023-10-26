@@ -1,9 +1,9 @@
-import { Modal, Text, View, StyleSheet, Button } from "react-native";
+import { Modal, Text, View, StyleSheet } from "react-native";
 import { UseUserContext } from "../../../../useHook/useUserContext";
 import { UseBackendAPI } from "../../../../api/useBackendAPI";
 import { useState } from "react";
 import { EnglishString } from "../../../../constants/strings";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Button } from "react-native-paper";
 
 function PuzzleOver({ visible, onClose, points, navigation, progress }) {
   const { user } = UseUserContext();
@@ -83,10 +83,13 @@ function PuzzleOver({ visible, onClose, points, navigation, progress }) {
                 <ActivityIndicator color="red" size="large" />
               ) : (
                 <Button
-                  title="Finish"
+                  mode="contained"
+                  buttonColor="red"
                   style={styles.buttonText}
-                  onPress={() => OnFinishHandler()}
-                />
+                  onPress={() => navigation.navigate("PuzzleSelection")}
+                >
+                  Finish
+                </Button>
               )}
             </View>
           </View>
@@ -130,11 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-    fontSize: 18,
-    color: "blue",
-    marginBottom: 10,
-    width: 100,
-    marginHorizontal: 16,
+    width: "60%",
   },
 
   btnContainer: {
