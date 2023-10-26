@@ -19,12 +19,6 @@ export const playAudio = async (playBackObj, url, lastPosition) => {
   }
 };
 
-// error inside playNextAudio helper method Cannot complete operation because sound is not loaded.
-// LOG  error inside playNextAudio helper method Cannot complete operation because sound is not loaded.
-// LOG  error inside play helper method The Sound is already loading.
-// LOG  error inside play helper method The Sound is already loading.
-// LOG  error inside cahnge audio method. Property 'onPlaybackStatusUpdate' doesn't exist
-
 export const pauseAudio = async (playBackObj) => {
   try {
     return await playBackObj.setStatusAsync({ shouldPlay: false });
@@ -178,13 +172,7 @@ export const changeAudio = async (context, select) => {
     currentAudioIndex,
     totalAudioCount,
     audioFiles,
-    setSoundObj,
-    setCurrentlyPlayingAudio,
-    setIsPlaying,
-    setCurrentAudioIndex,
-    setPlaybackDuration,
     isPlayListRunning,
-    setPlaybackPosition,
     onPlaybackStatusUpdate,
   } = context;
 
@@ -248,12 +236,12 @@ export const changeAudio = async (context, select) => {
       }
     }
 
-    setCurrentlyPlayingAudio(audio);
-    setSoundObj(status);
-    setIsPlaying(true);
-    setCurrentAudioIndex(index);
-    setPlaybackPosition(null);
-    setPlaybackDuration(null);
+    context.setCurrentlyPlayingAudio(audio);
+    context.setSoundObj(status);
+    context.setIsPlaying(true);
+    context.setCurrentAudioIndex(index);
+    context.setPlaybackPosition(null);
+    context.setPlaybackDuration(null);
 
     storeAudioForNextOpening(audio, index);
   } catch (error) {

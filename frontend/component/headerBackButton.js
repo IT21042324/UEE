@@ -4,7 +4,7 @@ import { screenTitles } from "../constants/commonStrings";
 
 export const CustomHeaderBackButton = ({ navigation, title }) => {
   const navigationHandler = () => {
-    if (title === screenTitles.StorySelection)
+    if (title === screenTitles.StorySelection || title === "PlayList")
       navigation.replace("StudentSelection");
     else if (storyTitleValidator(title)) navigation.replace("StorySelection");
   };

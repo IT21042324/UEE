@@ -16,6 +16,7 @@ import { StorySelectionScreen } from "../screen/game/storySelection";
 import LoadingScreen from "../screen/loading";
 import { StudentSelectionScreen } from "../screen/studentSelection";
 import { PlayListNavigator } from "../screen/game/playlist/playListNavigator";
+import { Text } from "react-native";
 
 const screens = {
   LoginAndSignup: {
@@ -90,12 +91,11 @@ const screens = {
   },
   PlayListSelection: {
     screen: PlayListNavigator,
-    navigationOptions: {
-      headerTitle: () => <Header title={"PlayList"} />,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: () => <Header title={"PlayList"} navigation={navigation} />,
       headerLeft: () => null,
-    },
+    }),
   },
-  //// Puzzle ////
   PuzzleSelection: {
     screen: HomePuzzle,
   },
