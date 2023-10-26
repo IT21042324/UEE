@@ -86,7 +86,7 @@ function PuzzleOver({ visible, onClose, points, navigation, progress }) {
                   mode="contained"
                   buttonColor="red"
                   style={styles.buttonText}
-                  onPress={() => navigation.navigate("PuzzleSelection")}
+                  onPress={() => OnFinishHandler()}
                 >
                   Finish
                 </Button>
