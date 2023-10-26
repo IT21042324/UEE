@@ -30,10 +30,10 @@ const renderPlayPauseIcon = (isPlaying) => {
 export const AudioListItem = ({
   title,
   duration,
-  onOptionPressHandler,
-  onAudioPressHandler,
   isPlaying,
   activeListItem,
+  onOptionPressHandler,
+  onAudioPressHandler,
 }) => {
   const getThumbNailText = () => {
     return title[0];

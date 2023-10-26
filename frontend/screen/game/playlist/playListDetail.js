@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { AudioListItem } from "../../../component/playlist/audioListItem";
+import { OptionModal } from "../../../component/playlist/optionModal";
 import { colorVariants } from "../../../constants/globalConstants";
 import { selectAudio } from "../../../helper/audioController";
 import { UseAudioContext } from "../../../useHook/useAudioContext";
-import { AudioListItem } from "../../../component/playlist/audioListItem";
-import { OptionModal } from "../../../component/playlist/optionModal";
 
 const PlayListDetail = (props) => {
   const context = UseAudioContext();
@@ -69,7 +69,7 @@ const PlayListDetail = (props) => {
         return item;
       });
 
-      AsyncStorage.setItem("playlist", JSON.stringify(updatedPlayLists));
+      await AsyncStorage.setItem("playlist", JSON.stringify(updatedPlayLists));
 
       context.setPlayList(updatedPlayLists);
       context.setIsPlayListRunning(isPlayListRunning);
@@ -149,8 +149,8 @@ const PlayListDetail = (props) => {
                   duration={item.duration}
                   isPlaying={context.isPlaying}
                   activeListItem={item.id === context.currentlyPlayingAudio.id}
-                  onAudioPress={() => playAudio(item)}
-                  onOptionPress={() => {
+                  onAudioPressHandler={() => playAudio(item)}
+                  onOptionPressHandler={() => {
                     setSelectedItem(item);
                     setModalVisible(true);
                   }}
