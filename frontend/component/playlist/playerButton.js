@@ -2,8 +2,6 @@ import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { colorVariants } from "../../constants/globalConstants";
 
-//test comment
-
 const PlayerButton = (props) => {
   const {
     iconType,
