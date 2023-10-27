@@ -147,7 +147,7 @@ export const AudioProvider = ({ children }) => {
     }
 
     if (playbackStatus?.isLoaded && !playbackStatus.isPlaying) {
-      storeAudioForNextOpening(
+      await storeAudioForNextOpening(
         currentlyPlayingAudio,
         currentAudioIndex,
         playbackStatus.positionMillis
@@ -248,6 +248,8 @@ export const AudioProvider = ({ children }) => {
         setIsPlaying,
         setCurrentAudioIndex,
         playbackDuration,
+        addDurationsToMediaList,
+        setMediaListWithDuration,
         setPlaybackDuration,
         activePlayList,
         setActivePlayList,
@@ -258,6 +260,7 @@ export const AudioProvider = ({ children }) => {
         setPlaybackPosition,
         onPlaybackStatusUpdate,
         setAddToPlayList,
+        getPermission,
       }}
     >
       {children}

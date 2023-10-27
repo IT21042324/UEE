@@ -2,13 +2,19 @@ import { storeAudioForNextOpening } from "./audioHelperWithAsyncStorage";
 
 export const playAudio = async (playBackObj, url, lastPosition) => {
   try {
-    if (!lastPosition)
+    if (!lastPosition) {
+      console.log("first", playBackObj);
+
       return await playBackObj.loadAsync(url, {
         shouldPlay: true,
         progressUpdateIntervalMillis: 1000,
       });
+    }
 
     // but if there is lastPosition then we will play audio from the lastPosition
+
+    console.log("after", playBackObj);
+
     await playBackObj.loadAsync(url, {
       shouldPlay: true,
     });
@@ -61,7 +67,11 @@ export const selectAudio = async (audio, context, playListInfo = {}) => {
     setPlaybackPosition,
   } = context;
   try {
+    // activePlayList: playList,
+    // isPlayListRunning: true,
+
     // playing audio for the first time.
+
     if (soundObj === null) {
       const status = await playAudio(
         playBackObj,
@@ -76,6 +86,13 @@ export const selectAudio = async (audio, context, playListInfo = {}) => {
       setCurrentAudioIndex(index);
       setIsPlayListRunning(false);
       setActivePlayList([]);
+
+      if (playListInfo?.activePlayList) {
+        setActivePlayList(playListInfo.activePlayList);
+      }
+      if (playListInfo?.isPlayListRunning) {
+        setIsPlayListRunning(true);
+      }
 
       playBackObj.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
       return storeAudioForNextOpening(audio, index);
