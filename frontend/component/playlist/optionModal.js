@@ -13,7 +13,8 @@ export const OptionModal = ({
   visible,
   currentItem,
   onCloseHandler,
-  options,
+  onPlayListPress,
+  onPlayPress,
 }) => {
   const { title } = currentItem;
   return (
@@ -25,16 +26,13 @@ export const OptionModal = ({
             {title}
           </Text>
           <View style={styles.optionContainer}>
-            {options.map((optn) => {
-              return (
-                <TouchableWithoutFeedback
-                  key={optn.title}
-                  onPress={optn.onPress}
-                >
-                  <Text style={styles.option}>{optn.title}</Text>
-                </TouchableWithoutFeedback>
-              );
-            })}
+            <TouchableWithoutFeedback onPress={onPlayPress}>
+              <Text style={styles.option}>Play</Text>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback onPress={onPlayListPress}>
+              <Text style={styles.option}>Add to playlist</Text>
+            </TouchableWithoutFeedback>
           </View>
         </View>
 
@@ -79,7 +77,6 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     left: 0,
-    bottom: 0,
     height: "100%",
     backgroundColor: colorVariants.MODAL_BG,
   },

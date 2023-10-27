@@ -8,30 +8,9 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import { colorVariants } from "../../constants/globalConstants";
 
-const renderPlayPauseIcon = (isPlaying) => {
-  if (isPlaying)
-    return (
-      <Entypo
-        name="controller-paus"
-        size={24}
-        color={colorVariants.ACTIVE_FONT}
-      />
-    );
-
-  return (
-    <Entypo
-      name="controller-play"
-      size={24}
-      color={colorVariants.ACTIVE_FONT}
-    />
-  );
-};
-
 export const AudioListItem = ({
   title,
   duration,
-  isPlaying,
-  activeListItem,
   onOptionPressHandler,
   onAudioPressHandler,
 }) => {
@@ -40,50 +19,34 @@ export const AudioListItem = ({
   };
 
   return (
-    <>
-      <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={onAudioPressHandler}>
-          <View style={styles.leftContainer}>
-            <View
-              style={[
-                styles.thumbnail,
-                {
-                  backgroundColor: activeListItem
-                    ? colorVariants.ACTIVE_BG
-                    : colorVariants.FONT_LIGHT,
-                },
-              ]}
-            >
-              <Text style={styles.thumbNailText}>
-                {activeListItem
-                  ? renderPlayPauseIcon(isPlaying)
-                  : getThumbNailText()}
-              </Text>
-            </View>
-
-            <View style={styles.titleContainer}>
-              <Text style={styles.title} numberOfLines={1}>
-                {title}
-              </Text>
-              <Text style={styles.timeText} numberOfLines={1}>
-                {duration}
-              </Text>
-            </View>
+    <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={onAudioPressHandler}>
+        <View style={styles.leftContainer}>
+          <View style={styles.thumbnail}>
+            <Text style={styles.thumbNailText}>{getThumbNailText()}</Text>
           </View>
-        </TouchableWithoutFeedback>
 
-        <View style={styles.rightContainer}>
-          <Entypo
-            name="dots-three-vertical"
-            size={24}
-            color={colorVariants.FONT_MEDIUM}
-            onPress={onOptionPressHandler}
-            style={{ padding: 10 }}
-          />
+          <View style={styles.titleContainer}>
+            <Text style={styles.title} numberOfLines={1}>
+              {title}
+            </Text>
+            <Text style={styles.timeText} numberOfLines={1}>
+              {duration}
+            </Text>
+          </View>
         </View>
+      </TouchableWithoutFeedback>
+
+      <View style={styles.rightContainer}>
+        <Entypo
+          name="dots-three-vertical"
+          size={24}
+          color={colorVariants.FONT_MEDIUM}
+          onPress={onOptionPressHandler}
+          style={{ alignSelf: "center", padding: 10 }}
+        />
       </View>
-      <View style={styles.seperator} />
-    </>
+    </View>
   );
 };
 

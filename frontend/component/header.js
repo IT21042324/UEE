@@ -24,7 +24,7 @@ export const Header = ({ title, navigation }) => {
           </TouchableOpacity>
         )}
 
-      {title !== "Welcome" && title !== "PlayList" && (
+      {title !== "Welcome" && (
         <TouchableOpacity
           style={styles.volumeIcon}
           onPress={muteOnPressHandler}

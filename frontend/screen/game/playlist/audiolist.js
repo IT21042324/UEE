@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import { UseAudioContext } from "../../../useHook/useAudioContext";
+import { AudioContext } from "../../../context/audioProvider";
 import { LayoutProvider, RecyclerListView } from "recyclerlistview";
 import { AudioListItem } from "../../../component/playlist/audioListItem";
 import { OptionModal } from "../../../component/playlist/optionModal";
-import { AudioContext } from "../../../context/audioProvider";
-import { selectAudio } from "../../../helper/audioController";
+import { Audio } from "expo-av";
 import { UseGeneralSpeechCombination } from "../../../useHook/mergeSpeechAndGeneralSettings";
-import { UseAudioContext } from "../../../useHook/useAudioContext";
+import {
+  pauseAudio,
+  playAudio,
+  playNextAudio,
+  resumeAudio,
+} from "../../../helper/audioController";
 
-export const Audiolist = ({ navigation }) => {
+export const Audiolist = () => {
   const [optionModalVisible, setOptionModalVisible] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
 
@@ -33,27 +39,66 @@ export const Audiolist = ({ navigation }) => {
     }
   );
 
-  const context = UseAudioContext();
-
-  const { currentAudioIndex, loadPreviousAudio, setAddToPlayList } = context;
+  const {
+    playBackObj,
+    soundObj,
+    currentlyPlayingAudio,
+    setPlayBackObj,
+    setSoundObj,
+    setCurrentlyPlayingAudio,
+  } = UseAudioContext();
 
   const onAudioPressHandler = async (currentItem) => {
     //playing audio for the first time
 
-    await selectAudio(currentItem, context);
+    if (soundObj === null) {
+      const playBackObject = new Audio.Sound();
+      const status = await playAudio(playBackObject, currentItem.url);
+
+      setCurrentlyPlayingAudio(currentItem);
+      setPlayBackObj(playBackObject);
+      setSoundObj(status);
+    }
+
+    // pause audio
+    if (
+      soundObj !== null &&
+      soundObj?.isLoaded &&
+      soundObj?.isPlaying &&
+      currentItem.id === currentlyPlayingAudio?.id
+    ) {
+      const status = await pauseAudio(playBackObj);
+      setSoundObj(status);
+    }
+
+    //resume playing audio
+    if (
+      soundObj !== null &&
+      soundObj?.isLoaded &&
+      !soundObj?.isPlaying &&
+      currentlyPlayingAudio?.id === currentItem.id
+    ) {
+      const status = await resumeAudio(playBackObj);
+      setSoundObj(status);
+    }
+
+    //select another audio
+    if (
+      soundObj !== null &&
+      soundObj.isLoaded &&
+      currentlyPlayingAudio?.id !== currentItem.id
+    ) {
+      const status = await playNextAudio(playBackObj, currentItem.url);
+      setCurrentlyPlayingAudio(currentItem);
+      setSoundObj(status);
+    }
   };
 
-  useEffect(() => {
-    loadPreviousAudio();
-  }, []);
-
-  const rowRenderer = (type, item, index, extendedState) => {
+  const rowRenderer = (type, item) => {
     return (
       <AudioListItem
         title={item.title}
         duration={item.duration}
-        isPlaying={extendedState.isPlaying}
-        activeListItem={currentAudioIndex === index}
         onOptionPressHandler={() => {
           setOptionModalVisible(true);
           setCurrentItem(item);
@@ -63,37 +108,28 @@ export const Audiolist = ({ navigation }) => {
     );
   };
 
-  const navigateToPlaylist = () => {
-    setOptionModalVisible(false);
-    setAddToPlayList(currentItem);
-    navigation.navigate("PlayList", { screen: "Your PlayList" });
-  };
-
   return (
     <AudioContext.Consumer>
-      {({ dataProvider, isPlaying }) => {
-        if (!dataProvider._data.length) return null;
-
+      {({ dataProvider }) => {
         return (
           <View style={styles.mainContainer}>
             <RecyclerListView
               dataProvider={dataProvider}
               layoutProvider={layoutProvider}
               rowRenderer={rowRenderer}
-              extendedState={{ isPlaying }} //to say recyclerview to check the state of the component all the time
             />
             <OptionModal
-              options={[
-                {
-                  title: "Add to playlist",
-                  onPress: navigateToPlaylist,
-                },
-              ]}
+              onPlayPress={() => {
+                console.log("Playing Audio");
+              }}
+              onPlayListPress={() => {
+                console.log("Adding to playlist");
+              }}
+              visible={optionModalVisible}
               currentItem={currentItem}
               onCloseHandler={() => {
                 setOptionModalVisible(false);
               }}
-              visible={optionModalVisible}
             />
           </View>
         );
