@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import * as Font from "expo-font";
 import { globalStyles } from "./styles/global";
 import Navigator from "./routes/navigation";

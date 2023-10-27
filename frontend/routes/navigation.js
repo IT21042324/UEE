@@ -5,7 +5,6 @@ import { screenTitles } from "../constants/commonStrings";
 import { colorVariants } from "../constants/globalConstants";
 import { LoginAndSignup } from "../screen/LoginAndSignup";
 import { GameCompletion } from "../screen/game/gameCompletion";
-import { PlayListNavigator } from "../screen/game/playlist/playListNavigator";
 import StartPuzzle from "../screen/game/puzzle/ChooseBigOne/StartPuzzle";
 import StartColorPuzzle from "../screen/game/puzzle/ChooseTheColor/StartColorPuzzle";
 import StartOddPuzzle from "../screen/game/puzzle/ChooseTheOddOne/StartOddPuzzle";
@@ -16,6 +15,8 @@ import { RapunzelStoryPage } from "../screen/game/story/rapunzelStory";
 import { StorySelectionScreen } from "../screen/game/storySelection";
 import LoadingScreen from "../screen/loading";
 import { StudentSelectionScreen } from "../screen/studentSelection";
+import { PlayListNavigator } from "../screen/game/playlist/playListNavigator";
+import { Text } from "react-native";
 
 const screens = {
   LoginAndSignup: {
@@ -90,9 +91,11 @@ const screens = {
   },
   PlayListSelection: {
     screen: PlayListNavigator,
-    navigationOptions: {},
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: () => <Header title={"PlayList"} navigation={navigation} />,
+      headerLeft: () => null,
+    }),
   },
-  //// Puzzle ////
   PuzzleSelection: {
     screen: HomePuzzle,
   },
