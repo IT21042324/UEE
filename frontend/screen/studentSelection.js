@@ -120,7 +120,7 @@ export const StudentSelectionScreen = ({ navigation }) => {
               dotStyle={{
                 width: 10,
                 height: 10,
-                backgroundColor: "#347af0",
+                backgroundColor: "white",
                 borderRadius: 5,
                 marginHorizontal: 5,
               }}
