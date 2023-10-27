@@ -1,6 +1,13 @@
 import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { getSettings } from "../../../asyncStorage/asyncStorage";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
 import {
@@ -11,6 +18,7 @@ import {
 import { SinhalaString } from "../../../constants/sinhalaString";
 import { EnglishString } from "../../../constants/strings";
 import { UseGeneralSpeechCombination } from "../../../useHook/mergeSpeechAndGeneralSettings";
+import { Card } from "react-native-paper";
 
 export const RapunzelStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -94,39 +102,62 @@ export const RapunzelStoryPage = ({ navigation }) => {
   };
   return (
     <View style={styles.mainContainer}>
-      {storyContent.length > 0 && (
-        <PopupQuestionModal
-          questionBank={storyContent[currentStoryPageObjectNumber].questionBank}
-          imageRef={storyContent[currentStoryPageObjectNumber]?.imageId}
-          onCorrectAnswerSelected={onCorrectAnswerSelected}
-          modalVisible={modalVisible}
-          setModalVisiblity={setModalVisiblity}
-          onIncorrectAnswerSelected={onIncorrectAnswerSelected}
-          popupQuestionToast={strings.PopupQuestionToast}
-        />
-      )}
-      <View style={styles.storyDisplayContainer}>
-        <View style={styles.storyMainContainer}>
-          <View style={styles.imageContainer}>
-            <Image source={displayObject?.imageId} style={styles.image} />
+      <ImageBackground
+        source={require("../../../assets/story/rapunzel.jpg")}
+        resizeMode="cover"
+        style={styles.bgImage}
+      >
+        {storyContent.length > 0 && (
+          <PopupQuestionModal
+            questionBank={
+              storyContent[currentStoryPageObjectNumber].questionBank
+            }
+            imageRef={storyContent[currentStoryPageObjectNumber]?.imageId}
+            onCorrectAnswerSelected={onCorrectAnswerSelected}
+            modalVisible={modalVisible}
+            setModalVisiblity={setModalVisiblity}
+            onIncorrectAnswerSelected={onIncorrectAnswerSelected}
+            popupQuestionToast={strings.PopupQuestionToast}
+          />
+        )}
+        <View style={styles.storyDisplayContainer}>
+          <View style={styles.storyMainContainer}>
+            <View style={styles.imageContainer}>
+              <Card>
+                <Card.Cover
+                  source={displayObject?.imageId}
+                  style={styles.image}
+                />
+              </Card>
+            </View>
+            <View style={styles.passageContainer}>
+              <Card>
+                <Card.Content>
+                  <Text style={styles.passage}>
+                    {displayObject?.passageContent}
+                  </Text>
+                </Card.Content>
+              </Card>
+            </View>
           </View>
-          <View style={styles.passageContainer}>
-            <Text style={styles.passage}>{displayObject?.passageContent}</Text>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.nextIconContainer}
+            onPress={onNextPressHandler}
+          >
+            <Foundation name="next" size={80} color="white" />
+          </TouchableOpacity>
+          <View style={styles.pageNoContainer}>
+            <Card style={styles.pageNoContainerCard}>
+              <Card.Content>
+                <Text style={styles.pageNoText}>
+                  Page {currentStoryPageObjectNumber + 1} of {totalStoryPages}
+                </Text>
+              </Card.Content>
+            </Card>
           </View>
         </View>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.nextIconContainer}
-          onPress={onNextPressHandler}
-        >
-          <Foundation name="next" size={80} color="black" />
-        </TouchableOpacity>
-        <View style={styles.pageNoContainer}>
-          <Text style={styles.pageNoText}>
-            Page {currentStoryPageObjectNumber + 1} of {totalStoryPages}
-          </Text>
-        </View>
-      </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -163,7 +194,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0,
-    margin: 30,
+    marginTop: 40,
+    marginRight: 40,
   },
   pageNoContainer: {
     position: "absolute",
@@ -172,13 +204,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: -25,
+    marginLeft: -20,
   },
   pageNoText: {
     fontFamily: fontFamily.normalText,
     fontStyle: fontStyle.normal,
-    fontSize: 30,
+    fontSize: 15,
     backgroundColor: colorVariants.black,
     color: colorVariants.white,
     padding: 10,
+  },
+  pageNoContainerCard: {
+    marginTop: "10%",
+  },
+  bgImage: {
+    width: "100%",
+    height: "100%",
   },
 });

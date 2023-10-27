@@ -73,6 +73,79 @@ const COODSE = [
       isCorrect: false,
     },
   },
+
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/easy/6.png`),
+      isCorrect: false,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/easy/6.png`),
+      isCorrect: false,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/easy/6.png`),
+      isCorrect: true,
+    },
+  },
+
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/easy/7.png`),
+      isCorrect: true,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/easy/7.png`),
+      isCorrect: false,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/easy/7.png`),
+      isCorrect: false,
+    },
+  },
+
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/easy/8.png`),
+      isCorrect: false,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/easy/8.png`),
+      isCorrect: true,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/easy/8.png`),
+      isCorrect: false,
+    },
+  },
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/easy/9.png`),
+      isCorrect: false,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/easy/9.png`),
+      isCorrect: false,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/easy/9.png`),
+      isCorrect: true,
+    },
+  },
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/easy/10.png`),
+      isCorrect: true,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/easy/10.png`),
+      isCorrect: false,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/easy/10.png`),
+      isCorrect: false,
+    },
+  },
 ];
 
 const COODSM = [
@@ -150,9 +223,93 @@ const COODSM = [
       isCorrect: false,
     },
   },
+
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/medium/6.png`),
+      isCorrect: false,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/medium/6.png`),
+      isCorrect: false,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/medium/6.png`),
+      isCorrect: true,
+    },
+  },
+
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/medium/7.png`),
+      isCorrect: false,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/medium/7.png`),
+      isCorrect: true,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/medium/7.png`),
+      isCorrect: false,
+    },
+  },
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/medium/8.png`),
+      isCorrect: true,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/medium/8.png`),
+      isCorrect: false,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/medium/8.png`),
+      isCorrect: false,
+    },
+  },
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/medium/9.png`),
+      isCorrect: false,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/medium/9.png`),
+      isCorrect: false,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/medium/9.png`),
+      isCorrect: true,
+    },
+  },
+  {
+    image1: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image1/medium/10.png`),
+      isCorrect: false,
+    },
+    image2: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image2/medium/10.png`),
+      isCorrect: true,
+    },
+    image3: {
+      src: require(`../../assets/puzzle/ChooseTheOddOne/image3/medium/10.png`),
+      isCorrect: false,
+    },
+  },
 ];
+
+const title = {
+  eng: "Choose The Odd One 😊",
+  sin: "වෙනස් පින්තූරයක් තෝරන්න 😊",
+};
+
+const screenTitle = {
+  eng: "Choose The Odd One",
+  sin: "වෙනස් පින්තූරයක් තෝරන්න",
+};
 
 export default {
   COODSE,
   COODSM,
+  title,
+  screenTitle,
 };

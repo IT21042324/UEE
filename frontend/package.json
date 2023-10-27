@@ -41,7 +41,6 @@
     "react-native-toast-message": "^2.1.6",
     "react-native-tts": "^4.1.0",
     "react-navigation-stack": "^2.10.4",
-    "react-navigation-tabs": "^2.11.2",
     "recyclerlistview": "^4.2.0",
     "@react-native-masked-view/masked-view": "0.2.9",
     "react-native-gesture-handler": "~2.12.0"

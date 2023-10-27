@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Animated, FlatList, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Animated,
+  FlatList,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { getSettings } from "../../asyncStorage/asyncStorage";
 import { StoryOptionCard } from "../../component/games/story/storyOptionCard";
@@ -38,49 +45,55 @@ export const StorySelectionScreen = ({ navigation }) => {
 
   if (!isLoading) {
     return (
-      <ScrollView contentContainerStyle={styles.mainContainer}>
-        <FlatList
-          data={strings.storySelectionOptions}
-          keyExtractor={(item) => item.ref}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            {
-              useNativeDriver: false,
-            }
-          )}
-          renderItem={({ item }) => (
-            <StoryOptionCard
-              option={item.ref}
-              title={item.title}
-              navigation={navigation}
-            />
-          )}
-        />
+      <ImageBackground
+        source={require("../../assets/story/main.jpg")}
+        resizeMode="cover"
+        style={styles.bgImage}
+      >
+        <ScrollView contentContainerStyle={styles.mainContainer}>
+          <FlatList
+            data={strings.storySelectionOptions}
+            keyExtractor={(item) => item.ref}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              {
+                useNativeDriver: false,
+              }
+            )}
+            renderItem={({ item }) => (
+              <StoryOptionCard
+                option={item.ref}
+                title={item.title}
+                navigation={navigation}
+              />
+            )}
+          />
 
-        <ExpandingDot
-          data={strings.storySelectionOptions}
-          expandingDotWidth={30}
-          scrollX={scrollX}
-          inActiveDotOpacity={0.6}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            backgroundColor: "#347af0",
-            borderRadius: 5,
-            marginHorizontal: 5,
-            alignSelf: "center",
-          }}
-          containerStyle={{
-            position: "absolute",
-            bottom: 30,
-            alignSelf: "center",
-            width: "100%",
-            justifyContent: "center",
-          }}
-        />
-      </ScrollView>
+          <ExpandingDot
+            data={strings.storySelectionOptions}
+            expandingDotWidth={30}
+            scrollX={scrollX}
+            inActiveDotOpacity={0.6}
+            dotStyle={{
+              width: 10,
+              height: 10,
+              backgroundColor: "#347af0",
+              borderRadius: 5,
+              marginHorizontal: 5,
+              alignSelf: "center",
+            }}
+            containerStyle={{
+              position: "absolute",
+              bottom: 15,
+              alignSelf: "center",
+              width: "100%",
+              justifyContent: "center",
+            }}
+          />
+        </ScrollView>
+      </ImageBackground>
     );
   }
 };
@@ -88,11 +101,16 @@ export const StorySelectionScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#fff",
-    margin: 30,
     padding: 10,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  bgImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
     alignItems: "center",
   },
 });

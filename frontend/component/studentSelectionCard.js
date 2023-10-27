@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Divider } from "@rneui/themed";
 import { globalStyles } from "../styles/global";
+import { Card } from "react-native-paper";
 
 export const StudentMainManuSelectionCard = ({
   Icon,
@@ -21,29 +22,34 @@ export const StudentMainManuSelectionCard = ({
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressHandler}>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {Icon}
-      </View>
-      <Divider
-        color={"black"}
-        width={3}
-        style={{
-          marginLeft: 10,
-          marginRight: 10,
-          marginTop: 10,
-          width: "100%",
-          alignSelf: "center",
-        }}
-      />
-      <View style={styles.textContainer}>
-        <Text style={globalStyles.normalText}>{title}</Text>
-      </View>
+    <TouchableOpacity onPress={onPressHandler}>
+      <Card style={styles.container}>
+        {/* <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {Icon}
+        </View> */}
+        <Card.Content>{Icon}</Card.Content>
+        <Card.Content>
+          <Divider
+            color={"black"}
+            width={3}
+            style={{
+              marginLeft: 10,
+              marginRight: 10,
+              marginTop: 10,
+              width: "100%",
+              alignSelf: "center",
+            }}
+          />
+        </Card.Content>
+        <View style={styles.textContainer}>
+          <Text style={globalStyles.normalText}>{title}</Text>
+        </View>
+      </Card>
     </TouchableOpacity>
   );
 };
@@ -57,6 +63,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#eaf0f0",
   },
   image: {
     width: "100%",
@@ -65,6 +72,7 @@ const styles = StyleSheet.create({
   textContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
