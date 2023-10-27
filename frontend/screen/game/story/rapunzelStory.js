@@ -1,13 +1,13 @@
 import { Foundation } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import {
-  Image,
   ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Card } from "react-native-paper";
 import { getSettings } from "../../../asyncStorage/asyncStorage";
 import { PopupQuestionModal } from "../../../component/games/story/cinderella/popUpQuestionModal";
 import {
@@ -18,7 +18,6 @@ import {
 import { SinhalaString } from "../../../constants/sinhalaString";
 import { EnglishString } from "../../../constants/strings";
 import { UseGeneralSpeechCombination } from "../../../useHook/mergeSpeechAndGeneralSettings";
-import { Card } from "react-native-paper";
 
 export const RapunzelStoryPage = ({ navigation }) => {
   const [storyContent, setStoryContent] = useState([]);
@@ -145,16 +144,12 @@ export const RapunzelStoryPage = ({ navigation }) => {
             style={styles.nextIconContainer}
             onPress={onNextPressHandler}
           >
-            <Foundation name="next" size={80} color="white" />
+            <Foundation name="next" size={80} color={colorVariants.ACTIVE_BG} />
           </TouchableOpacity>
           <View style={styles.pageNoContainer}>
-            <Card style={styles.pageNoContainerCard}>
-              <Card.Content>
-                <Text style={styles.pageNoText}>
-                  Page {currentStoryPageObjectNumber + 1} of {totalStoryPages}
-                </Text>
-              </Card.Content>
-            </Card>
+            <Text style={styles.pageNoText}>
+              Page {currentStoryPageObjectNumber + 1} of {totalStoryPages}
+            </Text>
           </View>
         </View>
       </ImageBackground>
@@ -213,7 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     backgroundColor: colorVariants.black,
     color: colorVariants.white,
-    padding: 10,
+    padding: 15,
   },
   pageNoContainerCard: {
     marginTop: "10%",

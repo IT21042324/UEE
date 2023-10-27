@@ -148,16 +148,16 @@ export const CinderellaStoryPage = ({ navigation }) => {
             style={styles.nextIconContainer}
             onPress={onNextPressHandler}
           >
-            <Foundation name="next" size={80} color="white" />
+            <Foundation name="next" size={80} color={colorVariants.black} />
           </TouchableOpacity>
           <View style={styles.pageNoContainer}>
-            <Card style={styles.pageNoContainerCard}>
-              <Card.Content>
-                <Text style={styles.pageNoText}>
-                  Page {currentStoryPageObjectNumber + 1} of {totalStoryPages}
-                </Text>
-              </Card.Content>
-            </Card>
+            {/* <Card style={styles.pageNoContainerCard}>
+              <Card.Content > */}
+            <Text style={styles.pageNoText}>
+              Page {currentStoryPageObjectNumber + 1} of {totalStoryPages}
+            </Text>
+            {/* </Card.Content>
+            </Card> */}
           </View>
         </View>
       </ImageBackground>
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     backgroundColor: colorVariants.black,
     color: colorVariants.white,
-    padding: 10,
+    padding: 15,
   },
   pageNoContainerCard: {
     marginTop: "10%",
