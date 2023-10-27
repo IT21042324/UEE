@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Modal, StyleSheet, Text, View } from "react-native";
 import { Card, Button } from "react-native-paper";
 import { UseBackendAPI } from "../../../../api/useBackendAPI";
 import { EnglishString } from "../../../../constants/strings";
 import { UseUserContext } from "../../../../useHook/useUserContext";
+import { getSettings } from "../../../../asyncStorage/asyncStorage";
+import SuccessModelDS from "../../../../constants/Datasets/SuccessModelDS";
 
 function SuccessModel({ visible, onClose, points, navigation, progress }) {
+  const [isSinhala, setIsSinhala] = useState(false);
+
+  useEffect(() => {
+    async function loadStrings() {
+      const settings = await getSettings();
+
+      if (settings?.language) {
+        if (settings.language === "si-LK") setIsSinhala(true);
+      }
+    }
+    loadStrings();
+  }, []);
   const { user } = UseUserContext();
 
   const { saveProgress } = UseBackendAPI();
@@ -72,9 +86,20 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
       <Modal visible={visible} animationType="slide">
         <Card style={styles.modalContainer}>
           <Card.Content style={styles.contentContainer}>
-            <Text style={styles.headerText}>Congratulations!</Text>
+            <Text style={styles.headerText}>
+              {isSinhala
+                ? SuccessModelDS.SUCMDLSTR.congratsSin
+                : SuccessModelDS.SUCMDLSTR.congrats}
+            </Text>
             <Text style={styles.descriptionText}>
-              You have earned {points} points.✴️
+              {isSinhala
+                ? SuccessModelDS.SUCMDLSTR.earnedsin
+                : SuccessModelDS.SUCMDLSTR.earned}{" "}
+              {points}{" "}
+              {isSinhala
+                ? SuccessModelDS.SUCMDLSTR.pointsSin
+                : SuccessModelDS.SUCMDLSTR.points}
+              .✴️
             </Text>
             <Card.Content style={styles.btnContainerFinish}>
               {isSavingToDB ? (
@@ -85,7 +110,9 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
                   buttonColor="red"
                   onPress={() => OnFinishHandler()}
                 >
-                  Finish
+                  {isSinhala
+                    ? SuccessModelDS.SUCMDLSTR.finSin
+                    : SuccessModelDS.SUCMDLSTR.fin}
                 </Button>
               )}
             </Card.Content>
@@ -93,7 +120,9 @@ function SuccessModel({ visible, onClose, points, navigation, progress }) {
             {!isSavingToDB && (
               <Card.Content style={styles.btnContainerNext}>
                 <Button mode="outlined" onPress={onClose}>
-                  Next
+                  {isSinhala
+                    ? SuccessModelDS.SUCMDLSTR.nextSin
+                    : SuccessModelDS.SUCMDLSTR.next}
                 </Button>
               </Card.Content>
             )}

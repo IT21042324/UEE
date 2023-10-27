@@ -1,11 +1,25 @@
 import { Modal, Text, View, StyleSheet } from "react-native";
 import { UseUserContext } from "../../../../useHook/useUserContext";
 import { UseBackendAPI } from "../../../../api/useBackendAPI";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EnglishString } from "../../../../constants/strings";
 import { ActivityIndicator, Button } from "react-native-paper";
+import { getSettings } from "../../../../asyncStorage/asyncStorage";
+import PuzzleOverDS from "../../../../constants/Datasets/PuzzleOverDS";
 
 function PuzzleOver({ visible, onClose, points, navigation, progress }) {
+  const [isSinhala, setIsSinhala] = useState(false);
+
+  useEffect(() => {
+    async function loadStrings() {
+      const settings = await getSettings();
+
+      if (settings?.language) {
+        if (settings.language === "si-LK") setIsSinhala(true);
+      }
+    }
+    loadStrings();
+  }, []);
   const { user } = UseUserContext();
 
   const { saveProgress } = UseBackendAPI();
@@ -72,11 +86,26 @@ function PuzzleOver({ visible, onClose, points, navigation, progress }) {
       <Modal visible={visible} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.contentContainer}>
-            <Text style={styles.headerText}>Congratulations!</Text>
-            <Text style={styles.headerTextWin}>🎊 You Win 🎊</Text>
-            <Text style={styles.headerTextWin}>Total points : {points} 🥇</Text>
+            <Text style={styles.headerText}>
+              {isSinhala
+                ? PuzzleOverDS.POVRSTR.congratsSin
+                : PuzzleOverDS.POVRSTR.congrats}
+            </Text>
+            <Text style={styles.headerTextWin}>
+              {isSinhala
+                ? PuzzleOverDS.POVRSTR.winSin
+                : PuzzleOverDS.POVRSTR.win}
+            </Text>
+            <Text style={styles.headerTextWin}>
+              {isSinhala
+                ? PuzzleOverDS.POVRSTR.totalPointsSin
+                : PuzzleOverDS.POVRSTR.totalPoints}{" "}
+              : {points} 🥇
+            </Text>
             <Text style={styles.descriptionText}>
-              Thank you for Playing this Game!
+              {isSinhala
+                ? PuzzleOverDS.POVRSTR.thanksSin
+                : PuzzleOverDS.POVRSTR.thanks}
             </Text>
             <View style={styles.btnContainer}>
               {isSavingToDB ? (
@@ -88,7 +117,9 @@ function PuzzleOver({ visible, onClose, points, navigation, progress }) {
                   style={styles.buttonText}
                   onPress={() => OnFinishHandler()}
                 >
-                  Finish
+                  {isSinhala
+                    ? PuzzleOverDS.POVRSTR.finSin
+                    : PuzzleOverDS.POVRSTR.fin}
                 </Button>
               )}
             </View>
