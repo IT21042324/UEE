@@ -43,7 +43,7 @@ function StartOddPuzzle({ navigation }) {
     height: 250,
   });
 
-  const difficulty = "easy";
+  const difficulty = "medium";
 
   let ChooseOddOneDSArray = [];
 
